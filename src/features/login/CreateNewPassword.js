@@ -128,7 +128,6 @@ function Home(props) {
               <Typography variant="h3" className="mb-2 mt-3 font-bold">
                 Create a New Password
               </Typography>
-             
             </div>
 
             <form onSubmit={formik.handleSubmit}>
@@ -181,7 +180,7 @@ function Home(props) {
 
               <div className="text-white m-b-30 mt-5  ">
                 <Button
-                  className="p-3 w-full text-base"
+                  className="p-3 bg-primary-main w-full text-base"
                   type="submit"
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '
@@ -190,8 +189,6 @@ function Home(props) {
                 </Button>
               </div>
             </form>
-
-          
           </div>
         </div>
         <div

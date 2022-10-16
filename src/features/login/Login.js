@@ -177,7 +177,10 @@ function Home(props) {
                     label="Remember Information"
                   />
                 </FormGroup>
-                <p onClick={forgotPass} className="text-primary-main font cursor-pointer">
+                <p
+                  onClick={forgotPass}
+                  className="text-primary-main font cursor-pointer"
+                >
                   Forgot Password
                 </p>
               </div>
@@ -186,7 +189,7 @@ function Home(props) {
 
               <div className="text-white m-b-30 mt-5  ">
                 <Button
-                  className="p-3 w-full text-base"
+                  className="p-3 bg-primary-main w-full text-base"
                   type="submit"
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '

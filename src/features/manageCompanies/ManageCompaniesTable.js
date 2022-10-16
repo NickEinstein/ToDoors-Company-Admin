@@ -110,7 +110,12 @@ const openBelow =()=>{
           <div className="w-1/5 flex items-center p-3 ">WXHDGDJKGG</div>
           <div className="w-1/5 flex items-center  p-3 ">N200,000</div>
           <div className="w-1/5  p-3 ">
-            <Button onClick={openModal} className="px-12 flex items-center h-8">Delivered</Button>
+            <Button
+              onClick={openModal}
+              className="px-12 bg-primary-main flex items-center h-8"
+            >
+              Delivered
+            </Button>
           </div>
         </div>
 

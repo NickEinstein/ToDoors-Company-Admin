@@ -152,7 +152,7 @@ function ForgotPassword(props) {
 
               <div className="text-white m-b-30 mt-5  ">
                 <Button
-                  className="p-3 w-full text-base"
+                  className="p-3 bg-primary-main w-full text-base"
                   type="submit"
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '
@@ -184,8 +184,6 @@ function ForgotPassword(props) {
                 </div>
               </div>
             </form>
-
-          
           </div>
         </div>
         <div

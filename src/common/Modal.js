@@ -40,7 +40,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          {(ConfirmWithdrawal == false && Confirm==false) &&(
+          {ConfirmWithdrawal == false && Confirm == false && (
             <Box sx={style}>
               <div className="flex mb-5 text-left ">
                 <Typography variant="h5" className="font-bold text-left">
@@ -71,7 +71,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
                 </div>
                 <Button
                   onClick={() => setConfirmWithdrawal(true)}
-                  className="w-full mb-3 mt-9"
+                  className="w-full mb-3 mt-9 bg-primary-main"
                 >
                   COnfirm Withdrawal
                 </Button>
@@ -82,7 +82,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
             </Box>
           )}
 
-          {(ConfirmWithdrawal && Confirm==false) &&
+          {ConfirmWithdrawal && Confirm == false && (
             <Box sx={style}>
               <div className="flex justify-center mb-5 text-left ">
                 <Typography variant="h5" className="font-bold">
@@ -100,42 +100,49 @@ export default function BasicModal({closeModal, openModal, suspend}) {
                   <MdArrowBackIosNew className="mr-1" size={16} />
                   <p>Go Back</p>
                 </div>
-                <Button onClick={() => setConfirm(true)} className="">
+                <Button
+                  onClick={() => setConfirm(true)}
+                  className="bg-primary-main"
+                >
                   Confirm
                 </Button>
               </div>
             </Box>
-          }
+          )}
 
-          {Confirm  &&<Box sx={style}>
-            <div className="flex justify-center mb-5 text-left ">
-              <Typography variant="h5" className="font-bold">
-                Input Account Info
-              </Typography>
-            </div>
-            <div className="text-left my-8">
-              <p className="mb-1 text-left text-sm">Bank Name</p>
-              <TextField
-                className="w-full bg-[#EBEBEB]"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">
-                      <HiSelector size={20}/>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
+          {Confirm && (
+            <Box sx={style}>
+              <div className="flex justify-center mb-5 text-left ">
+                <Typography variant="h5" className="font-bold">
+                  Input Account Info
+                </Typography>
+              </div>
+              <div className="text-left my-8">
+                <p className="mb-1 text-left text-sm">Bank Name</p>
+                <TextField
+                  className="w-full bg-[#EBEBEB]"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <HiSelector size={20} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
 
-            <div className="text-left my-8">
-              <p className="mb-1 text-left text-sm">Account Number</p>
-              <TextField className="w-full bg-[#EBEBEB]" />
-            </div>
+              <div className="text-left my-8">
+                <p className="mb-1 text-left text-sm">Account Number</p>
+                <TextField className="w-full bg-[#EBEBEB]" />
+              </div>
 
-            <div className="mt-10 flex justify-between items-center">
-              <Button className="h-10 w-full mb-8">Save Account Info</Button>
-            </div>
-          </Box>}
+              <div className="mt-10 flex justify-between items-center">
+                <Button className=" bg-primary-main h-10 w-full mb-8">
+                  Save Account Info
+                </Button>
+              </div>
+            </Box>
+          )}
         </div>
       </Modal>
     </div>

@@ -156,7 +156,9 @@ function SupportChart({ setOpen, open }) {
             </Typography>
           </div>
 
-          <Button variant="outlined">View Profile</Button>
+          <Button variant="outlined" className="bg-primary-main">
+            View Profile
+          </Button>
         </div>
         <Divider className="my-4" />
         <div className=" ">

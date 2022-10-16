@@ -192,7 +192,7 @@ function Signup(props) {
             </FormGroup> */}
 
               {/* <Input placeholder='Location' className='m-b-20'/> */}
-              <div className="text-white m-b-30 mt-8  ">
+              <div className="text-white bg-primary-main m-b-30 mt-8  ">
                 <Button
                   className="p-3 w-full"
                   type="submit"

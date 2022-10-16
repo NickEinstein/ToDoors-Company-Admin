@@ -333,7 +333,7 @@ function Trips(props) {
                   }}
                 >
                   <div className="w-1/5 border3b px-3 py-3  text-center">
-                    <Button className="h-7">View Route</Button>
+                    <Button className="h-7 bg-primary-main">View Route</Button>
                     <p className="font-semibold my-2">{row.origin}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
@@ -357,7 +357,9 @@ function Trips(props) {
                         style={{ color: "#888888" }}
                         size={26}
                       />
-                      <p className="text-[#959595] text-[11px] text-left mt-1">Remove</p>
+                      <p className="text-[#959595] text-[11px] text-left mt-1">
+                        Remove
+                      </p>
                     </div>
                   </div>
                 </div>

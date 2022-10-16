@@ -168,7 +168,7 @@ function Home(props) {
 
               {/* <Input placeholder='Location' className='m-b-20'/> */}
 
-              <div className="text-white m-b-30 mt-5  ">
+              <div className="text-white bg-primary-main m-b-30 mt-5  ">
                 <Button
                   className="p-3 w-full text-base"
                   type="submit"
@@ -193,11 +193,7 @@ function Home(props) {
             <a className="text-center mb-1" href="">
               <h2 className="mb-5">
                 Already have an account?
-                <b
-                  className="ml-1 text-[#039836]"
-                >
-                  Sign In
-                </b>
+                <b className="ml-1 text-[#039836]">Sign In</b>
               </h2>
             </a>
           </div>

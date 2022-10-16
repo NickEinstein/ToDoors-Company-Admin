@@ -147,8 +147,8 @@ function WallCards(props) {
             {props.button && (
               <div class="mt-4 ">
                 <Button
-                  onClick={()=>props.openModal()}
-                  className="bg-[#F7AD2B] px-16 text-white"
+                  onClick={() => props.openModal()}
+                  className="bg-[#F7AD2B] px-16 bg-primary-main text-white"
                 >
                   Withdraw
                 </Button>

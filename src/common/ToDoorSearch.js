@@ -106,7 +106,9 @@ function ToDoorSearch({hide, pad}) {
                   <p className="text-[#1E1E1E] text-sm mb-1">
                     GIGM Agent, Benin
                   </p>
-                  <Button className="h-6">Level 1 Account</Button>
+                  <Button className="h-6 bg-primary-main">
+                    Level 1 Account
+                  </Button>
                 </div>
               </div>
               {/* </div> */}

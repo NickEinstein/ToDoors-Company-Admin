@@ -48,7 +48,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
               </div>
               <div className="mt-4">
                 <Typography className="mb-4" variant="h6">
-                  {suspend ? 'Suspend': 'Delete'} Account
+                  {suspend ? "Suspend" : "Delete"} Account
                 </Typography>
                 <p>
                   Are you sure you want to delete this rider? This action cannot
@@ -59,11 +59,13 @@ export default function BasicModal({closeModal, openModal, suspend}) {
               <div className="flex justify-between items-center mt-8">
                 <Button
                   onClick={openModal}
-                  className="w-[80%] mr-3 bg-white text-[#989898]"
+                  className="w-[80%] bg-primary-main mr-3 bg-white text-[#989898]"
                 >
                   Cancel
                 </Button>{" "}
-                <Button className="w-[80%] bg-[#FF2828]">Delete</Button>
+                <Button className="w-[80%] bg-primary-main bg-[#FF2828]">
+                  Delete
+                </Button>
               </div>
             </div>
           </div>
