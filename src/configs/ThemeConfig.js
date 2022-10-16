@@ -50,6 +50,7 @@ export function customizeComponents(theme) {
       button: {
         textTransform: "none",
         width: "w-28",
+        backgroundColor: "#0C3BAA",
       },
     },
     components: {
