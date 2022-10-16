@@ -168,9 +168,9 @@ function Home(props) {
 
               {/* <Input placeholder='Location' className='m-b-20'/> */}
 
-              <div className="text-white  m-b-30 mt-5  ">
+              <div className="text-white  m-b-30 mt-5">
                 <Button
-                  className="p-3 w-full text-base"
+                  className="h-14 bg-primary-main w-full text-base"
                   type="submit"
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '
