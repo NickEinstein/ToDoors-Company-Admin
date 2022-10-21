@@ -122,7 +122,7 @@ function NewWallCards(props) {
                   ? "text-center text-primary-main "
                   : "text-center text-primary-main font-bold"
               }
-              sx={{ fontSize: 12 }}
+              sx={{ fontSize: 14 }}
             >
               {props.name || "Total Companies"}
             </Typography>

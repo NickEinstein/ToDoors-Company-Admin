@@ -179,7 +179,7 @@ console.log(show)
           </div>
         </div>
         <div className='w-full mb-8'>
-          <Button className='h-12 w-2/6'>Request verification</Button>
+          <Button className='h-12 w-2/6 bg-primary-main'>Request verification</Button>
         </div>
       </div>
     </div>

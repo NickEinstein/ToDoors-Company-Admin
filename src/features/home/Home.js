@@ -1,51 +1,56 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
 
-import { FcGoogle } from 'react-icons/fc';
+import { FcGoogle } from "react-icons/fc";
 // import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
 import useAuthUser from "hooks/useAuthUser";
 import { Navigate } from "react-router-dom";
 import { RouteEnum } from "constants/RouteConstants";
-import LoginHeader from 'common/LoginHeader';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import toDoorLogo from 'images/Ellipse 30.png'
-import background from 'images/background.png'
-import snake from 'images/Mask group.png'
+import LoginHeader from "common/LoginHeader";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import toDoorLogo from "images/Ellipse 30.png";
+import background from "images/background.png";
+import snake from "images/Mask group.png";
 
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
-import trustedBy2 from 'images/Rectangle 7.png'
-import trustedBy3 from 'images/Rectangle 106.png'
+import trustedBy2 from "images/Rectangle 7.png";
+import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
-import { Button, Input, MenuItem, Select, TextField, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  Input,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Home(props) {
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event)
+    console.log(event);
   };
 
   // console.log(localStorage.getItem('authUser'))
   const history = useNavigate();
 
-
   const redirect = () => {
     // localStorage.setItem('authUser', 'true')
 
-    history('/dashboard');
-  }
+    history("/dashboard");
+  };
 
   // console.log(localStorage.getItem('authUser'))
 
@@ -64,9 +69,9 @@ function Home(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values)
-      localStorage.setItem('il', true)
-      redirect()
+      console.log(values);
+      localStorage.setItem("il", true);
+      redirect();
       // history('/dashboard')
 
       // try {
@@ -81,7 +86,6 @@ function Home(props) {
       // }
     },
   });
-
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -102,10 +106,10 @@ function Home(props) {
     //     <Button type="submit">Submit</Button>
     //   </form>
     // </div>
-    <div className="  pl-24 h-screen">
+    <div className="pl-24 min-h-screen">
       <div className="flex justify-between">
         <div
-          className="pt-4"
+          className="pt-4 min-h-screen"
           style={{
             paddingLeft: "",
             paddingRight: "",
@@ -199,10 +203,10 @@ function Home(props) {
           </div>
         </div>
         <div
-          className="relative flex-vertical bg-primary-main text-white pl-10 justify-center w-2/5"
+          className="relative flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
             minWidth: "40%",
-            minHeight: "100%",
+            // minHeight: "100%",
             position: "relative",
             // backgroundImage: `url(${snake})`,
             // minHeight:"500px"

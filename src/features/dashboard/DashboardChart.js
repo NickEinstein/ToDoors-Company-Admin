@@ -101,13 +101,29 @@ const DashboardChart = () => {
     },
     {
       year: "1959 ",
-      value: 48,
+      value: 88,
     },
+
     {
       year: "1960 ",
-      value: 48,
+      value: 18,
     },
-    
+    {
+      year: "1961",
+      value: 38,
+    },
+    {
+      year: "1962 ",
+      value: 28,
+    },
+    {
+      year: "1963 ",
+      value: 58,
+    },
+    {
+      year: "1964 ",
+      value: 38,
+    },
   ];
   // const config = {
   //   data,

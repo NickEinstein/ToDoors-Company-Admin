@@ -14,13 +14,17 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { BsGrid, BsPeople } from "react-icons/bs";
 import MailIcon from "@mui/icons-material/Mail";
-import message from "images/message.png";
-import messages from "images/messages.png";
-import companies from "images/lifebuoy.png";
-import dashboard from "images/category-2.png";
-import trips from "images/routing.png";
-import rider from "images/profile-2user.png";
-import map from "images/map.png";
+import clipboard from "images/clipboard-text.svg";
+import clipboardW from "images/clipboard-text white.svg";
+import dashboard from "images/category-2.svg";
+// import companies from "images/lifebuoy.png";
+import dashboardW from "images/category-2 white.svg";
+import wallet from "images/wallet-minus.svg";
+import walletW from "images/wallet-minus white.svg";
+import smartCar from "images/smart-car.svg";
+import smartCarW from "images/smart-car white.svg";
+import addBikes from "images/add-square.svg";
+import addBikesW from "images/add-square white.svg";
 import logouts from "images/logout.png";
 import LoginHeader from "common/LoginHeader";
 import { RouteEnum } from "constants/RouteConstants";
@@ -46,47 +50,48 @@ export default function PermanentDrawerLeft() {
       name: "Dashboard",
       d: RouteEnum.DASHBOARD,
       imageboolean: false,
-      image2: <BsGrid color="white" size={26} />,
-      image: <BsGrid size={26} />,
+      image2: dashboardW,
+      image: dashboard,
+
       color: true,
     },
     {
       name: "History",
       d: RouteEnum.MANAGE_COMPANIES,
       imageboolean: true,
-      image2: <TbFileText color="white" size={26} />,
-      image: <TbFileText size={26} />,
+      image2: clipboardW,
+      image: clipboard,
       color: false,
     },
 
-    {
-      name: "Help & Support",
-      image2: <RiShieldLine color="white" size={26} />,
-      imageboolean: true,
-      image: <RiShieldLine size={26} />,
-      color: false,
-    },
+    // {
+    //   name: "Help & Support",
+    //   image2: <RiShieldLine color="white" size={26} />,
+    //   imageboolean: true,
+    //   image: <RiShieldLine size={26} />,
+    //   color: false,
+    // },
     {
       name: "Wallet",
       imageboolean: true,
       d: RouteEnum.MANAGE_RIDERS,
-      image: <GiWallet size={26} />,
-      image2: <GiWallet color="white" size={26} />,
+      image: wallet,
+      image2: walletW,
       color: false,
     },
     {
       name: "Manage Bikes",
       imageboolean: true,
       d: RouteEnum.TRIPS,
-      image: <RiCarLine size={26} />,
-      image2: <RiCarLine color="white" size={26} />,
+      image: smartCar,
+      image2: smartCarW,
       color: false,
     },
     {
       name: "Add Bikes",
       imageboolean: true,
-      image2: <MdAddBox color="white" size={26} />,
-      image: <MdAddBox size={26} />,
+      image2: addBikes,
+      image: addBikesW,
       color: false,
       d: RouteEnum.SUPPORT,
     },
@@ -164,10 +169,9 @@ export default function PermanentDrawerLeft() {
         {/* <Divider /> */}
         <List>
           {pat.map((text, index) => (
-           
             <ListItem
-            // key={index}
-            className={index ===0?"mb-12":''}
+              // key={index}
+              className={index === 0 ? "mb-12" : ""}
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
                 color: text.color ? "white" : "",
@@ -183,7 +187,8 @@ export default function PermanentDrawerLeft() {
                 }}
               >
                 <ListItemIcon>
-                  {text.imageboolean ? text.image:text.image2}
+                 <img  src={text.imageboolean ? text.image : text.image2}/> 
+                  
                 </ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItemButton>
@@ -198,11 +203,7 @@ export default function PermanentDrawerLeft() {
               key={text.name}
               disablePadding
             >
-              <ListItemButton
-                onClick={() =>
-                  logout(text.linx) 
-                }
-              >
+              <ListItemButton onClick={() => logout(text.linx)}>
                 <ListItemIcon>
                   <img src={text.image} />
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
