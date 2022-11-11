@@ -54,6 +54,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
+import { AiTwotoneDelete } from "react-icons/ai";
 
 function Trips(props) {
   const [age, setAge] = React.useState("");
@@ -64,12 +65,45 @@ function Trips(props) {
     console.log(event);
   };
   const history = useNavigate();
+console.log('hi')
+    const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery()
+    
+    const allBikes = (getgetAllBikesQueryResult?.data?.data);
 
   const redirect = () => {
     history("/complete-signUp");
   };
 
+
+  const getBikes = ()=>{
+    console.log('hi')
+    // getgetAllBikesQueryResult()
+// getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
+  }
+  const [deleteBikeMuation, deleteBikeMutationResult] =
+    UserApi.useDeleteBikeMutation();
+
+ const toDelete = async (userId)=>{
+  console.log(userId)
+ try {
+        const data = await deleteBikeMuation({
+          data:{userId},
+        });
+        getBikes()
+        // TODO extra login
+        // redirect()
+        enqueueSnackbar(data.message, { variant: "success" });
+      } catch (error) {
+        enqueueSnackbar(error?.data?.message, "Failed to login", {
+          variant: "error",
+        });
+      }
+  }
+
+
+
   function createData(
+    place,
     origin,
     destination,
     rider,
@@ -78,9 +112,11 @@ function Trips(props) {
     fee,
     departureDate,
     arrivalDate,
-    timeDelay
+    timeDelay,
+    id
   ) {
     return {
+      place,
       origin,
       destination,
       rider,
@@ -90,11 +126,33 @@ function Trips(props) {
       departureDate,
       arrivalDate,
       timeDelay,
+      id
     };
   }
 
+
+   const raws = allBikes?.map((e) =>
+     createData(
+       e.fname,
+       e.city,
+       "NGN30,908",
+       "WXHDGDJKGG",
+       "Delivered",
+       "N200,000",
+       "11 Sept. 9:00am",
+       "15 Sept. 1:00am",
+       "-",
+       '',
+       e._id
+
+     )
+   );
+
+   console.log(raws);
+   console.log(allBikes?.map((e)=>e._id));
   const rows = [
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -106,6 +164,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -117,6 +176,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -128,6 +188,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -221,108 +282,9 @@ function Trips(props) {
       {!show && (
         <div>
           <div sx={{ minWidth: 650 }} aria-label="simple table">
-            {/* <TableHead
-              sx={{
-                padding: "100px",
-                backgroundColor: "#EBEBEB",
-                border: "2px solid red",
-              }}
-              className="mb-4"
-            >
-              <TableRow sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Origin
-                </TableCell>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Destination
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Rider
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Order ID&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Status&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Fee&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Departure Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Arrival Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Action&nbsp;(g)
-                </TableCell>
-              </TableRow>
-            </TableHead> */}
-
-            {/* <div
-              //   onClick={openBelow}
-              style={{ border: "1px solid #DADADA" }}
-              className=" cursor-pointer mt-2 flex border2 background-table min-h-[50%]"
-            >
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Origin</h6>
-                <Typography variant="h6"></Typography>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Destination</h6>
-                <Typography variant="h6">{tableArray.company}</Typography>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Rider</h6>
-                <Typography variant="h6">{tableArray.id}</Typography>
-              </div>
-
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Order ID</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Status</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Fee</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Departure Date</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Arrival Date</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Time Delay</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Action</h6>
-              </div>
-            </div> */}
+       
             <div className="mt-3">
-              {rows.map((row) => (
+              {raws?.map((row) => (
                 <div
                   className="flex my-5"
                   key={row.name}
@@ -333,8 +295,8 @@ function Trips(props) {
                   }}
                 >
                   <div className="w-1/5 border3b px-3 py-3  text-center">
-                    <Button className="h-7 bg-primary-main">View Route</Button>
-                    <p className="font-semibold my-2">{row.origin}</p>
+                    <Button className="h-7 bg-primary-main">{row.origin}</Button>
+                    <p className="font-semibold my-2">{row.place}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">
@@ -356,6 +318,8 @@ function Trips(props) {
                         className="mt-2 ml-2 "
                         style={{ color: "#888888" }}
                         size={26}
+
+                        onClick={()=>toDelete(row.id)}
                       />
                       <p className="text-[#959595] text-[11px] text-left mt-1">
                         Remove

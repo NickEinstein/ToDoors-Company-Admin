@@ -36,7 +36,13 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 import SupportChart from './SupportChart';
 import ToDoorSearch from 'common/ToDoorSearch';
 function ManageRiders(props) {
-  const [age, setAge] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [state, setState] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
@@ -47,7 +53,7 @@ function ManageRiders(props) {
 
   const redirect = () => {
 
-    history('/complete-signUp');
+    // history('/complete-signUp');
   }
 
 
@@ -81,36 +87,79 @@ const tableArray = [
 
   const authUser = useAuthUser();
 
+  console.log(authUser)
+
   const { enqueueSnackbar } = useSnackbar();
-  const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
+  const [addBikeMuation, addBikeMutationResult] = UserApi.useAddBikeMutation();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      username: yup.string().trim().required(),
-      password: yup.string().trim().required(),
-    }),
-    onSubmit: async (values) => {
-      console.log(values)
-      // localStorage.setItem('location', values.location)
-      redirect()
+//   const formik = useFormik({
+//     initialValues: {
+//     email:"",
+//     phoneNo: "+2348094432806",
+//     password:"",
+//     userType: "rider",
+//     companyId:''
+// },
 
-      try {
-        const data = await loginMuation({ data: values }).unwrap();
+
+//     validationSchema: yup.object({
+//       email: yup.string().trim().required(),
+//       password: yup.string().trim().required(),
+//     }),
+//     onSubmit: async (values) => {
+//       console.log(values);
+//       localStorage.setItem("il", true);
+//       // redirect();
+//       // history('/dashboard')
+
+//       try {
+//         const data = await addBikeMuation({ data: values }).unwrap();
+//         // TODO extra login
+//         console.log(data.data);
+//         enqueueSnackbar("Logged in successful", { variant: "success" });
+//         redirect();
+//       } catch (error) {
+//         enqueueSnackbar(error?.data?.message, "Failed to login", {
+//           variant: "error",
+//         });
+//       }
+//     },
+//   });
+console.log(show)
+
+const onSubmit = async ()=>{
+  try {
+        const data = await addBikeMuation({
+          data: {
+            email: email,
+            phoneNo: phoneNumber,
+            password: password,
+            userType: "rider",
+            companyId: authUser._id,
+            fname: name,
+            // lname: null,
+            // email: "rider2@gmail.com",
+            // phoneNo: "",
+            // password:
+            //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+            dob: "1993-12-07T23:00:00.000Z",
+            bloodGroup: "B+",
+            address: address,
+            city: city,
+            state: state,
+            country: "Nigeria",
+          },
+        }).unwrap();
         // TODO extra login
-        // redirect()
-        enqueueSnackbar("Logged in successful", { variant: "success" });
+        console.log(data.data);
+        enqueueSnackbar(data.message, { variant: "success" });
+        // redirect();
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
           variant: "error",
         });
       }
-    },
-  });
-console.log(show)
+}
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -144,42 +193,97 @@ console.log(show)
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
-            <p className='font-bold'>Drivers Full Name</p>
-            <TextField className="w-full bg-[#EBEBEB] border-none" multiline={true} rows={1.5} />
+            <p className="font-bold">Drivers Full Name</p>
+            <TextField
+              className="w-full bg-[#EBEBEB] border-none"
+              multiline={true}
+              rows={1.5}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="w-full ">
-            <p className='font-bold'>Drivers Liscence No.</p>
-            <TextField className="w-full bg-[#EBEBEB]" multiline={true} rows={1.5} />
+            <p className="font-bold">Drivers Phone No.</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
           </div>
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
-            <p className='font-bold'>Email Address</p>
-            <TextField className="w-full bg-[#EBEBEB]" multiline={true} rows={1.5} />
+            <p className="font-bold">Email Address</p>
+            <TextField
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+            />
           </div>
           <div className="w-full">
-            <p className='font-bold'>Liscence Expiry</p>
-            <TextField className="w-full bg-[#EBEBEB]" multiline={true} rows={1.5} />
-          </div>
-        </div>
-        <div className="flex justify-between my-10">
-          <div className="w-full ">
-            <p className='font-bold'>House Address</p>
-            <TextField className="w-full bg-[#EBEBEB]" multiline={true} rows={2} />
+            <p className="font-bold">Liscence Expiry</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+            />
           </div>
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
-            <p className='font-bold'>Create Temporary Password</p>
-            <TextField className="w-full bg-[#EBEBEB]" multiline={true} rows={1.5} />
+            <p className="font-bold">City</p>
+            <TextField
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+            />
           </div>
-          <div className="w-full ">
-            <p className='font-bold'>Confirm Password</p>
-            <TextField  className="w-full bg-[#EBEBEB]" multiline={true} rows={1.5} />
+          <div className="w-full">
+            <p className="font-bold">State</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+              onChange={(e) => setState(e.target.value)}
+            />
           </div>
         </div>
-        <div className='w-full mb-8'>
-          <Button className='h-12 w-2/6 bg-primary-main'>Request verification</Button>
+        <div className="flex justify-between my-10">
+          <div className="w-full ">
+            <p className="font-bold">House Address</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={2}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="flex justify-between my-10">
+          <div className="w-full mr-[5%]">
+            <p className="font-bold">Create Temporary Password</p>
+            <TextField
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+            />
+          </div>
+          <div className="w-full ">
+            <p className="font-bold">Confirm Password</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              multiline={true}
+              rows={1.5}
+            />
+          </div>
+        </div>
+        <div className="w-full mb-8">
+          <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
+            Request verification
+          </Button>
         </div>
       </div>
     </div>
