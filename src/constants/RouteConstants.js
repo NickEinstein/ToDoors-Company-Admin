@@ -13,4 +13,5 @@ export const RouteEnum = {
   TRIPS: "/trips",
   MAPS: "/maps",
   SUPPORT: "/support",
+  PROFILE: "/profile",
 };

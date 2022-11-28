@@ -44,6 +44,8 @@ function ManageRiders(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
+  const [liscence, setLiscence] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   // const handleChange = (event) => {
   //   setAge(event.target.value);
   //   console.log(event)
@@ -53,7 +55,7 @@ function ManageRiders(props) {
 
   const redirect = () => {
 
-    // history('/complete-signUp');
+    history(RouteEnum.TRIPS);
   }
 
 
@@ -84,6 +86,44 @@ const tableArray = [
         ratings:"4",
     }
 ]
+
+const bikerx = {
+  fname: null,
+  lname: null,
+  email: "rider2@gmail.com",
+  phoneNo: "+23490762795",
+  password: "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+  dob: "1993-12-07T23:00:00.000Z",
+  bloodGroup: "B+",
+  address: null,
+  city: "Maryland",
+  state: "Lagos",
+  country: "Nigeria",
+  
+  profileUrl:
+    "http://res.cloudinary.com/todoorapp/image/upload/v1505805106/noun_17237_agwqgt.png",
+  userType: "rider",
+  bikeDetails: {
+    type: "bike",
+    company: "Maruti Suzuki",
+    regNo: "NYC 123",
+    RC_ownerName: null,
+    bikeNo: null,
+    bikeModel: "Swift Dzire",
+    regDate: "2016-12-31T23:00:00.000Z",
+  },
+  licenceDetails: {
+    licenceNo: null,
+    issueDate: null,
+    expDate: null,
+  },
+  bankDetails: {
+    accountNo: null,
+    holderName: null,
+    bank: null,
+  },
+  companyId: "635fbe0bbfadb9f5ea56afc2",
+};
 
   const authUser = useAuthUser();
 
@@ -153,13 +193,59 @@ const onSubmit = async ()=>{
         // TODO extra login
         console.log(data.data);
         enqueueSnackbar(data.message, { variant: "success" });
-        // redirect();
+        redirect();
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
           variant: "error",
         });
       }
 }
+
+const onSave = async () => {
+  try {
+    // alert('saveed')
+    const data = await addBikeMuation({
+      data: {
+        email: email,
+        phoneNo: phoneNumber,
+        password: password,
+        userType: "rider",
+        companyId: authUser._id,
+        fname: name,
+        // lname: null,
+        // email: "rider2@gmail.com",
+        // phoneNo: "",
+        // password:
+        //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+        dob: "1993-12-07T23:00:00.000Z",
+        bloodGroup: "B+",
+        address: address,
+        city: city,
+        state: state,
+        country: "Nigeria",
+      },
+    }).unwrap();
+    // TODO extra login
+    console.log(data.data);
+    enqueueSnackbar(data.message, { variant: "success" });
+    setAddress('')
+    setCity('')
+    setPhoneNumber('')
+    setState('')
+    setEmail('')
+    setName('')
+    setPassword("");
+    setConfirmPassword("");
+    setLiscence("");
+    // onSubmit('')
+    // // redirect();
+  } 
+  catch (error) {
+    enqueueSnackbar(error?.data?.message, "Failed to login", {
+      variant: "error",
+    });
+  }
+};
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -198,6 +284,7 @@ const onSubmit = async ()=>{
               className="w-full bg-[#EBEBEB] border-none"
               multiline={true}
               rows={1.5}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -206,6 +293,7 @@ const onSubmit = async ()=>{
             <TextField
               className="w-full bg-[#EBEBEB]"
               multiline={true}
+              value={phoneNumber}
               rows={1.5}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
@@ -217,6 +305,7 @@ const onSubmit = async ()=>{
             <TextField
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#EBEBEB]"
+              value={email}
               multiline={true}
               rows={1.5}
             />
@@ -226,6 +315,8 @@ const onSubmit = async ()=>{
             <TextField
               className="w-full bg-[#EBEBEB]"
               multiline={true}
+              onChange={(e) => setLiscence(e.target.value)}
+              value={liscence}
               rows={1.5}
             />
           </div>
@@ -236,6 +327,7 @@ const onSubmit = async ()=>{
             <TextField
               onChange={(e) => setCity(e.target.value)}
               className="w-full bg-[#EBEBEB]"
+              value={city}
               multiline={true}
               rows={1.5}
             />
@@ -245,6 +337,7 @@ const onSubmit = async ()=>{
             <TextField
               className="w-full bg-[#EBEBEB]"
               multiline={true}
+              value={state}
               rows={1.5}
               onChange={(e) => setState(e.target.value)}
             />
@@ -255,6 +348,7 @@ const onSubmit = async ()=>{
             <p className="font-bold">House Address</p>
             <TextField
               className="w-full bg-[#EBEBEB]"
+              value={address}
               multiline={true}
               rows={2}
               onChange={(e) => setAddress(e.target.value)}
@@ -267,8 +361,10 @@ const onSubmit = async ()=>{
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-[#EBEBEB]"
+              // value={name}
               multiline={true}
               rows={1.5}
+              value={password}
             />
           </div>
           <div className="w-full ">
@@ -277,12 +373,21 @@ const onSubmit = async ()=>{
               className="w-full bg-[#EBEBEB]"
               multiline={true}
               rows={1.5}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
             />
           </div>
         </div>
-        <div className="w-full mb-8">
+        <div className="w-full flex justify-between mb-8 gap-12">
           <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
-            Request verification
+            Save
+          </Button>
+
+          <Button
+            onClick={() => onSave()}
+            className="h-12 w-2/6 bg-primary-main"
+          >
+            Save & Continue
           </Button>
         </div>
       </div>

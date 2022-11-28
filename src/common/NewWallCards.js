@@ -140,7 +140,7 @@ function NewWallCards(props) {
                   : "text-center font-bold text-primary-main px-5"
               }
             >
-              {props.count || 20}
+              {props.count}
             </Typography>
           </div>
         </div>

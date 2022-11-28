@@ -1,6 +1,9 @@
 import store from "./StoreConfig";
 import { logoutAction } from "./StoreActionConfig";
 import { SoftworkHttp } from "./HttpConfig";
+import Cookies from "universal-cookie";
+import { LocalSee } from "@mui/icons-material";
+const cookies = new Cookies();
 
 SoftworkHttp.interceptors.request.use((config) => {
     const { accessToken } =
@@ -8,6 +11,7 @@ SoftworkHttp.interceptors.request.use((config) => {
 
     if (accessToken) {
         config.headers.Authorization = `${accessToken}`;
+        localStorage.setItem("token", accessToken);
 
     }
 
