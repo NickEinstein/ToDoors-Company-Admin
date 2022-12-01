@@ -54,7 +54,7 @@ function ManageRiders(props) {
   const [phoneNumber, setPhoneNumber] = React.useState(authUser?.phoneNo);
   const [state, setState] = React.useState(authUser?.state);
   const [email, setEmail] = useState(authUser?.email);
-  const [companyName, setCompanyName] = useState("");
+  const [companyName, setCompanyName] = useState(authUser.fname);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [country, setCountry] = useState(authUser?.country);
@@ -291,6 +291,8 @@ function ManageRiders(props) {
             />
           </div>
         </div>
+
+        
         {/* <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
             <p className="font-bold">Create Temporary Password</p>

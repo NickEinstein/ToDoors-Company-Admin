@@ -196,7 +196,7 @@ function Home(props) {
               </div>
             </form>
 
-            <a className="text-center mb-1" href="/signUp">
+            <a className="text-center mb-1" href="/signUpA">
               <h2 className="mb-5">
                 Yet to have an account?
                 <b className="ml-1 text-primary-main">Sign Up</b>

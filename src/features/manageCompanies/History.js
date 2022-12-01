@@ -394,10 +394,10 @@ function Trips(props) {
             aria-label="simple table"
           >
             <div className="mt-3 ">
-              {row?.map((row, idx) => (
+              {allHistory?.map((row, idx) => (
                 <div
                   className="flex"
-                  key={row.riderId}
+                  key={row?.riderId?.fname}
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     marginTop: 10,
@@ -415,11 +415,11 @@ function Trips(props) {
                     <p
                       onClick={() => {
                         setOpen(true);
-                        setUserId(row.riderId);
+                        // setUserId(row.riderId);
                       }}
                       className="font-bold"
                     >
-                      {row.riderId}
+                      {row?.riderId?.fname}
                     </p>
                   </div>
                   <div

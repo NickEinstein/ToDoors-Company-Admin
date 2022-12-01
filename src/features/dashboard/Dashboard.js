@@ -119,7 +119,7 @@ const getUserQueryResult =
 
     const getRiderTripStatisticsQueryResult =
       // UserApi?.useGetRiderTripStatisticsQuery({ date: "2022-11-13" });
-      UserApi?.useGetRiderTripStatisticsQuery({ date: "2022-11-13" });
+      UserApi?.useGetRiderTripStatisticsQuery();
 
     const allCompanyRiderTripsStats = getRiderTripStatisticsQueryResult?.data?.data;
     console.log(allCompanyRiderTripsStats);

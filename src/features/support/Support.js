@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import moment from 'moment'
 import { useSnackbar } from "notistack";
 // import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
@@ -21,6 +22,9 @@ import toDoorLogo from 'images/Ellipse 30.png'
 // import { RouteEnum } from "constants/RouteConstants";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 import gigLogo from 'images/Ellipse 56.png'
 import trustedBy3 from 'images/Rectangle 106.png'
 // import LoginHeader from './LoginHeader';
@@ -35,6 +39,7 @@ import ManageCompaniesTable from 'features/manageCompanies/ManageCompaniesTable'
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import SupportChart from './SupportChart';
 import ToDoorSearch from 'common/ToDoorSearch';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 function ManageRiders(props) {
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");
@@ -45,6 +50,11 @@ function ManageRiders(props) {
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [liscence, setLiscence] = useState("");
+  const [bikeCompany, setBikeCompany] = useState("");
+  const [bikeModel, setBikeModel] = useState("");
+  const [bikeRegNo, setBikeRegNo] = useState("");
+  const [bikeOwner, setBikeOwner] = useState("");
+  const [bikeDate, setBikeDate] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   // const handleChange = (event) => {
   //   setAge(event.target.value);
@@ -188,6 +198,15 @@ const onSubmit = async ()=>{
             city: city,
             state: state,
             country: "Nigeria",
+            bikeDetails: {
+              type: "bike",
+              company: bikeCompany,
+              regNo: bikeRegNo,
+              RC_ownerName: bikeOwner,
+              bikeNo: "",
+              bikeModel: bikeModel,
+              // regDate: bikeDate,
+            },
           },
         }).unwrap();
         // TODO extra login
@@ -202,6 +221,35 @@ const onSubmit = async ()=>{
 }
 
 const onSave = async () => {
+  // const  data = {
+  //       email: email,
+  //       phoneNo: phoneNumber,
+  //       password: password,
+  //       userType: "rider",
+  //       companyId: authUser._id,
+  //       fname: name,
+  //       // lname: null,
+  //       // email: "rider2@gmail.com",
+  //       // phoneNo: "",
+  //       // password:
+  //       //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+  //       dob: "1993-12-07T23:00:00.000Z",
+  //       bloodGroup: "B+",
+  //       address: address,
+  //       city: city,
+  //       state: state,
+  //       country: "Nigeria",
+  //       bikeDetails: {
+  //         type: "bike",
+  //         company: bikeCompany,
+  //         regNo: bikeRegNo,
+  //         RC_ownerName: bikeOwner,
+  //         bikeNo: '',
+  //         bikeModel: bikeModel,
+  //         // regDate: bikeDate,
+  //       },
+  //     }
+      // console.log(data)
   try {
     // alert('saveed')
     const data = await addBikeMuation({
@@ -223,6 +271,15 @@ const onSave = async () => {
         city: city,
         state: state,
         country: "Nigeria",
+        bikeDetails: {
+          type: "bike",
+          company: bikeCompany,
+          regNo: bikeRegNo,
+          RC_ownerName: bikeOwner,
+          bikeNo: '',
+          bikeModel: bikeModel,
+          regDate: bikeDate,
+        },
       },
     }).unwrap();
     // TODO extra login
@@ -355,6 +412,90 @@ const onSave = async () => {
             />
           </div>
         </div>
+
+        <Typography variant="h4">Bike Details</Typography>
+
+        <div className="flex justify-between my-10">
+          <div className="w-full mr-[5%]">
+            <p className="font-bold">Bike Company</p>
+            <TextField
+              onChange={(e) => setBikeCompany(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              // value={name}
+              // multiline={true}
+              // rows={1.5}
+              value={bikeCompany}
+            />
+          </div>
+          <div className="w-full ">
+            <p className="font-bold">Bike Model</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              // multiline={true}
+              // rows={1.5}
+              onChange={(e) => setBikeModel(e.target.value)}
+              value={bikeModel}
+            />
+          </div>
+        </div>
+        <div className="flex justify-between my-10">
+          <div className="w-full mr-[5%]">
+            <p className="font-bold">Bike Reg No.</p>
+            <TextField
+              onChange={(e) => setBikeRegNo(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              // value={name}
+              // multiline={true}
+              // rows={1.5}
+              value={bikeRegNo}
+            />
+          </div>
+          <div className="w-full ">
+            <p className="font-bold">Bike Owner</p>
+            <TextField
+              className="w-full bg-[#EBEBEB]"
+              // multiline={true}
+              // rows={1.5}
+              onChange={(e) => setBikeOwner(e.target.value)}
+              value={bikeOwner}
+            />
+          </div>
+        </div>
+        <div className="flex justify-between my-10">
+          <div className="w-full mr-[5%]">
+            {/* <p className="font-bold">Bike Reg. Date</p>
+            <TextField
+              onChange={setBikeDate}
+              className="w-full bg-[#EBEBEB]"
+              // value={name}
+              // multiline={true}
+              // rows={1.5}
+              value={bikeDate}
+            /> */}
+            <div>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <div className="flex-between">
+                  <DatePicker
+                    className=" mr-8 w-full"
+                    // label="Basic example"
+                    value={bikeDate}
+                    onChange={setBikeDate}
+                    // onChange={(newValue) => {
+                    //   // console.log(newValue)
+                    //   // setWorkList({ ...workList, start_date: newValue });
+                    //   setBikeDate(moment(newValue).format("YYYY-MM-DD"));
+                    //   console.log(newValue);
+                    //   console.log(moment(newValue).format("YYYY-MM-DD"));
+                    //   // setValue(newValue);
+                    // }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </div>
+              </LocalizationProvider>
+            </div>
+          </div>
+        </div>
+
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
             <p className="font-bold">Create Temporary Password</p>
@@ -378,6 +519,7 @@ const onSave = async () => {
             />
           </div>
         </div>
+
         <div className="w-full flex justify-between mb-8 gap-12">
           <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
             Save

@@ -104,7 +104,7 @@ function ToDoorSearch({hide, pad}) {
                 />
                 <div>
                   <p className="text-[#1E1E1E] text-sm text-center mb-1">
-                    {authUser.fname.toUpperCase()}, Benin
+                    {authUser?.fname?.toUpperCase()}, Benin
                   </p>
                   <Button className="h-6 bg-primary-main">
                     Level 1 Account
