@@ -30,8 +30,7 @@ function App() {
       >
         <Suspense>
           {/* { */}
-          {!!authUser?.accessToken && <AppProtected />}
-          <AppPublic />
+          {!!authUser?.accessToken ? <AppProtected /> : <AppPublic />}
         </Suspense>
       </SnackbarProvider>
     </AppThemeProvider>
