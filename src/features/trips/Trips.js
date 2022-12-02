@@ -23,6 +23,7 @@ import ManageTripsTable from "./ManageTripsTable";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
+import edit from "images/edit.svg";
 import { GiTrashCan } from "react-icons/gi";
 import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
@@ -44,6 +45,7 @@ import {
   Modal,
   Box,
   Avatar,
+  Divider,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import WallCards from "common/WallCards";
@@ -85,7 +87,7 @@ function Trips(props) {
 
 
 const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
-const user = getUserQueryResult?.data?.data;
+const user = getUserQueryResult?.data;
 console.log(user);
 
   // const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
@@ -292,8 +294,8 @@ getBikes()
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "70%",
-    minHeight: "700px",
+    width: "50%",
+    minHeight: "520px",
     bgcolor: "background.paper",
     borderRadius: "3%",
     // border: '2px solid #000',
@@ -325,8 +327,8 @@ getBikes()
             <div className="mt-3">
               {raws?.map((row) => (
                 <div
-                onClick={()=>{
-                  setUserId(row.id)
+                  onClick={() => {
+                    setUserId(row.id);
                   }}
                   className="flex my-5"
                   key={row.name}
@@ -336,7 +338,10 @@ getBikes()
                     backgroundColor: "",
                   }}
                 >
-                  <div onClick={()=>setOpens(true)} className="w-1/5 border3b px-3 py-3  text-center">
+                  <div
+                    onClick={() => setOpens(true)}
+                    className="w-1/5 border3b px-3 py-3  text-center"
+                  >
                     <Button className="h-7 bg-primary-main">
                       {row.origin}
                     </Button>
@@ -505,8 +510,6 @@ getBikes()
         <TripsMap route={route} width={show} />
       </div>
 
-   
-
       <Modal
         // open={true}
         open={opens}
@@ -516,74 +519,75 @@ getBikes()
       >
         <div>
           <Box sx={style}>
-            <div className="flex items-center gap-64 ">
-              <div className="flex items-center ">
-                <Avatar
-                  sx={{ width: "90px", height: "90px" }}
-                  className="mr-3 "
-                  alt="Travis Howard"
-                  src={gigLogo}
-                />
-                <div>
-                  <p className="text-[#1E1E1E] text-sm mb-1">
-                    {user?.fname || "Oladimeji"} {user?.lname || "Bankole"}
-                  </p>
-                  <Button className="h-6 bg-primary-main">
-                    {user?.phoneNo}
-                  </Button>
-                  <p className="text-center mt-1">
-                    {moment(user?.dob).format("ll") || "27th June 2022"}
-                  </p>
+            <div>
+              <div className="flex gap-8">
+                {/* <Avatar
+              sx={{ bgcolor: deepOrange[500] }}
+              alt="Remy Sharp"
+              src="/broken-image.jpg"
+            >
+              B
+            </Avatar> */}
+                {/* <Avatar
+              sx={{ bgcolor: deepOrange[500] }}
+              alt="Remy Sharp"
+              src="/broken-image.jpg"
+            /> */}
+                <div className="flex">
+                  <Avatar
+                    sx={{ width: 100, height: 100 }}
+                    src="/broken-image.jpg"
+                  />
+                </div>
+                <div className="mt-4">
+                  <Typography className="font-bold" variant="h5">
+                    {user?.fname}
+                  </Typography>
                 </div>
               </div>
-
-              <div className="text-center">
-                <span> {user?.address || "Opposite Mofcon"}, </span>
-                <span> {user?.city || "Maryland,"} </span>
-                <p>{user?.state || "Lagos"}</p>
-                <p> {"Nigeria"},</p>
+              <Divider className="my-8" />
+              <div class="flex gap-20">
+                <div className=" gap-16 font-semibold">
+                  <Typography className="my-3 font-semibold">
+                    Total Earnings
+                  </Typography>
+                  <Typography className="font-semibold text-primary-main">
+                    {" "}
+                    XXXXXXX
+                  </Typography>
+                </div>
+                <div className=" font-semibold">
+                  <Typography className="my-3 font-semibold">
+                    No Of Rides
+                  </Typography>
+                  <Typography className="font-semibold text-primary-main">
+                    XXXXX
+                  </Typography>
+                </div>
               </div>
-            </div>
-
-            <div className="mt-12 text-center ">
-              <Button
-                onClick={() => setShowBikeDetails(!showBikeDetails)}
-                className="w-2/5"
-              >
-                Bike Details
-              </Button>
-              {showBikeDetails && (
-                <div>
-                  {/* <p>bikeDetails:{user?.bikeDetails} </p> */}
-                  <p>type:{user?.bikeDetails?.type} </p>
-                  <p>company:{user?.bikeDetails?.company} </p>
-                  <p>regNo:{user?.bikeDetails?.regNo} </p>
-                  <p>RC_ownerName:{user?.bikeDetails?.RC_ownerName} </p>
-                  <p>bikeNo:{user?.bikeDetails?.bikeNo}</p>
-                  <p>bikeModel:{user?.bikeDetails?.bikeModel} </p>
-                  <p>
-                    regDate:{moment(user?.bikeDetails?.regDate).format("ll")}{" "}
-                  </p>
+              <Divider className="my-8" />
+              <div class="flex gap-16 ">
+                <div className="flex flex-col gap-3 font-semibold">
+                  <Typography className="font-semibold">Address:</Typography>
+                  <Typography className="font-semibold">
+                    Phone Number:
+                  </Typography>
+                  <Typography className="font-semibold">
+                    Email address:
+                  </Typography>
+                  <Typography className="font-semibold">ID Card:</Typography>
+                  <Typography className="font-semibold">
+                    Last Login Image
+                  </Typography>
                 </div>
-              )}
-            </div>
-
-            <div className="mt-12 text-center ">
-              <Button
-                onClick={() => setShowBikeDetails(!showBikeDetails)}
-                className="w-2/5"
-              >
-                Bank Details
-              </Button>
-              {showBikeDetails && (
-                <div>
-                  {/* <p>bikeDetails:{user?.bikeDetails} </p> */}
-
-                  <p>accountNo: {user?.bankDetails?.accountNo},</p>
-                  <p>holderName: {user?.bankDetails?.holderName},</p>
-                  <p>bank: {user?.bankDetails?.bank}</p>
+                <div className="flex flex-col gap-3">
+                  <Typography>{user?.city}</Typography>
+                  <Typography>{user?.phoneNo}</Typography>
+                  <Typography>{user?.email}</Typography>
+                  <Typography>{"****"}</Typography>
+                  <Typography>{"***"}</Typography>
                 </div>
-              )}
+              </div>
             </div>
           </Box>
         </div>

@@ -252,7 +252,7 @@ const getUserQueryResult =
                   // small={true}
                   // bigspace={true}
                   name="Online"
-                  count="20"
+                  count="XX"
                 />
                 <NewWallCards
                   dashboard={true}
@@ -261,7 +261,7 @@ const getUserQueryResult =
                   // small={true}
                   // bigspace={true}
                   name="Went offline in the last (1) MIn"
-                  count="33"
+                  count="XX"
                 />
                 {/* <WallCards name='Total Raiders' count='116,019'/> */}
                 {/* <WallCards name='Rides in progress' count='13'/>
@@ -271,7 +271,7 @@ const getUserQueryResult =
                   earnings={true}
                   cutborder={true}
                   name="Earnings"
-                  count="30,000"
+                  count="XXXX"
                 />
               </div>
             </div>

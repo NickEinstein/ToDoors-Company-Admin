@@ -71,6 +71,7 @@ function Home(props) {
       phoneNo: "",
       password: "",
       userType: "company",
+      fname: "",
     },
 
     validationSchema: yup.object({
@@ -169,6 +170,22 @@ function Home(props) {
                 // }}
                 name="phoneNo"
                 {...getTextFieldFormikProps(formik, "phoneNo")}
+              />
+              <Typography variant="h6" className="mb-2 mt-4">
+                Company Name
+              </Typography>
+              <TextField
+                size="medium"
+                className="w-full"
+                placeholder="Enter your Company Name"
+                // onChange={handleChange}
+                //     onChange={(e)=>{
+                //   alert('k')
+                //   // console.log(e)
+                //   // localStorage.setItem ('location', e.target.value)
+                // }}
+                name="fname"
+                {...getTextFieldFormikProps(formik, "fname")}
               />
 
               <Typography variant="h6" className="mt-4 mb-2">

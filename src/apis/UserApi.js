@@ -92,7 +92,7 @@ export const UserApi = todoorsApi.injectEndpoints({
       query: (arg) => {
         const { userId } = arg;
         return {
-          url: `${BASE_URL}/users`,
+          url: `${BASE_URL}/users/getUserById`,
           method: "GET",
           params: { userId },
         };
