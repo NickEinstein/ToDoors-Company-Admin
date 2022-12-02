@@ -4,7 +4,8 @@ export const RouteEnum = {
   FORGOTPASSWORD: "/forgot-password",
   NEWPASSWORD: "/new-password",
   LOGIN: "/login",
-  SIGNUP: "/complete-signUp",
+  SIGNUP: "/signUp",
+  SIGNUPA: "/signUpA",
   DASHBOARD: "/dashboard",
   SIGNUPCLIENT: "/signup-client",
   MANAGE_COMPANIES: "/manage-companies",
@@ -12,4 +13,5 @@ export const RouteEnum = {
   TRIPS: "/trips",
   MAPS: "/maps",
   SUPPORT: "/support",
+  PROFILE: "/profile",
 };

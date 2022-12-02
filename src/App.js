@@ -30,11 +30,8 @@ function App() {
       >
         <Suspense>
           {/* { */}
-            {/* // !!authUser?.accessToken &&
-            // localStorage.getItem('authUser') == 'true' && */}
-            <AppProtected /> 
-            <AppPublic />
-          {/* } */}
+          {!!authUser?.accessToken && <AppProtected />}
+          <AppPublic />
         </Suspense>
       </SnackbarProvider>
     </AppThemeProvider>

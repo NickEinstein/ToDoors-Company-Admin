@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import moment from "moment";
 import { useSnackbar } from "notistack";
+import { post, get, put } from "services/fetch";
+
 // import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
@@ -20,6 +23,7 @@ import ManageTripsTable from "./ManageTripsTable";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
+import edit from "images/edit.svg";
 import { GiTrashCan } from "react-icons/gi";
 import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
@@ -38,6 +42,10 @@ import {
   Typography,
   Badge,
   Rating,
+  Modal,
+  Box,
+  Avatar,
+  Divider,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import WallCards from "common/WallCards";
@@ -54,22 +62,79 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
+import { AiTwotoneDelete } from "react-icons/ai";
 
 function Trips(props) {
+  const [userId, setUserId] = React.useState();
+
+ 
+
+  const [showBikeDetails, setShowBikeDetails] = React.useState(false);
+  const [allBikez, setAllBikez] = React.useState([]);
+
+  const [open, setOpen] = React.useState("");
+  const [opens, setOpens] = React.useState(false);
   const [age, setAge] = React.useState("");
   const [show, setShow] = React.useState(false);
   const [route, setRoute] = React.useState({});
+  const [b, setb] = React.useState(null);
   const handleChange = (event) => {
     setAge(event.target.value);
     console.log(event);
   };
   const history = useNavigate();
+  console.log("hi");
+
+
+const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
+const user = getUserQueryResult?.data;
+console.log(user);
+
+  // const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
+
+  // let allBikes = getgetAllBikesQueryResult?.data?.data;
 
   const redirect = () => {
     history("/complete-signUp");
   };
 
+  useEffect(()=>{
+getBikes()
+  },[])
+
+  const getBikes = async () => {
+    // const deleteRider = async () => {
+      const res = await get({
+        endpoint: `api/company/bikes`,
+        //  body: { ...payload },
+        auth: true,
+      });
+      setAllBikez(res.data.data) 
+  };
+  const [deleteBikeMuation, deleteBikeMutationResult] =
+    UserApi.useDeleteBikeMutation();
+
+  const toDelete = async (userId) => {
+    console.log(userId);
+    try {
+      const data = await deleteBikeMuation({
+        data: { userId },
+      });
+      // window.location.reload();
+      getBikes();
+      // TODO extra login
+      // redirect()
+      enqueueSnackbar("Bike deleted successfully!", { variant: "success" });
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, "Failed to login", {
+        variant: "error",
+      });
+    }
+  };
+
+
   function createData(
+    place,
     origin,
     destination,
     rider,
@@ -78,9 +143,11 @@ function Trips(props) {
     fee,
     departureDate,
     arrivalDate,
-    timeDelay
+    timeDelay,
+    id
   ) {
     return {
+      place,
       origin,
       destination,
       rider,
@@ -90,11 +157,31 @@ function Trips(props) {
       departureDate,
       arrivalDate,
       timeDelay,
+      id,
     };
   }
 
+  let raws = allBikez?.map((e) =>
+    createData(
+      e.fname,
+      e.city,
+      e.bikeDetails.regNo,
+      e.phoneNo,
+      moment(e.bikeDetails.regDate).format('ll'),
+      "N200,000",
+      "11 Sept. 9:00am",
+      "15 Sept. 1:00am",
+      "-",
+      "",
+      e._id
+    )
+  );
+
+  console.log(raws);
+  // console.log(allBikes?.map((e) => e._id));
   const rows = [
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -106,6 +193,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -117,6 +205,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -128,6 +217,7 @@ function Trips(props) {
       "-"
     ),
     createData(
+      "Lagos",
       "George Femi",
       "435",
       "NGN30,908",
@@ -199,6 +289,19 @@ function Trips(props) {
     setRoute(e);
   };
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "50%",
+    minHeight: "520px",
+    bgcolor: "background.paper",
+    borderRadius: "3%",
+    // border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
@@ -221,109 +324,12 @@ function Trips(props) {
       {!show && (
         <div>
           <div sx={{ minWidth: 650 }} aria-label="simple table">
-            {/* <TableHead
-              sx={{
-                padding: "100px",
-                backgroundColor: "#EBEBEB",
-                border: "2px solid red",
-              }}
-              className="mb-4"
-            >
-              <TableRow sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Origin
-                </TableCell>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Destination
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Rider
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Order ID&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Status&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Fee&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Departure Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Arrival Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Action&nbsp;(g)
-                </TableCell>
-              </TableRow>
-            </TableHead> */}
-
-            {/* <div
-              //   onClick={openBelow}
-              style={{ border: "1px solid #DADADA" }}
-              className=" cursor-pointer mt-2 flex border2 background-table min-h-[50%]"
-            >
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Origin</h6>
-                <Typography variant="h6"></Typography>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Destination</h6>
-                <Typography variant="h6">{tableArray.company}</Typography>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Rider</h6>
-                <Typography variant="h6">{tableArray.id}</Typography>
-              </div>
-
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Order ID</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Status</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Fee</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Departure Date</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Arrival Date</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Time Delay</h6>
-              </div>
-              <div className="w-1/5 text-center  px-3 py-3">
-                <h6 className="font-bold text-[#454647]">Action</h6>
-              </div>
-            </div> */}
             <div className="mt-3">
-              {rows.map((row) => (
+              {raws?.map((row) => (
                 <div
+                  onClick={() => {
+                    setUserId(row.id);
+                  }}
                   className="flex my-5"
                   key={row.name}
                   sx={{
@@ -332,23 +338,31 @@ function Trips(props) {
                     backgroundColor: "",
                   }}
                 >
-                  <div className="w-1/5 border3b px-3 py-3  text-center">
-                    <Button className="h-7 bg-primary-main">View Route</Button>
-                    <p className="font-semibold my-2">{row.origin}</p>
+                  <div
+                    onClick={() => setOpens(true)}
+                    className="w-1/5 border3b px-3 py-3  text-center"
+                  >
+                    <Button className="h-7 bg-primary-main">
+                      {row.origin}
+                    </Button>
+                    <p className="font-semibold my-2">{row.place}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">
-                      No of Rides
+                      Bike Reg No.
                     </p>
                     <p className="font-semibold my-2">{row.destination}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
-                    <p className="text-[#959595] text-[11px] h-6">Earnings</p>
+                    <p className="text-[#959595] text-[11px] h-6">
+                      Phone Number
+                    </p>
                     <p className="font-semibold my-2">{row.rider}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
-                    <p className="text-[#959595] text-[11px] h-6">Ratings</p>
-                    <Rating className="my-2" value={4} />
+                    <p className="text-[#959595] text-[11px] h-6">Reg Date</p>
+                    <p className="font-semibold my-2">{row.orderId}</p>
+                    {/* <Rating className="my-2" value={4} /> */}
                   </div>
                   <div className="w-1/5 cursor-pointer  px-3 py-3  border3b text-center">
                     <div class="ml-16">
@@ -356,6 +370,7 @@ function Trips(props) {
                         className="mt-2 ml-2 "
                         style={{ color: "#888888" }}
                         size={26}
+                        onClick={() => toDelete(row.id)}
                       />
                       <p className="text-[#959595] text-[11px] text-left mt-1">
                         Remove
@@ -494,6 +509,89 @@ function Trips(props) {
       <div className="w-full flex items-center justify-center">
         <TripsMap route={route} width={show} />
       </div>
+
+      <Modal
+        // open={true}
+        open={opens}
+        onClose={() => setOpens(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div>
+          <Box sx={style}>
+            <div>
+              <div className="flex gap-8">
+                {/* <Avatar
+              sx={{ bgcolor: deepOrange[500] }}
+              alt="Remy Sharp"
+              src="/broken-image.jpg"
+            >
+              B
+            </Avatar> */}
+                {/* <Avatar
+              sx={{ bgcolor: deepOrange[500] }}
+              alt="Remy Sharp"
+              src="/broken-image.jpg"
+            /> */}
+                <div className="flex">
+                  <Avatar
+                    sx={{ width: 100, height: 100 }}
+                    src="/broken-image.jpg"
+                  />
+                </div>
+                <div className="mt-4">
+                  <Typography className="font-bold" variant="h5">
+                    {user?.fname}
+                  </Typography>
+                </div>
+              </div>
+              <Divider className="my-8" />
+              <div class="flex gap-20">
+                <div className=" gap-16 font-semibold">
+                  <Typography className="my-3 font-semibold">
+                    Total Earnings
+                  </Typography>
+                  <Typography className="font-semibold text-primary-main">
+                    {" "}
+                    XXXXXXX
+                  </Typography>
+                </div>
+                <div className=" font-semibold">
+                  <Typography className="my-3 font-semibold">
+                    No Of Rides
+                  </Typography>
+                  <Typography className="font-semibold text-primary-main">
+                    XXXXX
+                  </Typography>
+                </div>
+              </div>
+              <Divider className="my-8" />
+              <div class="flex gap-16 ">
+                <div className="flex flex-col gap-3 font-semibold">
+                  <Typography className="font-semibold">Address:</Typography>
+                  <Typography className="font-semibold">
+                    Phone Number:
+                  </Typography>
+                  <Typography className="font-semibold">
+                    Email address:
+                  </Typography>
+                  <Typography className="font-semibold">ID Card:</Typography>
+                  <Typography className="font-semibold">
+                    Last Login Image
+                  </Typography>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <Typography>{user?.city}</Typography>
+                  <Typography>{user?.phoneNo}</Typography>
+                  <Typography>{user?.email}</Typography>
+                  <Typography>{"****"}</Typography>
+                  <Typography>{"***"}</Typography>
+                </div>
+              </div>
+            </div>
+          </Box>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -46,7 +46,10 @@ import { AccountCircle } from "@mui/icons-material";
 import AgentComponent from "./AgentComponent";
 
 function ToDoorSearch({hide, pad}) {
+  const authUser = useAuthUser();
+
   const [age, setAge] = React.useState("");
+  const [userId, setUserId] = React.useState(authUser._id);
   const handleChange = (event) => {
     setAge(event.target.value);
     console.log(event);
@@ -54,10 +57,13 @@ function ToDoorSearch({hide, pad}) {
   const history = useNavigate();
 
   const redirect = () => {
-    history("/complete-signUp");
+    history("/profile");
   };
 
-  const authUser = useAuthUser();
+  const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
+  const user = getUserQueryResult?.data;
+  console.log(user);
+
 
  
   return (
@@ -102,9 +108,9 @@ function ToDoorSearch({hide, pad}) {
                   alt="Travis Howard"
                   src="/static/images/avatar/2.jpg"
                 />
-                <div>
-                  <p className="text-[#1E1E1E] text-sm mb-1">
-                    GIGM Agent, Benin
+                <div className="cursor-pointer" onClick={redirect}>
+                  <p className="text-[#1E1E1E] text-sm text-center mb-1">
+                    {user?.fname?.toUpperCase()}, {user?.city}
                   </p>
                   <Button className="h-6 bg-primary-main">
                     Level 1 Account

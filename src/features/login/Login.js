@@ -57,6 +57,12 @@ function Home(props) {
     history("/forgot-password");
   };
 
+  const toSignUp = () => {
+    // localStorage.setItem('authUser', 'true')
+
+    history("/");
+  };
+
   // console.log(localStorage.getItem('authUser'))
 
   // const authUser = useAuthUser();
@@ -158,7 +164,7 @@ function Home(props) {
               <PasswordTextField
                 className="w-full "
                 placeholder="Enter your Password"
-                type="password"
+                // type="password"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
@@ -213,6 +219,7 @@ function Home(props) {
               <h2 className="mb-5">
                 Already have an account?
                 <b
+                  onClick={toSignUp}
                   className="ml-1 color[
                   #039836]"
                 >

@@ -41,6 +41,19 @@ const ROUTES = configureRoutes([
 
     // element: <Navigate to={RouteEnum.HOME} replace />,
   },
+  {
+    path: RouteEnum.SIGNUP,
+    element: lazy(() => import("features/signup/Signup")),
+
+    // element: <Navigate to={RouteEnum.HOME} replace />,
+  },
+
+  {
+    path: RouteEnum.SIGNUPA,
+    element: lazy(() => import("features/signup/SignUpA")),
+
+    // element: <Navigate to={RouteEnum.HOME} replace />,
+  },
   // {
   //   path: RouteEnum.SIGNUPCLIENT,
   //   element: lazy(() => import("features/signup/SignUpClient")),

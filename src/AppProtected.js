@@ -75,4 +75,8 @@ const ROUTES = configureRoutes([
     path: RouteEnum.SUPPORT,
     element: lazy(() => import("features/support/Support")),
   },
+  {
+    path: RouteEnum.PROFILE,
+    element: lazy(() => import("features/profile/Profile")),
+  },
 ]);

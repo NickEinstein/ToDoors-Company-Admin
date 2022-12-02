@@ -55,6 +55,7 @@ import Maps from "features/maps/Maps";
 
 function Dashboard(props) {
   const [age, setAge] = React.useState("");
+  const [userId, setUserId] = React.useState("635fbde0bfadb9f5ea56afa4");
   const [show, setshow] = React.useState();
   const handleChange = (event) => {
     console.log(event)
@@ -73,6 +74,8 @@ function Dashboard(props) {
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
+
+  ;
 
   const formik = useFormik({
     initialValues: {
@@ -104,6 +107,25 @@ function Dashboard(props) {
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
+
+
+   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
+
+   const allBikes = getAllBikesQueryResult?.data?.data;
+
+  
+const getUserQueryResult =
+  UserApi?.useGetUserQuery({ userId });
+
+    const getRiderTripStatisticsQueryResult =
+      // UserApi?.useGetRiderTripStatisticsQuery({ date: "2022-11-13" });
+      UserApi?.useGetRiderTripStatisticsQuery();
+
+    const allCompanyRiderTripsStats = getRiderTripStatisticsQueryResult?.data?.data;
+    console.log(allCompanyRiderTripsStats);
+
+
+  //  riderTripStatics;
 
   return (
     <div>
@@ -182,7 +204,7 @@ function Dashboard(props) {
                   // big={true}
                   // bigspace={true}
                   name="Active Bikes"
-                  count="8"
+                  count={allBikes?.length}
                 />
                 <NewWallCards
                   dashboard={true}
@@ -191,7 +213,11 @@ function Dashboard(props) {
                   // small={true}
                   // bigspace={true}
                   name="Rides in progress"
-                  count="13"
+                  count={
+                    allCompanyRiderTripsStats &&
+                    allCompanyRiderTripsStats?.length > 0 &&
+                    allCompanyRiderTripsStats[0]?.inQueue
+                  }
                 />
                 <NewWallCards
                   dashboard={true}
@@ -200,7 +226,11 @@ function Dashboard(props) {
                   // small={true}
                   // bigspace={true}
                   name="Completed"
-                  count="11"
+                  count={
+                    allCompanyRiderTripsStats &&
+                    allCompanyRiderTripsStats?.length > 0 &&
+                    allCompanyRiderTripsStats[0]?.completed
+                  }
                 />
                 <NewWallCards
                   dashboard={true}
@@ -209,7 +239,11 @@ function Dashboard(props) {
                   // small={true}
                   // bigspace={true}
                   name="Canceled"
-                  count="02"
+                  count={
+                    allCompanyRiderTripsStats &&
+                    allCompanyRiderTripsStats?.length > 0 &&
+                    allCompanyRiderTripsStats[0]?.completed
+                  }
                 />
                 <NewWallCards
                   dashboard={true}
@@ -218,7 +252,7 @@ function Dashboard(props) {
                   // small={true}
                   // bigspace={true}
                   name="Online"
-                  count="20"
+                  count="XX"
                 />
                 <NewWallCards
                   dashboard={true}
@@ -227,7 +261,7 @@ function Dashboard(props) {
                   // small={true}
                   // bigspace={true}
                   name="Went offline in the last (1) MIn"
-                  count="33"
+                  count="XX"
                 />
                 {/* <WallCards name='Total Raiders' count='116,019'/> */}
                 {/* <WallCards name='Rides in progress' count='13'/>
@@ -237,7 +271,7 @@ function Dashboard(props) {
                   earnings={true}
                   cutborder={true}
                   name="Earnings"
-                  count="30,000"
+                  count="XXXX"
                 />
               </div>
             </div>
@@ -313,4 +347,73 @@ function Dashboard(props) {
   );
 }
 
+
+const listOfTrips = {
+  success: true,
+  message: "user trip history",
+  data: [
+    {
+      paymentStatus: null,
+      roadMapUrl: null,
+      _id: "6370eefca5143b38c79ad43a",
+      customerId: "6370c0bdbce238a31b652bc4",
+      riderId: "635fbde0bfadb9f5ea56afa4",
+      srcLoc: [0.32423423424342424, 0.434553453],
+      destLoc: [0.32423423424342424, 0.434553453],
+      paymentMode: "cash",
+      details: "brown gucci bag",
+      tripRequestStatus: "request",
+      tripRequestIssue: "busy",
+      pickUpAddress: "abc, abuja",
+      destAddress: "def, lagos",
+      latitudeDelta: 0.012,
+      longitudeDelta: 0.012,
+      tripAmt: 2500,
+      tripDist: 12,
+      bookingTime: "2022-11-13T10:41:25.316Z",
+      tripEndTime: "2022-11-13T10:41:25.316Z",
+      travelTime: 1255,
+      bikeType: "Todoor",
+      seatBooked: 1,
+      tripStatus: "endTrip",
+      tripIssue: "noissue",
+      companyId: "6370c0bdbce238a31b652bc4",
+      customerRatingByRider: 4,
+      customerReviewByRider: "great",
+      riderRatingByCustomer: 5,
+      riderReviewByCustomer: "great",
+    },
+    {
+      paymentStatus: null,
+      seatBooked: 0,
+      roadMapUrl: null,
+      _id: "6370ef03a5143b38c79ad43b",
+      customerId: "6370c0bdbce238a31b652bc4",
+      riderId: "635fbde0bfadb9f5ea56afa4",
+      srcLoc: [0.32423423424342424, 0.434553453],
+      destLoc: [0.32423423424342424, 0.434553453],
+      paymentMode: "cash",
+      details: "brown gucci bag",
+      tripRequestStatus: "request",
+      tripRequestIssue: "busy",
+      pickUpAddress: "abc, abuja",
+      destAddress: "def, lagos",
+      latitudeDelta: 0.012,
+      longitudeDelta: 0.012,
+      tripAmt: 2500,
+      tripDist: 12,
+      bookingTime: "2022-11-13T10:41:25.316Z",
+      tripEndTime: "2022-11-13T10:41:25.316Z",
+      travelTime: 1255,
+      bikeType: "Todoor",
+      tripStatus: "endTrip",
+      tripIssue: "noissue",
+      companyId: "6370c0bdbce238a31b652bc4",
+      customerRatingByRider: 4,
+      customerReviewByRider: "great",
+      riderRatingByCustomer: 5,
+      riderReviewByCustomer: "great",
+    },
+  ],
+}
 export default Dashboard;

@@ -1,75 +1,95 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
+
+import { FcGoogle } from "react-icons/fc";
 // import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
 import useAuthUser from "hooks/useAuthUser";
 import { Navigate } from "react-router-dom";
 import { RouteEnum } from "constants/RouteConstants";
-import snake from "images/Mask group.png";
 import LoginHeader from "common/LoginHeader";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import toDoorLogo from 'images/Ellipse 30.png'
-import background from 'images/background.png'
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import toDoorLogo from "images/Ellipse 30.png";
+import background from "images/background.png";
+import snake from "images/Mask group.png";
 
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
-import trustedBy2 from 'images/Rectangle 7.png'
-import trustedBy3 from 'images/Rectangle 106.png'
+import trustedBy2 from "images/Rectangle 7.png";
+import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
-import { Button, Input, MenuItem, Select, TextField, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  Input,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function Signup(props) {
-  const [age, setAge] = React.useState('');
+function Home(props) {
+  const [age, setAge] = React.useState("");
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event)
+    console.log(event);
   };
+
+  // console.log(localStorage.getItem('authUser'))
   const history = useNavigate();
 
-
   const redirect = () => {
+    // localStorage.setItem('authUser', 'true')
 
-    history('/complete-signUp');
-  }
+    history("/");
+  };
 
-  const authUser = useAuthUser();
+  const toSignIn = () => {
+    // localStorage.setItem('authUser', 'true')
+
+    history("/");
+  };
+
+  // console.log(localStorage.getItem('authUser'))
+
+  // const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
-  const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
+  const [signupMuation, signupMutationResult] = UserApi.useSignupMutation();
 
   const formik = useFormik({
     initialValues: {
-    
-    email:"",
-    phoneNo: "+2348094432806",
-    password:"",
-    userType: "company"
-
+      email: "",
+      phoneNo: "",
+      password: "",
+      userType: "company",
+      fname: "",
     },
+
     validationSchema: yup.object({
-      username: yup.string().trim().required(),
+      email: yup.string().trim().required(),
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values)
-      // localStorage.setItem('location', values.location)
-      redirect()
+      console.log(values);
+      localStorage.setItem("il", true);
+      // redirect();
+      // history('/dashboard')
 
       try {
-        const data = await loginMuation({ data: values }).unwrap();
+        const data = await signupMuation({ data: values }).unwrap();
         // TODO extra login
-        // redirect()
-        enqueueSnackbar("Logged in successful", { variant: "success" });
+        console.log(data.data);
+        enqueueSnackbar("Sign Up in successful", { variant: "success" });
+        redirect();
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
           variant: "error",
@@ -77,7 +97,6 @@ function Signup(props) {
       }
     },
   });
-
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -88,8 +107,8 @@ function Signup(props) {
     //  {/* <Typography variant="h6">Hi</Typography> */}
     //   <form onSubmit={formik.handleSubmit}>
     //     <TextField
-    //       label="Username"
-    //       {...getTextFieldFormikProps(formik, "username")}
+    //       label="email"
+    //       {...getTextFieldFormikProps(formik, "email")}
     //     />
     //     <PasswordTextField
     //       label="Password"
@@ -98,7 +117,7 @@ function Signup(props) {
     //     <Button type="submit">Submit</Button>
     //   </form>
     // </div>
-    <div className="pl-24">
+    <div className="z  pl-24">
       <div className="flex justify-between ">
         <div
           className="pt-4"
@@ -106,43 +125,77 @@ function Signup(props) {
             paddingLeft: "",
             paddingRight: "",
             minWidth: "40%",
-            maxWidth: "80%",
+            // maxWidth: "75%",
           }}
         >
           <LoginHeader />
           <div className="flex-vertical">
-            <div className="my-6">
-              <Typography variant="h3" className=" font-bold">
-                Complete Sign-up
+            <div className="my-8">
+              <Typography variant="h3" className="mb-2 mt-3 font-bold">
+                Sign Up
               </Typography>
+              {/* <p>Enter your credentials to create your account.</p> */}
             </div>
 
             <form onSubmit={formik.handleSubmit}>
               <Typography variant="h6" className="mb-2">
-                Company Reg Num:
+                Email Address
               </Typography>
               <TextField
                 size="medium"
                 className="w-full"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
                 //   // console.log(e)
                 //   // localStorage.setItem ('location', e.target.value)
                 // }}
-                name="username"
-                {...getTextFieldFormikProps(formik, "username")}
+                name="email"
+                {...getTextFieldFormikProps(formik, "email")}
               />
 
-              <Typography variant="h6" className="mt-5 mb-2">
-                TIN Number
+              <Typography variant="h6" className="mb-2 mt-4">
+                Phone Number
+              </Typography>
+              <TextField
+                size="medium"
+                className="w-full"
+                placeholder="Enter your Phone Number"
+                // onChange={handleChange}
+                //     onChange={(e)=>{
+                //   alert('k')
+                //   // console.log(e)
+                //   // localStorage.setItem ('location', e.target.value)
+                // }}
+                name="phoneNo"
+                {...getTextFieldFormikProps(formik, "phoneNo")}
+              />
+              <Typography variant="h6" className="mb-2 mt-4">
+                Company Name
+              </Typography>
+              <TextField
+                size="medium"
+                className="w-full"
+                placeholder="Enter your Company Name"
+                // onChange={handleChange}
+                //     onChange={(e)=>{
+                //   alert('k')
+                //   // console.log(e)
+                //   // localStorage.setItem ('location', e.target.value)
+                // }}
+                name="fname"
+                {...getTextFieldFormikProps(formik, "fname")}
+              />
+
+              <Typography variant="h6" className="mt-4 mb-2">
+                Choose Password
               </Typography>
 
-              <TextField
+              <PasswordTextField
                 className="w-full "
                 placeholder="Enter your Password"
-                // type='password'
+                // type="password"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
@@ -153,14 +206,14 @@ function Signup(props) {
                 {...getTextFieldFormikProps(formik, "password")}
               />
 
-              <Typography variant="h6" className="mt-5 mb-2">
-                Address
+              <Typography variant="h6" className="mt-4 mb-2">
+                Confirm Password
               </Typography>
 
-              <TextField
+              <PasswordTextField
                 className="w-full "
-                placeholder="Enter your Password"
-                // type='password'
+                placeholder="Confirm your Password"
+                // type="password"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
@@ -168,56 +221,56 @@ function Signup(props) {
                 //   // localStorage.setItem ('password', e.target.value)
                 // }}
                 name="password"
-                {...getTextFieldFormikProps(formik, "password")}
+                {...getTextFieldFormikProps(formik, "confirmPassword")}
               />
 
-              <Typography variant="h6" className="mt-5 mb-2">
-                {" "}
-                Contact Phone Number
-              </Typography>
-
-              <TextField
-                className="w-full "
-                placeholder="Enter your Password"
-                // type='password'
-                // onChange={handleChange}
-                //     onChange={(e)=>{
-                //   alert('k')
-                //   // console.log(e)
-                //   // localStorage.setItem ('password', e.target.value)
-                // }}
-                name="password"
-                {...getTextFieldFormikProps(formik, "password")}
-              />
-
-              {/* 
-            <FormGroup>
-              <FormControlLabel className='mt-5' control={<Checkbox defaultChecked />} label="Remember Information" />
-            </FormGroup> */}
+              <FormGroup>
+                <FormControlLabel
+                  className="mt-3"
+                  control={<Checkbox defaultChecked />}
+                  label="Remember Information"
+                />
+              </FormGroup>
 
               {/* <Input placeholder='Location' className='m-b-20'/> */}
-              <div className="text-white bg-primary-main m-b-30 mt-8  ">
+
+              <div className="text-white m-b-30 mt-3  ">
                 <Button
-                  className="p-3 w-full"
+                  className="p-3 w-full text-base"
                   type="submit"
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '
                 >
-                  Request Verification
+                  Sign Up
                 </Button>
+                {/* <Button
+                  variant="outlined"
+                  startIcon={<FcGoogle />}
+                  className="p-3 bg-white text-base text-black mt-4 w-full"
+                  type="submit"
+                  // onClick={() => localStorage.setItem('type', 'CLIENT')}
+                  // className=' '
+                >
+                  Sign In With Google
+                </Button> */}
               </div>
             </form>
 
-            <a className='text-center' href="/">
-              <h2 className='mb-5'>Already have an account?<b className='ml-1  color{#039836}'>Sign In</b></h2>
+            <a className="text-center" href="">
+              <h2 className="mb-5">
+                Already have an account?
+                <b onClick={toSignIn} className="ml-1  color{#039836}">
+                  Sign In
+                </b>
+              </h2>
             </a>
           </div>
         </div>
         <div
-          className="relative flex-vertical bg-primary-main text-white pl-10 justify-center w-2/5"
+          className="relative flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
             minWidth: "40%",
-            minHeight: "100%",
+            // minHeight: "100%",
             position: "relative",
             // backgroundImage: `url(${snake})`,
             // minHeight:"500px"
@@ -239,16 +292,10 @@ function Signup(props) {
               Manage.
             </Typography>
           </div>
-          {/* <Typography variant='h1' className='mt-10 font-bold'>Manage.</Typography> */}
-
-          {/* background:`url(${background})` */}
-          {/* <div className='two-circles relative' style={{ position: 'relative' }}></div> */}
-          {/* <img src={trustedBy3} className='' style={{ position: 'absolute', top: '50%', height: '49%', width: '98.8%' }} /> */}
-          {/* <div className='' style={{width:'100px', height:'50px', ottomLeftRadius:'100%',ottomRightRadius:'100%', position:'absolute', bottom:'0px', opColor:'blue'}}></div> */}
         </div>
       </div>
     </div>
   );
 }
 
-export default Signup;
+export default Home;

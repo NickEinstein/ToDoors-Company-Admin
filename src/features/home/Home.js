@@ -61,29 +61,31 @@ function Home(props) {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
+      phoneNo: "+2348094432806",
       password: "",
+      userType: "company",
     },
     validationSchema: yup.object({
-      username: yup.string().trim().required(),
+      email: yup.string().trim().required(),
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
       console.log(values);
       localStorage.setItem("il", true);
-      redirect();
+      // redirect();
       // history('/dashboard')
 
-      // try {
-      //   const data = await loginMuation({ data: values }).unwrap();
-      //   // TODO extra login
-      //   // redirect()
-      //   enqueueSnackbar("Logged in successful", { variant: "success" });
-      // } catch (error) {
-      //   enqueueSnackbar(error?.data?.message, "Failed to login", {
-      //     variant: "error",
-      //   });
-      // }
+      try {
+        const data = await loginMuation({ data: values }).unwrap();
+        // TODO extra login
+        redirect()
+        enqueueSnackbar("Logged in successful", { variant: "success" });
+      } catch (error) {
+        enqueueSnackbar(error?.data?.message, "Failed to login", {
+          variant: "error",
+        });
+      }
     },
   });
 
@@ -96,8 +98,8 @@ function Home(props) {
     //  {/* <Typography variant="h6">Hi</Typography> */}
     //   <form onSubmit={formik.handleSubmit}>
     //     <TextField
-    //       label="Username"
-    //       {...getTextFieldFormikProps(formik, "username")}
+    //       label="email"
+    //       {...getTextFieldFormikProps(formik, "email")}
     //     />
     //     <PasswordTextField
     //       label="Password"
@@ -133,15 +135,15 @@ function Home(props) {
               <TextField
                 size="medium"
                 className="w-full"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
                 //   // console.log(e)
                 //   // localStorage.setItem ('location', e.target.value)
                 // }}
-                name="username"
-                {...getTextFieldFormikProps(formik, "username")}
+                name="email"
+                {...getTextFieldFormikProps(formik, "email")}
               />
 
               <Typography variant="h6" className="mt-10 mb-2">
@@ -179,7 +181,7 @@ function Home(props) {
                   // onClick={() => localStorage.setItem('type', 'CLIENT')}
                   // className=' '
                 >
-                  Sign Up
+                  Sign In
                 </Button>
                 <Button
                   variant="outlined"
@@ -194,10 +196,10 @@ function Home(props) {
               </div>
             </form>
 
-            <a className="text-center mb-1" href="">
+            <a className="text-center mb-1" href="/signUpA">
               <h2 className="mb-5">
-                Already have an account?
-                <b className="ml-1 text-primary-main">Sign In</b>
+                Yet to have an account?
+                <b className="ml-1 text-primary-main">Sign Up</b>
               </h2>
             </a>
           </div>
