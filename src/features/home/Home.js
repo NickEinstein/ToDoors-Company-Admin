@@ -153,7 +153,7 @@ function Home(props) {
               <PasswordTextField
                 className="w-full "
                 placeholder="Enter your Password"
-                type="password"
+                // type="password"
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')

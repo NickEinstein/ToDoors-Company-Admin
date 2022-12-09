@@ -9,6 +9,7 @@ import useAuthUser from "hooks/useAuthUser";
 
 function App() {
   const authUser = useAuthUser();
+  console.log(!!authUser?.accessToken);
 
   return (
     <AppThemeProvider>
@@ -30,7 +31,10 @@ function App() {
       >
         <Suspense>
           {/* { */}
-          {!!authUser?.accessToken ? <AppProtected /> : <AppPublic />}
+          {!!authUser?.accessToken ? <AppProtected /> :
+          
+          <AppPublic />
+          }
         </Suspense>
       </SnackbarProvider>
     </AppThemeProvider>

@@ -30,6 +30,7 @@ import toDoorLogo from "images/Ellipse 30.png";
 // import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
 import trustedBy3 from "images/Rectangle 106.png";
+import io from "socket.io-client";
 // import LoginHeader from './LoginHeader';
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
@@ -55,7 +56,8 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 // import Paper from "@material-ui/core/Paper";
 // import { makeStyles } from '@mui/styles';
 
-function Trips({switsh}) {
+function Trips({ switsh }) {
+  const authUser = useAuthUser()
   const [map, setMap] = useState(/** @type google.maps.map*/ (null));
   const [distance, setDistance] = useState(/** @type google.maps.map*/ (null));
   const [duration, setDuration] = useState(/** @type google.maps.map*/ (null));
@@ -71,6 +73,18 @@ function Trips({switsh}) {
 
   const redirect = () => {
     history("/complete-signUp");
+  };
+
+  // const socket = io.connect("https://todoorapp.com");
+
+  const toEmit = () => {
+    let payload = {
+      user: {
+        _id:useAuthUser._id
+      },
+    };
+
+    // socket.emit("adminMapSocket", payload);
   };
 
   function createData(
@@ -139,6 +153,7 @@ function Trips({switsh}) {
   };
   return isLoaded ? (
     <div className="w-full relative">
+      <Button>Emit</Button>
       <div className="absolute w-full top-10 left-8 z-50">
         <ToDoorSearch pad={true} hide={true} />
 

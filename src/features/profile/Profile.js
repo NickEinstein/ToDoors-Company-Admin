@@ -8,8 +8,9 @@ import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
 import { BsFillCircleFill, BsPeople } from "react-icons/bs";
 import useAuthUser from "hooks/useAuthUser";
-  import { post, get, put } from "services/fetch";
+  // import { post, get, put } from "services/fetch";
 import { deepOrange } from "@mui/material/colors";
+import { post, get, put } from "services/fetch";
 
 import edit from "images/edit.svg";
 // import ManageCompanyCard from 'common/ManageCompanyCard'
@@ -51,6 +52,8 @@ function ManageRiders(props) {
 
  console.log(authUser);
 
+ 
+
   const [address, setAddress] = React.useState(authUser?.homeAddress);
   const [city, setCity] = React.useState(authUser?.city);
   const [phoneNumber, setPhoneNumber] = React.useState(authUser?.phoneNo);
@@ -62,6 +65,7 @@ function ManageRiders(props) {
   const [country, setCountry] = useState(authUser?.country);
   const [userId, setUserId] = React.useState(authUser._id);
   const [showProfile, setShowProfile] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(true);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
   //   console.log(event)
@@ -101,6 +105,15 @@ function ManageRiders(props) {
   };
 
   
+  // const getBikes = async () => {
+  //   // const deleteRider = async () => {
+  //   const res = await get({
+  //     endpoint: `api/company/bikes`,
+  //     //  body: { ...payload },
+  //     auth: true,
+  //   });
+  //   // setAllBikez(res.data.data);
+  // };
 
   const tableArray = [
     {
@@ -130,10 +143,43 @@ function ManageRiders(props) {
     },
   ];
 
+  const  onFileChange = (event) => {
+    // Update the state
+    // setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+onFileUpload(event.target.files[0])
+
+  };
+
+  // On file upload (click the upload button)
+  const onFileUpload = async  (selectedFile) => {
+    // Create an object of formData
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append("image", selectedFile, selectedFile.name);
+
+    // Details of the uploaded file
+    console.log(selectedFile);
+onUpload(formData)
+    // Request made to the backend api
+    // Send formData object
+    // const res = await put({
+    //   endpoint: `api/users/upload`,
+    //    body: formData,
+    //   auth: true,
+    // });
+    // axios.post("api/uploadfile", formData);
+  };
+     
+
  
 
   const { enqueueSnackbar } = useSnackbar();
-  const [updateUserMuation, updateUserMutationResult] = UserApi.useUpdateUserMutation();
+  const [updateUserMuation, updateUserMutationResult] =
+    UserApi.useUpdateUserMutation();
+  const [updateUserUploadMuation, updateUserUploadMutationResult] =
+    UserApi.useUpdateUserUploadMutation();
 
   //   const formik = useFormik({
   //     initialValues: {
@@ -183,6 +229,26 @@ function ManageRiders(props) {
       // redirect();
     } catch (error) {
       console.log(error.data)
+      enqueueSnackbar(error?.data?.message, "Failed to login", {
+        variant: "error",
+      });
+    }
+  };
+
+  const onUpload = async (zz) => {
+    // tryNewPost()
+    // alert('ji')
+
+    try {
+      const data = await updateUserUploadMuation({
+        data: zz,
+      }).unwrap();
+      // TODO extra login
+      console.log(data.data);
+      enqueueSnackbar(data.message, { variant: "success" });
+      // redirect();
+    } catch (error) {
+      console.log(error.data);
       enqueueSnackbar(error?.data?.message, "Failed to login", {
         variant: "error",
       });
@@ -359,6 +425,18 @@ function ManageRiders(props) {
                 />
               </div>
             </div>
+
+            <input
+              onChange={onFileChange}
+              style={{ display: "none" }}
+              id="contained-button-file"
+              type="file"
+            />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" color="primary" component="span">
+                Upload
+              </Button>
+            </label>
             {/* <div className="flex justify-between my-10">
             <div className="w-full mr-[5%]">
               <p className="font-bold">Create Temporary Password</p>

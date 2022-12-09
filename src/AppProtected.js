@@ -39,12 +39,12 @@ function AppProtected(props) {
 export default AppProtected;
 
 const ROUTES = configureRoutes([
-  {
-    path: "*",
-    // element: lazy(() => import("features/home/Home")),
+  // {
+  //   path: "*",
+  //   // element: lazy(() => import("features/home/Home")),
 
-    element: <Navigate to={RouteEnum.DASHBOARD} replace />,
-  },
+  //   element: <Navigate to={RouteEnum.DASHBOARD} replace />,
+  // },
   {
     path: RouteEnum.FORGOTPASSWORD,
     element: lazy(() => import("features/login/ForgotPassword")),

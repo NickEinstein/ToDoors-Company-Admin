@@ -68,7 +68,7 @@ export const UserApi = todoorsApi.injectEndpoints({
 
     getHistory: builder.query({
       query: (arg) => {
-        const { to,from,riderId } = arg;
+        const { to, from, riderId } = arg;
         return {
           url: `${BASE_URL}/company/history`,
           method: "GET",
@@ -82,7 +82,18 @@ export const UserApi = todoorsApi.injectEndpoints({
         return {
           url: `${BASE_URL}/users`,
           method: "PUT",
-          ...arg
+          ...arg,
+          // params: { userId },
+        };
+      },
+    }),
+    updateUserUpload: builder.mutation({
+      query: (arg) => {
+        // const { userId } = arg;
+        return {
+          url: `${BASE_URL}/users/upload`,
+          method: "PUT",
+          ...arg,
           // params: { userId },
         };
       },

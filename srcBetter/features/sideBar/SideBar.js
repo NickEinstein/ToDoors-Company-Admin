@@ -25,12 +25,14 @@ import logouts from "images/logout.png";
 import LoginHeader from "common/LoginHeader";
 import { RouteEnum } from "constants/RouteConstants";
 import { useNavigate } from "react-router-dom";
-import { Logout } from "@mui/icons-material";
+// import { Logout } from "@mui/icons-material";
+import useLogout from "hooks/useLogout";
 
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
   const history = useNavigate();
+  const { logout } = useLogout();
 
   const [outcasts, setOutcasts] = React.useState([
     { name: "Logout", linx: RouteEnum.HOME, image: logouts },
@@ -70,9 +72,9 @@ export default function PermanentDrawerLeft() {
     // logout()
   };
 
-  const logout = (push) => {
+  const logoutz = (push) => {
     localStorage.removeItem("il");
-    console.log('hi')
+    console.log("hi");
     history(push);
   };
 
@@ -83,10 +85,8 @@ export default function PermanentDrawerLeft() {
       name: e.name,
       d: e.d,
       image: e.image,
-      color: num==index ? true: false,
+      color: num == index ? true : false,
     }));
-
-    
 
     setPat(k);
   };
@@ -123,7 +123,6 @@ export default function PermanentDrawerLeft() {
         {/* <Divider /> */}
         <List>
           {pat.map((text, index) => (
-           
             <ListItem
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
@@ -159,11 +158,7 @@ export default function PermanentDrawerLeft() {
               key={text.name}
               disablePadding
             >
-              <ListItemButton
-                onClick={() =>
-                  logout(text.linx) 
-                }
-              >
+              <ListItemButton onClick={() => logoutz()}>
                 <ListItemIcon>
                   <img src={text.image} />
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
