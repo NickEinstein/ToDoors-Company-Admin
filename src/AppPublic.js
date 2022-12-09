@@ -11,10 +11,10 @@ function AppPublic() {
 }
 
 const ROUTES = configureRoutes([
-  // {
-  //   path: "*",
-  //   element: <Navigate to={RouteEnum.HOME} replace />,
-  // },
+  {
+    path: "*",
+    element: <Navigate to={RouteEnum.HOME} replace />,
+  },
   {
     path: RouteEnum.HOME,
     element: lazy(() => import("features/home/Home")),
@@ -50,7 +50,7 @@ const ROUTES = configureRoutes([
 
   {
     path: RouteEnum.SIGNUPA,
-    element: lazy(() => import("features/signup/SignUpA")),
+    element: lazy(() => import("features/signup/Signups")),
 
     // element: <Navigate to={RouteEnum.HOME} replace />,
   },

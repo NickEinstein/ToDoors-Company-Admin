@@ -35,11 +35,15 @@ import { GiWallet } from "react-icons/gi";
 import { RiCarLine, RiShieldLine } from "react-icons/ri";
 import { IoCarSharp } from "react-icons/";
 import { MdAddBox } from "react-icons/md";
+import useLogout from "hooks/useLogout";
+
 ;
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
   const history = useNavigate();
+  const { logout } = useLogout();
+
 
   const [outcasts, setOutcasts] = React.useState([
     { name: "Logout", linx: RouteEnum.HOME, image: logouts },
@@ -117,11 +121,11 @@ export default function PermanentDrawerLeft() {
     // logout()
   };
 
-  const logout = (push) => {
-    localStorage.removeItem("il");
-    console.log('hi')
-    history(push);
-  };
+  // const logout = (push) => {
+  //   localStorage.removeItem("il");
+  //   console.log('hi')
+  //   history(push);
+  // };
 
   // const pat =
 

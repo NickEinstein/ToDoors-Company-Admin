@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -52,6 +52,7 @@ function Home(props) {
     history("/dashboard");
   };
 
+
   // console.log(localStorage.getItem('authUser'))
 
   // const authUser = useAuthUser();
@@ -92,6 +93,7 @@ function Home(props) {
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
+ 
 
   return (
     // <div>
@@ -196,7 +198,7 @@ function Home(props) {
               </div>
             </form>
 
-            <a className="text-center mb-1" href="/signUpA">
+            <a className="text-center mb-1" href="/signups">
               <h2 className="mb-5">
                 Yet to have an account?
                 <b className="ml-1 text-primary-main">Sign Up</b>

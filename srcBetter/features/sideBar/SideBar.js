@@ -34,6 +34,7 @@ export default function PermanentDrawerLeft() {
   const history = useNavigate();
   const { logout } = useLogout();
 
+
   const [outcasts, setOutcasts] = React.useState([
     { name: "Logout", linx: RouteEnum.HOME, image: logouts },
   ]);
@@ -74,7 +75,7 @@ export default function PermanentDrawerLeft() {
 
   const logoutz = (push) => {
     localStorage.removeItem("il");
-    console.log("hi");
+    console.log('hi')
     history(push);
   };
 
@@ -85,8 +86,10 @@ export default function PermanentDrawerLeft() {
       name: e.name,
       d: e.d,
       image: e.image,
-      color: num == index ? true : false,
+      color: num==index ? true: false,
     }));
+
+    
 
     setPat(k);
   };
@@ -123,6 +126,7 @@ export default function PermanentDrawerLeft() {
         {/* <Divider /> */}
         <List>
           {pat.map((text, index) => (
+           
             <ListItem
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
@@ -158,7 +162,11 @@ export default function PermanentDrawerLeft() {
               key={text.name}
               disablePadding
             >
-              <ListItemButton onClick={() => logoutz()}>
+              <ListItemButton
+                onClick={() =>
+                  logout() 
+                }
+              >
                 <ListItemIcon>
                   <img src={text.image} />
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}

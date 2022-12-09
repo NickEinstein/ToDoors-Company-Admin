@@ -5,7 +5,7 @@ export const RouteEnum = {
   NEWPASSWORD: "/new-password",
   LOGIN: "/login",
   SIGNUP: "/signUp",
-  SIGNUPA: "/signUpA",
+  SIGNUPA: "/signups",
   DASHBOARD: "/dashboard",
   SIGNUPCLIENT: "/signup-client",
   MANAGE_COMPANIES: "/manage-companies",
