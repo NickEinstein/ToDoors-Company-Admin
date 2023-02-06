@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
-import toDoorLogo from 'images/Ellipse 30.png'
+import toDoorLogo from 'images/ToDoorLogo.png'
 import trustedBy3 from '../images/Rectangle 78.png'
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
@@ -21,20 +21,20 @@ const LoginHeader = (prop) => {
           <div className="flex relative items-center">
             <img
               src={toDoorLogo}
-              style={{ width: "70px" }}
+              // style={{ width: "70px" }}
               alt="softwork logo"
-              className="cursor-pointer"
+              className="cursor-pointer w-36"
               onClick={redirect}
             />
-            <Typography
+            {/* <Typography
               variant="h4"
               className="absolute font-bold"
               style={{ marginLeft: "16px", color: "white" }}
             >
               TO
-            </Typography>
+            </Typography> */}
           </div>
-          <div>
+          {/* <div>
             <Typography
               variant="h4"
               className="font-bold text-primary-main ml-1"
@@ -43,7 +43,7 @@ const LoginHeader = (prop) => {
             >
               -Door
             </Typography>
-          </div>
+          </div> */}
         </div>
       </div>
     );
