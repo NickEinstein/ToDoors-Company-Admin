@@ -18,6 +18,16 @@ export const UserApi = todoorsApi.injectEndpoints({
         ...config,
       }),
     }),
+    getCompanyStatistics: builder.query({
+      query: (arg) => {
+        const { userType } = arg;
+        return {
+          url: `${BASE_URL}/company/companyStatistics`,
+          method: "GET",
+          // params: { userType },
+        };
+      },
+    }),
 
     addBike: builder.mutation({
       query: (config) => ({
@@ -73,6 +83,17 @@ export const UserApi = todoorsApi.injectEndpoints({
           url: `${BASE_URL}/company/history`,
           method: "GET",
           params: { to, from, riderId },
+        };
+      },
+    }),
+
+    getBanks: builder.query({
+      query: (arg) => {
+        // const { to, from, riderId } = arg;
+        return {
+          url: `${BASE_URL}/payment/getAllBanks`,
+          method: "GET",
+          // params: { to, from, riderId },
         };
       },
     }),

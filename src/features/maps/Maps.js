@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -51,6 +51,7 @@ import { useNavigate } from "react-router-dom";
 import WallCards from "common/WallCards";
 import ToDoorSearch from "common/ToDoorSearch";
 import { RiArrowLeftSLine } from "react-icons/ri";
+import { get } from "services/fetch";
 // import ManageCompanyCard from '.features/manageCompanies/ManageCompanyCard';
 // import { makeStyles } from "@material-ui/core/styles";
 // import Paper from "@material-ui/core/Paper";
@@ -69,13 +70,33 @@ function Trips({ switsh }) {
     setAge(event.target.value);
     console.log(event);
   };
+
+  const [data, setData] = useState(null);
+
   const history = useNavigate();
+
+   useEffect(() => {
+     const fetchData = async () => {
+       // const deleteRider = async () => {
+       const res = await get({
+         endpoint: `api/payment/getAllBanks`,
+         //  body: { ...payload },
+         auth: true,
+       });
+       console.log(res);
+       //  setAllBikez(res.data.data);
+     };
+
+     const intervalId = setInterval(fetchData, 3000);
+     return () => clearInterval(intervalId);
+   }, []);
+
 
   const redirect = () => {
     history("/complete-signUp");
   };
-
-  // const socket = io.connect("https://todoorapp.com");
+// http://todoorapp.com:3000?token=
+  const socket = io.connect(`https://todoorapp.com:3000?token=${localStorage.getItem('token')}`);
 
   const toEmit = () => {
     let payload = {

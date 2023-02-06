@@ -10,7 +10,7 @@ import { getTextFieldFormikProps } from "utils/FormikUtils";
 
 import { HiOutlineTrash } from "react-icons/hi";
 import { TbMessage2, TbPhoneCall } from "react-icons/tb";
-
+import moment from 'moment'
 import { MdOutlineKeyboardArrowDown,MdKeyboardArrowRight } from 'react-icons/md';
 import useAuthUser from "hooks/useAuthUser";
 import { Navigate } from "react-router-dom";
@@ -35,7 +35,7 @@ import { useNavigate } from 'react-router-dom';
 import WallCards from 'common/WallCards';
 import ManageCompanyCard from './ManageCompanyCard';
 
-function ManageCompaniesTable(props) {
+function ManageCompaniesTable({tableArray}) {
   const [suspend, setSuspend] = React.useState(false);
   const [closeModal, setCloseModal] = React.useState(false);
   const [show, setShow] = React.useState('');
@@ -44,6 +44,11 @@ function ManageCompaniesTable(props) {
   //   console.log(event)
   // };
   const history = useNavigate();
+   function numberWithCommas(x) {
+     // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     //  formState.target_amount=cleanupNumber(serPrice.value)
+     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   }
 
 
 const openModal = (bol)=>{
@@ -81,6 +86,8 @@ const openBelow =()=>{
     setShow(!show)
 }
 
+
+console.log(tableArray)
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
@@ -95,26 +102,32 @@ const openBelow =()=>{
           className="px-8 w-full flex border2 py-2 min-h-[50%]"
         >
           <div className="w-1/5  p-3 flex items-center">
-            <img src={gigLogo} className="rounded-full mr-2" />
+            <img src={tableArray?.image} className="rounded-full mr-2" />
             <div>
-              <p className="font font-semibold">Paypal</p>
+              <p className="font font-semibold">Bank Transfer</p>
               <p className="text-[#767676]">Withdraw</p>
             </div>
           </div>
           <div className="w-1/5  p-3 ">
             <div>
-              <p className="font font-semibold">August 18, 2002</p>
-              <p className="text-[#767676]">09.30 PM</p>
+              <p className="font font-semibold">
+                {moment(tableArray?.updatedAt).format("ll")}
+              </p>
+              <p className="text-[#767676]">
+                {moment(tableArray?.updatedAt).format("hh:mm:ss")}
+              </p>
             </div>
           </div>
-          <div className="w-1/5 flex items-center p-3 ">WXHDGDJKGG</div>
-          <div className="w-1/5 flex items-center  p-3 ">N200,000</div>
+          <div className="w-1/5 flex items-center p-3 ">{tableArray?.id}</div>
+          <div className="w-1/5 flex items-center  p-3 ">
+            N {numberWithCommas(tableArray?.amount)}
+          </div>
           <div className="w-1/5  p-3 ">
             <Button
               onClick={openModal}
               className="px-12 bg-primary-main flex items-center h-8"
             >
-              Delivered
+              successful
             </Button>
           </div>
         </div>

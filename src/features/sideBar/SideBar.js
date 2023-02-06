@@ -211,7 +211,7 @@ export default function PermanentDrawerLeft() {
         <List>
           {outcasts.map((text, index) => (
             <ListItem
-              className={index % 2 == 0 ? "mt-36" : ""}
+              className={index % 2 == 0 ? "mt-32" : ""}
               key={text.name}
               disablePadding
             >

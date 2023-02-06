@@ -412,15 +412,18 @@ function Trips(props) {
                     }
                   >
                     <p className="text-[#959595] mb-2">Rider</p>
-                    <p
-                      onClick={() => {
-                        setOpen(true);
-                        // setUserId(row.riderId);
-                      }}
-                      className="font-bold"
-                    >
-                      {row?.riderId?.fname}
-                    </p>
+                    <div className="flex items-center gap-3">
+                      <Avatar src = {row?.riderId?.profileUrl}/>
+                      <p
+                        onClick={() => {
+                          setOpen(true);
+                          // setUserId(row.riderId);
+                        }}
+                        className="font-bold"
+                      >
+                        {row?.riderId?.fname}
+                      </p>
+                    </div>
                   </div>
                   <div
                     className={

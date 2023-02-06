@@ -75,8 +75,6 @@ function Dashboard(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
-  ;
-
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -86,6 +84,7 @@ function Dashboard(props) {
       username: yup.string().trim().required(),
       password: yup.string().trim().required(),
     }),
+    
     onSubmit: async (values) => {
       console.log(values);
       // localStorage.setItem('location', values.location)
@@ -107,6 +106,8 @@ function Dashboard(props) {
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
+const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery({});
+const companyStatistics = getCompanyStatisticsQueryResult?.data;
 
 
    const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();

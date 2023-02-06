@@ -3,14 +3,14 @@ import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
+import {put} from "services/fetchUpload";
 // import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
 import { BsFillCircleFill, BsPeople } from "react-icons/bs";
 import useAuthUser from "hooks/useAuthUser";
-  // import { post, get, put } from "services/fetch";
 import { deepOrange } from "@mui/material/colors";
-import { post, get, put } from "services/fetch";
+import { post, get } from "services/fetch";
 
 import edit from "images/edit.svg";
 // import ManageCompanyCard from 'common/ManageCompanyCard'
@@ -151,13 +151,24 @@ onFileUpload(event.target.files[0])
 
   };
 
+  //  const upload = async () => {
+  //    // const deleteRider = async () => {
+  //    const res = await get({
+  //      endpoint: `api/payment/getAllBanks`,
+  //      //  body: { ...payload },
+  //      auth: true,
+  //    });
+  //    setListOfBanks(res?.data?.response?.data);
+  //    //  setAllBikez(res.data.data);
+  //  };
+
   // On file upload (click the upload button)
   const onFileUpload = async  (selectedFile) => {
     // Create an object of formData
     const formData = new FormData();
 
     // Update the formData object
-    formData.append("image", selectedFile, selectedFile.name);
+    formData.append("image", selectedFile);
 
     // Details of the uploaded file
     console.log(selectedFile);
@@ -239,20 +250,34 @@ onUpload(formData)
     // tryNewPost()
     // alert('ji')
 
-    try {
-      const data = await updateUserUploadMuation({
-        data: zz,
-      }).unwrap();
-      // TODO extra login
-      console.log(data.data);
-      enqueueSnackbar(data.message, { variant: "success" });
-      // redirect();
-    } catch (error) {
-      console.log(error.data);
-      enqueueSnackbar(error?.data?.message, "Failed to login", {
-        variant: "error",
-      });
-    }
+     const res = await put({
+       endpoint: `api/users/upload`,
+             body: zz,
+            auth: true,
+     });
+
+
+     if(res.data.success)
+     enqueueSnackbar(res?.data?.message, { variant: "success" });
+     else
+     enqueueSnackbar(res?.data?.message, { variant: "error" });
+
+
+
+    // try {
+    //   const data = await updateUserUploadMuation({
+    //     data: zz,
+    //   }).unwrap();
+    //   // TODO extra login
+    //   console.log(data.data);
+    //   enqueueSnackbar(data.message, { variant: "success" });
+    //   // redirect();
+    // } catch (error) {
+    //   console.log(error.data);
+    //   enqueueSnackbar(error?.data?.message, "Failed to login", {
+    //     variant: "error",
+    //   });
+    // }
   };
 
   // if (authUser.accessToken) {
@@ -306,7 +331,7 @@ onUpload(formData)
               <div className="flex">
                 <Avatar
                   sx={{ width: 100, height: 100 }}
-                  src="/broken-image.jpg"
+                  src={user?.profileUrl}
                 />
                 <img
                   onClick={() => setShowProfile(false)}
@@ -432,9 +457,9 @@ onUpload(formData)
               id="contained-button-file"
               type="file"
             />
-            <label htmlFor="contained-button-file">
+            <label htmlFor="contained-button-file" className="mb-8">
               <Button variant="contained" color="primary" component="span">
-                Upload
+                Upload Profile Picture
               </Button>
             </label>
             {/* <div className="flex justify-between my-10">
@@ -456,7 +481,7 @@ onUpload(formData)
               />
             </div>
           </div> */}
-            <div className="w-full mb-8">
+            <div className="w-full mb-8 mt-4">
               <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
                 Update Company Profile
               </Button>

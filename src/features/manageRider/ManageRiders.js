@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -50,15 +50,50 @@ import {
 import { MdRefresh } from "react-icons/md";
 import ToDoorSearch from "common/ToDoorSearch";
 import NewWallCards from "common/NewWallCards";
+import { get } from "services/fetch";
 function ManageRiders(props) {
   const [age, setAge] = React.useState("");
+  const [closeModal, setCloseModal] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+  const [payMentTransactions, setPayMentTransactions] = React.useState([]);
+  const [totalEarnings, setTotalEarnings] = React.useState([]);
+  const [availableBalance, setAvailableBalance] = React.useState([]);
   
   
+  const getBanksQueryResult = UserApi?.useGetBanksQuery();
+
+  const banks = getBanksQueryResult?.data?.data;
+
+  useEffect(()=>{
+    getPaymentTransactions()
+getTotalEarningsAndAvailableBalance()
+  },[])
+
+   const getTotalEarningsAndAvailableBalance = async () => {
+     // const deleteRider = async () => {
+     const resTotalEarnings = await get({
+       endpoint: `api/company/getTotalEarnings`,
+       //  body: { ...payload },
+       auth: true,
+     });
+     setTotalEarnings(resTotalEarnings?.data?.data[0]?.total_earning);
+     //  setAllBikez(res.data.data);
+
+     const resAvailableBalance = await get({
+       endpoint: `api/payment/getBalance`,
+       //  body: { ...payload },
+       auth: true,
+     });
+     setAvailableBalance(resAvailableBalance?.data?.data?.user?.walletBalance);
+     //  setAllBikez(res.data.data);
+   };
+  function numberWithCommas(x) {
+    // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //  formState.target_amount=cleanupNumber(serPrice.value)
+    return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   
-  
-  
-    const [closeModal, setCloseModal] = React.useState(false);
-    const [count, setCount] = React.useState(0);
+    
     const openModal = (bol) => {
       console.log('hi')
       setCloseModal(!closeModal);
@@ -80,59 +115,53 @@ function ManageRiders(props) {
     // history("/complete-signUp");
   };
 
-  const tableArray = [
-    {
-      image: gigLogo,
-      name: "Nickky Samuel jonas  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-
-    {
-      image: gigLogo,
-      name: "John jimmy Samuel  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-  ];
+  const tableArray = payMentTransactions?.map((e) => ({
+    image: gigLogo,
+    name: "Nickky Samuel jonas  ",
+    company: "GIG Logistics",
+    amount: e?.amount,
+    id: e?.tx_ref,
+    updatedAt: e?.updatedAt,
+  }));
+ 
 
   const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      username: yup.string().trim().required(),
-      password: yup.string().trim().required(),
-    }),
-    onSubmit: async (values) => {
-      console.log(values);
-      // localStorage.setItem('location', values.location)
-      redirect();
+   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
-      try {
-        const data = await loginMuation({ data: values }).unwrap();
-        // TODO extra login
-        // redirect()
-        enqueueSnackbar("Logged in successful", { variant: "success" });
-      } catch (error) {
-        enqueueSnackbar(error?.data?.message, "Failed to login", {
-          variant: "error",
-        });
-      }
-    },
-  });
+   const allBikes = getAllBikesQueryResult?.data?.data;
 
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
+ 
+
+  const getPaymentTransactions = async (zz) => {
+    // tryNewPost()
+    // alert('ji')
+
+    const res = await get({
+      endpoint: `api/company/getPaymentTransactions`,
+      auth: true,
+    });
+
+    setPayMentTransactions(res?.data?.data)
+
+    // try {
+    //   const data = await updateUserUploadMuation({
+    //     data: zz,
+    //   }).unwrap();
+    //   // TODO extra login
+    //   console.log(data.data);
+    //   enqueueSnackbar(data.message, { variant: "success" });
+    //   // redirect();
+    // } catch (error) {
+    //   console.log(error.data);
+    //   enqueueSnackbar(error?.data?.message, "Failed to login", {
+    //     variant: "error",
+    //   });
+    // }
+  };
 
   return (
     <div>
@@ -143,11 +172,11 @@ function ManageRiders(props) {
           GIG LOGISTICS
         </Typography>
       </div> */}
-      <Typography  variant="h5" className="font-bold  mt-12">
+      <Typography variant="h5" className="font-bold  mt-12">
         Wallet
       </Typography>
       <div className="flex items-end mr-3 w-3/6">
-        <div  className="mr-4">
+        <div className="mr-4">
           <WallCards
             className="mr-3"
             rider={false}
@@ -155,7 +184,7 @@ function ManageRiders(props) {
             // big={true}
             green={true}
             name="Available Balance"
-            count="N1,000,000"
+            count={numberWithCommas(availableBalance)}
             openModal={openModal}
           />
         </div>
@@ -180,7 +209,7 @@ function ManageRiders(props) {
                 // small={true}
                 big={true}
                 name="Active Bikes"
-                count="20"
+                count={allBikes?.length}
               />
 
               <NewWallCards
@@ -188,7 +217,7 @@ function ManageRiders(props) {
                 earnings={true}
                 cutborder={true}
                 name="Earnings"
-                count="30,000"
+                count={numberWithCommas(totalEarnings)}
               />
             </div>
           </div>

@@ -106,7 +106,7 @@ function ToDoorSearch({hide, pad}) {
                 <Avatar
                   className="mr-3 h-12 w-12"
                   alt="Travis Howard"
-                  src="/static/images/avatar/2.jpg"
+                  src={user?.profileUrl}
                 />
                 <div className="cursor-pointer" onClick={redirect}>
                   <p className="text-[#1E1E1E] text-sm text-center mb-1">

@@ -4,9 +4,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { RiErrorWarningLine } from "react-icons/ri";
-import { InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { HiSelector } from 'react-icons/hi';
+import { get, post } from 'services/fetch';
 
 
 const style = {
@@ -22,12 +23,68 @@ const style = {
   p: 4,
 };
 
+
+
+
+
 export default function BasicModal({closeModal, openModal, suspend}) {
   const [open, setOpen] = React.useState(false);
+  const [listOfBanks, setListOfBanks] = React.useState([]);
+  const [bankInfo, setBankInfo] = React.useState(null);
   const [ConfirmWithdrawal, setConfirmWithdrawal] = React.useState(false);
   const [Confirm, setConfirm] = React.useState(false);
+  const [current, setCurrent] = React.useState(0);
+  const [accountNumber, setAccountNumber] = React.useState(0);
+  const [withDrawalAmount, setWithDrawalAmount] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+;
+   React.useEffect(() => {
+     getBanks();
+   }, []);
+
+const top100Films = listOfBanks.map((e) => ({
+  id: e?.id,
+  code: e?.code,
+  label: e?.name,
+}));
+
+   const getBanks = async () => {
+     // const deleteRider = async () => {
+     const res = await get({
+       endpoint: `api/payment/getAllBanks`,
+       //  body: { ...payload },
+       auth: true,
+     });
+     setListOfBanks(res?.data?.response?.data);
+     //  setAllBikez(res.data.data);
+   };
+   const increaseCurrent = ()=>{
+    if(current <2)
+    setCurrent((current)=>current+1)
+   }
+    const decreaseCurrent = () => {
+    if (current >0) setCurrent((current) => current - 1);
+    };
+
+    const payRecipient = async ()=>{
+      let payload = {
+        account_bank: "044",
+        account_number: "0690000040",
+        amount: 5500,
+      };
+      
+      // {
+      //   account_bank: bankInfo?.code,
+      //   account_number: accountNumber,
+      //   amount: withDrawalAmount,
+      // };
+       const res = await post({
+         endpoint: `api/payment/Withdrawal`,
+          body: { ...payload },
+         auth: true,
+       });
+    }
 
   return (
     <div>
@@ -40,7 +97,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          {ConfirmWithdrawal == false && Confirm == false && (
+          {current == 1 && (
             <Box sx={style}>
               <div className="flex mb-5 text-left ">
                 <Typography variant="h5" className="font-bold text-left">
@@ -48,41 +105,51 @@ export default function BasicModal({closeModal, openModal, suspend}) {
                 </Typography>
               </div>
               <p className="mb-2">How much do you want to withdraw</p>
-              <TextField className="w-full" />
+              <TextField
+                onChange={(e) => setWithDrawalAmount(e.target.value)}
+                className="w-full"
+              />
               <div className="mt-10">
                 <p className="text-primary-main mb-5">Saved Account Info</p>
                 <div className="">
                   <div className="flex items-center justify-between mb-3">
                     <p>Account Number:</p>
                     <Typography variant="h5" className="font-bold">
-                      2161542395
+                      {accountNumber}
                     </Typography>
                   </div>
                   <div className="flex items-center justify-between mb-3">
                     <p>Bank</p>
                     <Typography className="font-bold">
-                      Guaranty Trust Bank PLC
+                      {bankInfo?.label}
                     </Typography>
                   </div>
                   <div className="flex items-center justify-between mb-3">
-                    <p>2161542395</p>
+                    <p>Company</p>
                     <Typography className="font-bold">GIG Logistics</Typography>
                   </div>
                 </div>
                 <Button
-                  onClick={() => setConfirmWithdrawal(true)}
+                  onClick={() => increaseCurrent()}
                   className="w-full mb-3 mt-9 bg-primary-main"
                 >
                   COnfirm Withdrawal
                 </Button>
-                <div class="text-center text-primary-main font-bold">
+                <div class=" flex justify-between text-center text-primary-main font-bold">
+                  <div
+                    className="flex cursor-pointer"
+                    onClick={decreaseCurrent}
+                  >
+                    <MdArrowBackIosNew className="mr-1" size={16} />
+                    <p>Go Back</p>
+                  </div>
                   <p>Use another account?</p>
                 </div>
               </div>
             </Box>
           )}
 
-          {ConfirmWithdrawal && Confirm == false && (
+          {current == 2 && (
             <Box sx={style}>
               <div className="flex justify-center mb-5 text-left ">
                 <Typography variant="h5" className="font-bold">
@@ -91,17 +158,17 @@ export default function BasicModal({closeModal, openModal, suspend}) {
               </div>
               <p className="mb-2 text-center px-8">
                 You are transferring{" "}
-                <span class="font-bold">NGN200,000.00 </span>
+                <span class="font-bold">NGN {withDrawalAmount} </span>
                 to <span class="font-bold">TO-DOOR UBA Bank</span>
               </p>
 
               <div className="mt-10 flex justify-between items-center">
-                <div className="flex cursor-pointer">
+                <div className="flex cursor-pointer" onClick={decreaseCurrent}>
                   <MdArrowBackIosNew className="mr-1" size={16} />
                   <p>Go Back</p>
                 </div>
                 <Button
-                  onClick={() => setConfirm(true)}
+                  onClick={() => payRecipient()}
                   className="bg-primary-main"
                 >
                   Confirm
@@ -110,7 +177,7 @@ export default function BasicModal({closeModal, openModal, suspend}) {
             </Box>
           )}
 
-          {Confirm && (
+          {current == 0 && (
             <Box sx={style}>
               <div className="flex justify-center mb-5 text-left ">
                 <Typography variant="h5" className="font-bold">
@@ -119,7 +186,28 @@ export default function BasicModal({closeModal, openModal, suspend}) {
               </div>
               <div className="text-left my-8">
                 <p className="mb-1 text-left text-sm">Bank Name</p>
-                <TextField
+                <Autocomplete
+                  disablePortal
+                  className="w-full bg-[#EBEBEB]"
+                  id="combo-box-demo"
+                  options={top100Films}
+                  sx={{ width: 300 }}
+                  onChange={(e, v) => setBankInfo(v)}
+                  renderInput={(params) => (
+                    <TextField
+                      // InputProps={{
+                      //   endAdornment: (
+                      //     <InputAdornment position="start">
+                      //       <HiSelector size={20} />
+                      //     </InputAdornment>
+                      //   ),
+                      // }}
+                      {...params}
+                      label="Banks"
+                    />
+                  )}
+                />
+                {/* <TextField
                   className="w-full bg-[#EBEBEB]"
                   InputProps={{
                     endAdornment: (
@@ -128,16 +216,22 @@ export default function BasicModal({closeModal, openModal, suspend}) {
                       </InputAdornment>
                     ),
                   }}
-                />
+                /> */}
               </div>
 
               <div className="text-left my-8">
                 <p className="mb-1 text-left text-sm">Account Number</p>
-                <TextField className="w-full bg-[#EBEBEB]" />
+                <TextField
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                  className="w-full bg-[#EBEBEB]"
+                />
               </div>
 
               <div className="mt-10 flex justify-between items-center">
-                <Button className=" bg-primary-main h-10 w-full mb-8">
+                <Button
+                  onClick={increaseCurrent}
+                  className=" bg-primary-main h-10 w-full mb-8"
+                >
                   Save Account Info
                 </Button>
               </div>
