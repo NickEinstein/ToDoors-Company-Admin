@@ -103,6 +103,12 @@ function Dashboard(props) {
     },
   });
 
+function numberWithCommas(x) {
+  // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //  formState.target_amount=cleanupNumber(serPrice.value)
+  return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
@@ -214,11 +220,7 @@ const getUserQueryResult =
                   // small={true}
                   // bigspace={true}
                   name="Rides in progress"
-                  count={
-                    allCompanyRiderTripsStats &&
-                    allCompanyRiderTripsStats?.length > 0 &&
-                    allCompanyRiderTripsStats[0]?.inQueue
-                  }
+                  count={companyStatistics && companyStatistics?.ongoing_trips}
                 />
                 <NewWallCards
                   dashboard={true}
@@ -228,12 +230,10 @@ const getUserQueryResult =
                   // bigspace={true}
                   name="Completed"
                   count={
-                    allCompanyRiderTripsStats &&
-                    allCompanyRiderTripsStats?.length > 0 &&
-                    allCompanyRiderTripsStats[0]?.completed
+                    companyStatistics && companyStatistics?.completed_trips
                   }
                 />
-                <NewWallCards
+                {/* <NewWallCards
                   dashboard={true}
                   cutborder={true}
                   big={true}
@@ -241,11 +241,9 @@ const getUserQueryResult =
                   // bigspace={true}
                   name="Canceled"
                   count={
-                    allCompanyRiderTripsStats &&
-                    allCompanyRiderTripsStats?.length > 0 &&
-                    allCompanyRiderTripsStats[0]?.completed
+                    companyStatistics && companyStatistics?.completed_trips
                   }
-                />
+                /> */}
                 <NewWallCards
                   dashboard={true}
                   cutborder={true}
@@ -253,17 +251,18 @@ const getUserQueryResult =
                   // small={true}
                   // bigspace={true}
                   name="Online"
-                  count="XX"
+                  count={companyStatistics && companyStatistics?.online_bikes}
+                  // count="XX"
                 />
-                <NewWallCards
+                {/* <NewWallCards
                   dashboard={true}
                   cutborder={true}
                   big={true}
                   // small={true}
                   // bigspace={true}
                   name="Went offline in the last (1) MIn"
-                  count="XX"
-                />
+                  count={companyStatistics && companyStatistics?.online_bikes}
+                /> */}
                 {/* <WallCards name='Total Raiders' count='116,019'/> */}
                 {/* <WallCards name='Rides in progress' count='13'/>
                   <WallCards name='Active vehicles' count='8'/> */}
@@ -272,7 +271,9 @@ const getUserQueryResult =
                   earnings={true}
                   cutborder={true}
                   name="Earnings"
-                  count="XXXX"
+                  count={numberWithCommas(
+                    companyStatistics && companyStatistics?.total_earnings
+                  )}
                 />
               </div>
             </div>
