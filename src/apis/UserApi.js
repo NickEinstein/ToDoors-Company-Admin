@@ -37,6 +37,26 @@ export const UserApi = todoorsApi.injectEndpoints({
       }),
     }),
 
+    updateBike: builder.mutation({
+      query: (arg) => {
+        const { userId } = arg;
+        return {
+          url: `${BASE_URL}/company/updateBike`,
+          method: "PUT",
+          ...arg,
+          params: { userId },
+        };
+      },
+    }),
+
+    // updateBike: builder.mutation({
+    //   query: (config) => ({
+    //     url: `${BASE_URL}/company/updateBike`,
+    //     method: "PUT",
+    //     ...config,
+    //   }),
+    // }),
+
     deleteBike: builder.mutation({
       query: (config) => ({
         url: `${BASE_URL}/company/deleteBike`,

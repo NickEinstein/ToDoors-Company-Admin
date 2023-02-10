@@ -12,8 +12,6 @@ import { getTextFieldFormikProps } from "utils/FormikUtils";
 import useAuthUser from "hooks/useAuthUser";
 import { Navigate } from "react-router-dom";
 import { RouteEnum } from "constants/RouteConstants";
-import LoginHeader from "common/LoginHeader";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import toDoorLogo from "images/Ellipse 30.png";
@@ -22,7 +20,9 @@ import ManageTripsTable from "./ManageTripsTable";
 // import { RouteEnum } from "constants/RouteConstants";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
+// import BorderColorIcon from "@mui/icons-material/BorderColor";
 import gigLogo from "images/Ellipse 56.png";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 import edit from "images/edit.svg";
 import { GiTrashCan } from "react-icons/gi";
 import trustedBy3 from "images/Rectangle 106.png";
@@ -46,6 +46,11 @@ import {
   Box,
   Avatar,
   Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import WallCards from "common/WallCards";
@@ -63,21 +68,31 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
 import { AiTwotoneDelete } from "react-icons/ai";
+import EditBikes from "./EditBikes";
 
 function Trips(props) {
   const [userId, setUserId] = React.useState();
-
- 
+  const [editbikeObj, setEditbikeObj] = React.useState();
 
   const [showBikeDetails, setShowBikeDetails] = React.useState(false);
   const [allBikez, setAllBikez] = React.useState([]);
 
-  const [open, setOpen] = React.useState("");
+  // const [open, setOpen] = React.useState("");
   const [opens, setOpens] = React.useState(false);
   const [age, setAge] = React.useState("");
   const [show, setShow] = React.useState(false);
   const [route, setRoute] = React.useState({});
   const [b, setb] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleChange = (event) => {
     setAge(event.target.value);
     console.log(event);
@@ -85,10 +100,9 @@ function Trips(props) {
   const history = useNavigate();
   console.log("hi");
 
-
-const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
-const user = getUserQueryResult?.data;
-console.log(user);
+  const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
+  const user = getUserQueryResult?.data;
+  console.log(user);
 
   // const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
@@ -98,18 +112,18 @@ console.log(user);
     history("/complete-signUp");
   };
 
-  useEffect(()=>{
-getBikes()
-  },[])
+  useEffect(() => {
+    getBikes();
+  }, []);
 
   const getBikes = async () => {
     // const deleteRider = async () => {
-      const res = await get({
-        endpoint: `api/company/bikes`,
-        //  body: { ...payload },
-        auth: true,
-      });
-      setAllBikez(res.data.data) 
+    const res = await get({
+      endpoint: `api/company/bikes`,
+      //  body: { ...payload },
+      auth: true,
+    });
+    setAllBikez(res.data.data);
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();
@@ -132,6 +146,11 @@ getBikes()
     }
   };
 
+  const toEdit = async (obj) => {
+    handleClickOpen()
+    console.log(obj?.obj);
+    setEditbikeObj(obj?.obj);
+  };
 
   function createData(
     place,
@@ -144,7 +163,8 @@ getBikes()
     departureDate,
     arrivalDate,
     timeDelay,
-    id
+    id,
+    obj
   ) {
     return {
       place,
@@ -158,22 +178,24 @@ getBikes()
       arrivalDate,
       timeDelay,
       id,
+      obj,
     };
   }
 
   let raws = allBikez?.map((e) =>
     createData(
       e.fname,
-      e.city,
+      e.state,
       e.bikeDetails.regNo,
       e.phoneNo,
-      moment(e.bikeDetails.regDate).format('ll'),
+      moment(e.bikeDetails.regDate).format("ll"),
       "N200,000",
       "11 Sept. 9:00am",
       "15 Sept. 1:00am",
       "-",
       "",
-      e._id
+      e._id,
+      e
     )
   );
 
@@ -322,7 +344,7 @@ getBikes()
     <div>
       <ToDoorSearch />
       {!show && (
-        <div>
+        <div className="">
           <div sx={{ minWidth: 650 }} aria-label="simple table">
             <div className="mt-3">
               {raws?.map((row) => (
@@ -364,7 +386,7 @@ getBikes()
                     <p className="font-semibold my-2">{row.orderId}</p>
                     {/* <Rating className="my-2" value={4} /> */}
                   </div>
-                  <div className="w-1/5 cursor-pointer  px-3 py-3  border3b text-center">
+                  <div className="w-1/5 cursor-pointer flex gap-5 items-center px-3 py-3  border3b text-center">
                     <div class="ml-16">
                       <GiTrashCan
                         className="mt-2 ml-2 "
@@ -372,8 +394,20 @@ getBikes()
                         size={26}
                         onClick={() => toDelete(row.id)}
                       />
+
                       <p className="text-[#959595] text-[11px] text-left mt-1">
                         Remove
+                      </p>
+                    </div>{" "}
+                    <div>
+                      <BorderColorIcon
+                        className="mt-2 ml-2 "
+                        style={{ color: "#888888" }}
+                        size={26}
+                        onClick={() => toEdit(row)}
+                      />
+                      <p className="text-[#959595] text-[11px] text-left mt-1 ml-3">
+                        Edit
                       </p>
                     </div>
                   </div>
@@ -382,102 +416,32 @@ getBikes()
             </div>
           </div>
 
-          {/* <Table
-            sx={{ minWidth: 650, backgroundColor: "#EBEBEB" }}
-            aria-label="simple table"
-          >
-            <TableHead
-              sx={{
-                padding: "100px",
-                backgroundColor: "#EBEBEB",
-                border: "2px solid red",
-              }}
-              className="mb-4"
+          <div>
+            {/* <Button variant="outlined" onClick={}>
+              Open alert dialog
+            </Button> */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              fullWidth
+              maxWidth="lg"
+              style={{ width: "" }}
+              className=""
+              // aria-labelledby="alert-dialog-title"
+              // aria-describedby="alert-dialog-description"
             >
-              <TableRow sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Origin
-                </TableCell>
-                <TableCell sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}>
-                  Destination
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Rider
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Order ID&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Status&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Fee&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Departure Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Arrival Date&nbsp;(g)
-                </TableCell>
-                <TableCell
-                  sx={{ marginBottom: 5, backgroundColor: "#EBEBEB" }}
-                  align="right"
-                >
-                  Action&nbsp;(g)
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    marginTop: 10,
-                    backgroundColor: "",
-                  }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.origin}
-                  </TableCell>
-                  <TableCell align="right">{row.destination}</TableCell>
-                  <TableCell align="right">{row.rider}</TableCell>
-                  <TableCell align="right">{row.orderId}</TableCell>
-                  <TableCell align="right">{row.status}</TableCell>
-                  <TableCell align="right">{row.fee}</TableCell>
-                  <TableCell align="right">{row.departureDate}</TableCell>
-                  <TableCell align="right">{row.arrivalDate}</TableCell>
-                  <TableCell align="right">
-                    <Button
-                      onClick={() => {
-                        handleShow(row);
-                      }}
-                    >
-                      View Route
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table> */}
+              <DialogTitle id="alert-dialog-title">{"Edit Rider"}</DialogTitle>
+              <DialogContent className="w-full ">
+                <EditBikes editbikeObj={editbikeObj} />
+              </DialogContent>
+              {/* <DialogActions>
+                <Button onClick={handleClose}>Disagree</Button>
+                <Button onClick={handleClose} autoFocus>
+                  Agree
+                </Button>
+              </DialogActions> */}
+            </Dialog>
+          </div>
         </div>
       )}
 
