@@ -174,7 +174,7 @@ function Trips({ switsh }) {
   };
   return isLoaded ? (
     <div className="w-full relative">
-      <Button>Emit</Button>
+      {/* <Button>Emit</Button> */}
       <div className="absolute w-full top-10 left-8 z-50">
         <ToDoorSearch pad={true} hide={true} />
 

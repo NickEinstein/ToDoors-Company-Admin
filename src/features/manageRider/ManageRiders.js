@@ -50,7 +50,7 @@ import {
 import { MdRefresh } from "react-icons/md";
 import ToDoorSearch from "common/ToDoorSearch";
 import NewWallCards from "common/NewWallCards";
-import { get } from "services/fetch";
+import { get, post } from "services/fetch";
 function ManageRiders(props) {
   const [age, setAge] = React.useState("");
   const [closeModal, setCloseModal] = React.useState(false);
@@ -111,9 +111,7 @@ getTotalEarningsAndAvailableBalance()
   };
 
 
-  const changes = () => {
-    // history("/complete-signUp");
-  };
+
 
   const tableArray = payMentTransactions?.map((e) => ({
     image: gigLogo,

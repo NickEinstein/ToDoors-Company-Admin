@@ -48,6 +48,22 @@ const top100Films = listOfBanks.map((e) => ({
   code: e?.code,
   label: e?.name,
 }));
+  const verifyAccount = async () => {
+    let payload = {
+      account_number: accountNumber,
+      account_bank: bankInfo?.code,
+    };
+
+    const res = await post({
+      endpoint: `api/payment/verifyAccountNumber`,
+      body: { ...payload },
+      auth: true,
+    });
+    console.log(res?.data);
+    // setCurrent((current)=>current+1)}
+
+    // history("/complete-signUp");
+  };
 
    const getBanks = async () => {
      // const deleteRider = async () => {
@@ -61,7 +77,13 @@ const top100Films = listOfBanks.map((e) => ({
    };
    const increaseCurrent = ()=>{
     if(current <2)
-    setCurrent((current)=>current+1)
+
+   { 
+    if(current<1){
+      verifyAccount()
+      return
+    }
+    setCurrent((current)=>current+1)}
    }
     const decreaseCurrent = () => {
     if (current >0) setCurrent((current) => current - 1);
@@ -203,7 +225,7 @@ const top100Films = listOfBanks.map((e) => ({
                       //   ),
                       // }}
                       {...params}
-                      label="Banks"
+                      // label="Banks"
                     />
                   )}
                 />

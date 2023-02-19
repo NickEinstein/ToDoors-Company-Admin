@@ -416,7 +416,7 @@ const onSave = async () => {
         <Typography variant="h4">Bike Details</Typography>
 
         <div className="flex justify-between my-10">
-          <div className="w-full mr-[5%]">
+          {/* <div className="w-full mr-[5%]">
             <p className="font-bold">Bike Company</p>
             <TextField
               onChange={(e) => setBikeCompany(e.target.value)}
@@ -426,9 +426,9 @@ const onSave = async () => {
               // rows={1.5}
               value={bikeCompany}
             />
-          </div>
+          </div> */}
           <div className="w-full ">
-            <p className="font-bold">Bike Model</p>
+            <p className="font-bold">Bike Model/Brand</p>
             <TextField
               className="w-full bg-[#EBEBEB]"
               // multiline={true}
@@ -450,7 +450,7 @@ const onSave = async () => {
               value={bikeRegNo}
             />
           </div>
-          <div className="w-full ">
+          {/* <div className="w-full ">
             <p className="font-bold">Bike Owner</p>
             <TextField
               className="w-full bg-[#EBEBEB]"
@@ -459,7 +459,7 @@ const onSave = async () => {
               onChange={(e) => setBikeOwner(e.target.value)}
               value={bikeOwner}
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
@@ -473,6 +473,8 @@ const onSave = async () => {
               value={bikeDate}
             /> */}
             <div>
+              <p className="font-bold">Bike Reg Date</p>
+
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <div className="flex-between">
                   <DatePicker
