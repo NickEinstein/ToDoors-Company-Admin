@@ -343,6 +343,7 @@ function EditBikes({editbikeObj}) {
           <div className="w-full ">
             <p className="font-bold">Drivers Phone No.</p>
             <TextField
+            disabled
               className="w-full bg-[#EBEBEB]"
               multiline={true}
               value={phoneNumber}
@@ -355,6 +356,7 @@ function EditBikes({editbikeObj}) {
           <div className="w-full mr-[5%]">
             <p className="font-bold">Email Address</p>
             <TextField
+            disabled
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#EBEBEB]"
               value={email}

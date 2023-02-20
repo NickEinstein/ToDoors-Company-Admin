@@ -386,6 +386,7 @@ onUpload(formData)
               <div className="w-full ">
                 <p className="font-bold">Company Phone No.</p>
                 <TextField
+                disabled
                   className="w-full bg-[#EBEBEB]"
                   multiline={true}
                   rows={1.5}
@@ -398,6 +399,7 @@ onUpload(formData)
               <div className="w-full mr-[5%]">
                 <p className="font-bold">Email Address</p>
                 <TextField
+                disabled
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-[#EBEBEB]"
                   multiline={true}
