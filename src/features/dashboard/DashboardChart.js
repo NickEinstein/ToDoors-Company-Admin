@@ -77,54 +77,68 @@ import ReactDOM from "react-dom";
 import { Column } from "@ant-design/plots";
 // import { Dashboard } from "@mui/icons-material";
 
-const DashboardChart = () => {
-
+const DashboardChart = ({ companyMonthly }) => {
   const brandColor = "#0C3BAA";
   const paletteSemanticRed = "#F4664A";
-   
-  const data = [
-    {
-      year: "1951 ",
-      value: 38,
-    },
-    {
-      year: "1952 ",
-      value: 52,
-    },
-    {
-      year: "1956 ",
-      value: 61,
-    },
-    {
-      year: "1957 ",
-      value: 145,
-    },
-    {
-      year: "1959 ",
-      value: 88,
-    },
 
-    {
-      year: "1960 ",
-      value: 18,
-    },
-    {
-      year: "1961",
-      value: 38,
-    },
-    {
-      year: "1962 ",
-      value: 28,
-    },
-    {
-      year: "1963 ",
-      value: 58,
-    },
-    {
-      year: "1964 ",
-      value: 38,
-    },
+  console.log(companyMonthly)
+  const getMonth = (val)=>{
+if (val == 11)
+return "Nov"
+  }
+
+  const data2 = companyMonthly ? companyMonthly?.map((e) => ({
+    year: getMonth(e._id.month),
+    value: e?.total_earning,
+  })):[]
+  console.log(data2);
+  // console.log([...data2]);
+  const data = [
+    // {
+    //   year: "1951 ",
+    //   value: 38,
+    // },
+    // {
+    //   year: "1952 ",
+    //   value: 52,
+    // },
+    // {
+    //   year: "1956 ",
+    //   value: 61,
+    // },
+    // {
+    //   year: "1957 ",
+    //   value: 145,
+    // },
+    // {
+    //   year: "1959 ",
+    //   value: 88,
+    // },
+
+    // {
+    //   year: "1960 ",
+    //   value: 18,
+    // },
+    // {
+    //   year: "1961",
+    //   value: 38,
+    // },
+    // {
+    //   year: "1962 ",
+    //   value: 28,
+    // },
+    // {
+    //   year: "1963 ",
+    //   value: 58,
+    // },
+    // {
+    //   year: "1964 ",
+    //   value: 38,
+    // },
+   ...data2
   ];
+
+  console.log(data)
   // const config = {
   //   data,
   //   xField: "year",
@@ -195,8 +209,8 @@ const DashboardChart = () => {
         autoRotate: false,
       },
     },
-     yAxis: {
-      label:false,
+    yAxis: {
+      label: false,
       grid: {
         line: false,
         // line: {
@@ -221,17 +235,17 @@ const DashboardChart = () => {
       {...config}
       onReady={(plot) => {
         plot.on("plot:click", (evt) => {
-        console.log(evt);
-        const { x, y } = evt;
+          console.log(evt);
+          const { x, y } = evt;
           const { xField } = plot.options;
           const tooltipData = plot.chart.getTooltipItems({ x, y });
           console.log(tooltipData);
-        //   console.log(xField);
+          //   console.log(xField);
         });
       }}
     />
   );
-}
+};
 export default DashboardChart
 
 // ReactDOM.render(<DemoColumn />, document.getElementById("container"));

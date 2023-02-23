@@ -96,6 +96,28 @@ export const UserApi = todoorsApi.injectEndpoints({
       },
     }),
 
+    getEarningsByMonth: builder.query({
+      query: (arg) => {
+        // const { userType } = arg;
+        return {
+          url: `${BASE_URL}/company/getTotalEarningsByMonth`,
+          method: "GET",
+          // params: { userType },
+        };
+      },
+    }),
+
+    getTripsByMonth: builder.query({
+      query: (arg) => {
+        // const { userType } = arg;
+        return {
+          url: `${BASE_URL}/company/getTotalTripsByMonth`,
+          method: "GET",
+          // params: { userType },
+        };
+      },
+    }),
+
     getHistory: builder.query({
       query: (arg) => {
         const { to, from, riderId } = arg;

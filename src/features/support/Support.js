@@ -40,6 +40,8 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 import SupportChart from './SupportChart';
 import ToDoorSearch from 'common/ToDoorSearch';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+// import { post,  } from "services/fetch";
+import { post,  } from "services/fetchUpload";
 function ManageRiders(props) {
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");
@@ -56,6 +58,7 @@ function ManageRiders(props) {
   const [bikeOwner, setBikeOwner] = useState("");
   const [bikeDate, setBikeDate] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [ridersPicture, setRidersPicture] = useState("");
   // const handleChange = (event) => {
   //   setAge(event.target.value);
   //   console.log(event)
@@ -211,8 +214,9 @@ const onSubmit = async ()=>{
         }).unwrap();
         // TODO extra login
         console.log(data.data);
+    onUpload(data?.data?.user?._id);
+
         enqueueSnackbar(data.message, { variant: "success" });
-        redirect();
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
           variant: "error",
@@ -283,17 +287,18 @@ const onSave = async () => {
       },
     }).unwrap();
     // TODO extra login
-    console.log(data.data);
+    console.log(data.data)
+    onUpload(data?.data?.user?._id)
     enqueueSnackbar(data.message, { variant: "success" });
-    setAddress('')
-    setCity('')
-    setPhoneNumber('')
-    setState('')
-    setEmail('')
-    setName('')
-    setPassword("");
-    setConfirmPassword("");
-    setLiscence("");
+    // setAddress('')
+    // setCity('')
+    // setPhoneNumber('')
+    // setState('')
+    // setEmail('')
+    // setName('')
+    // setPassword("");
+    // setConfirmPassword("");
+    // setLiscence("");
     // onSubmit('')
     // // redirect();
   } 
@@ -303,6 +308,54 @@ const onSave = async () => {
     });
   }
 };
+
+  const onFileChange = (event) => {
+    // Update the state
+    // setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+    onFileUpload(event.target.files[0]);
+  };
+
+  const onFileUpload = async (selectedFile) => {
+    // Create an object of formData
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append("image", selectedFile);
+
+    // Details of the uploaded file
+    console.log(selectedFile);
+    setRidersPicture(formData);
+    // onUpload();
+    // Request made to the backend api
+    // Send formData object
+    // const res = await put({
+    //   endpoint: `api/users/upload`,
+    //    body: formData,
+    //   auth: true,
+    // });
+    // axios.post("api/uploadfile", formData);
+  };
+   const onUpload = async (id) => {
+     // tryNewPost()
+     // alert('ji')
+
+     const res = await post({
+       endpoint: `api/company/uploadForCompany?id=${id}`,
+       body: ridersPicture,
+       auth: true,
+     });
+
+     if (res.data.success)
+       {
+        enqueueSnackbar(res?.data?.message, { variant: "success" })
+        redirect();
+      
+      }
+     else enqueueSnackbar(res?.data?.message, { variant: "error" });
+
+     
+   };
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -522,7 +575,19 @@ const onSave = async () => {
           </div>
         </div>
 
-        <div className="w-full flex justify-between mb-8 gap-12">
+        <input
+          onChange={onFileChange}
+          style={{ display: "none" }}
+          id="contained-button-file"
+          type="file"
+        />
+        <label htmlFor="contained-button-file" className="mb-8">
+          <Button variant="contained" color="primary" component="span">
+            Upload Profile Picture
+          </Button>
+        </label>
+
+        <div className="w-full flex justify-between my-8 gap-12">
           <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
             Save
           </Button>

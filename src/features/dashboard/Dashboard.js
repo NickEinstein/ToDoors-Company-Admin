@@ -112,8 +112,17 @@ function numberWithCommas(x) {
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
+// const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery(
+//   {}
+// );
+// const companyStatistics = getCompanyStatisticsQueryResult?.data;
+   const getMonthlyEarningsResult = UserApi?.useGetEarningsByMonthQuery();
+   const getMonthlyTripsResult = UserApi?.useGetTripsByMonthQuery();
+
+
 const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery({});
 const companyStatistics = getCompanyStatisticsQueryResult?.data;
+
 
 
    const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
@@ -299,9 +308,8 @@ const getUserQueryResult =
           </div>
           <Divider className="my-2" />
           <div className="flex items-center w-1/5 mt-4">
-            <Box className=" w-full" sx={{ minWidth: 120 }}>
+            {/* <Box className=" w-full" sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
-                {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
                 <Select
                   // initialValues='August'
                   placeholder="August"
@@ -320,12 +328,16 @@ const getUserQueryResult =
                   <MenuItem value={30}>March</MenuItem>
                 </Select>
               </FormControl>
-            </Box>
+            </Box> */}
+            {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+
             {/* <Button className="p-3 w-1/3 ml-4">Search</Button> */}
           </div>
           <div className=" flex mt-10 w-full justify-center">
             <div className=" w-3/5 mb-10">
-              <DashboardChart />
+              <DashboardChart
+                companyMonthly={getMonthlyEarningsResult?.data?.data}
+              />
             </div>
           </div>
         </div>
