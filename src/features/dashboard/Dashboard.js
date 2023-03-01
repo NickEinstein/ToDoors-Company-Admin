@@ -298,12 +298,15 @@ const getUserQueryResult =
               {/* <span className="text-xs mr-1 opacity-50">
               <MdRefresh />
             </span> */}
-              <span
+              {/* ********************************************************************************* */}
+              {/* Return to work on it */}
+              {/* <span
                 onClick={switsh}
                 className="cursor-pointer p-2 text-primary-main font-bold"
               >
                 View Riders Location
-              </span>
+              </span> */}
+              {/* *********************************************************************************** */}
             </div>
           </div>
           <Divider className="my-2" />
@@ -337,6 +340,7 @@ const getUserQueryResult =
             <div className=" w-3/5 mb-10">
               <DashboardChart
                 companyMonthly={getMonthlyEarningsResult?.data?.data}
+                companyMonthlyTrips={getMonthlyTripsResult?.data?.data}
               />
             </div>
           </div>

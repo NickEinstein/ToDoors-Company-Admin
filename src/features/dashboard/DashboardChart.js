@@ -77,20 +77,21 @@ import ReactDOM from "react-dom";
 import { Column } from "@ant-design/plots";
 // import { Dashboard } from "@mui/icons-material";
 
-const DashboardChart = ({ companyMonthly }) => {
+const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
   const brandColor = "#0C3BAA";
   const paletteSemanticRed = "#F4664A";
 
-  console.log(companyMonthly)
-  const getMonth = (val)=>{
-if (val == 11)
-return "Nov"
-  }
+  console.log(companyMonthly);
+  const getMonth = (val) => {
+    if (val == 11) return "Nov";
+  };
 
-  const data2 = companyMonthly ? companyMonthly?.map((e) => ({
-    year: getMonth(e._id.month),
-    value: e?.total_earning,
-  })):[]
+  const data2 = companyMonthly
+    ? companyMonthly?.map((e) => ({
+        year: getMonth(e._id.month),
+        value: e?.total_earning,
+      }))
+    : [];
   console.log(data2);
   // console.log([...data2]);
   const data = [
@@ -135,10 +136,10 @@ return "Nov"
     //   year: "1964 ",
     //   value: 38,
     // },
-   ...data2
+    ...data2,
   ];
 
-  console.log(data)
+  console.log(data);
   // const config = {
   //   data,
   //   xField: "year",

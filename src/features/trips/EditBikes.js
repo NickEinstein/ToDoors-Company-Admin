@@ -40,7 +40,7 @@ import ToDoorSearch from "common/ToDoorSearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { put } from "services/fetch";
 
-function EditBikes({editbikeObj}) {
+function EditBikes({ editbikeObj, handleClose }) {
   const [address, setAddress] = React.useState(editbikeObj?.address);
   const [city, setCity] = React.useState(editbikeObj?.city);
   const [phoneNumber, setPhoneNumber] = React.useState(editbikeObj?.phoneNo);
@@ -54,7 +54,9 @@ function EditBikes({editbikeObj}) {
   const [bikeCompany, setBikeCompany] = useState(
     editbikeObj?.bikeDetails?.company
   );
-  const [bikeModel, setBikeModel] = useState(editbikeObj?.bikeDetails?.bikeModel);
+  const [bikeModel, setBikeModel] = useState(
+    editbikeObj?.bikeDetails?.bikeModel
+  );
   const [bikeRegNo, setBikeRegNo] = useState(editbikeObj?.bikeDetails?.regNo);
   const [bikeOwner, setBikeOwner] = useState(
     editbikeObj?.bikeDetails?.RC_ownerName
@@ -172,9 +174,6 @@ function EditBikes({editbikeObj}) {
 
   console.log(editbikeObj);
 
-  
- 
-
   const onSubmit = async () => {
     let payload = {
       email: email,
@@ -211,93 +210,94 @@ function EditBikes({editbikeObj}) {
       auth: true,
     });
 
-          enqueueSnackbar('updated successfully', { variant: "success" });
+    enqueueSnackbar("updated successfully", { variant: "success" });
 
     console.log(res);
+    handleClose()
   };
 
-//   const onSave = async () => {
-//     // const  data = {
-//     //       email: email,
-//     //       phoneNo: phoneNumber,
-//     //       password: password,
-//     //       userType: "rider",
-//     //       companyId: authUser._id,
-//     //       fname: name,
-//     //       // lname: null,
-//     //       // email: "rider2@gmail.com",
-//     //       // phoneNo: "",
-//     //       // password:
-//     //       //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
-//     //       dob: "1993-12-07T23:00:00.000Z",
-//     //       bloodGroup: "B+",
-//     //       address: address,
-//     //       city: city,
-//     //       state: state,
-//     //       country: "Nigeria",
-//     //       bikeDetails: {
-//     //         type: "bike",
-//     //         company: bikeCompany,
-//     //         regNo: bikeRegNo,
-//     //         RC_ownerName: bikeOwner,
-//     //         bikeNo: '',
-//     //         bikeModel: bikeModel,
-//     //         // regDate: bikeDate,
-//     //       },
-//     //     }
-//     // console.log(data)
-//     try {
-//       // alert('saveed')
-//       const data = await addBikeMuation({
-//         data: {
-//           email: email,
-//           phoneNo: phoneNumber,
-//           password: password,
-//           userType: "rider",
-//           companyId: authUser._id,
-//           fname: name,
-//           // lname: null,
-//           // email: "rider2@gmail.com",
-//           // phoneNo: "",
-//           // password:
-//           //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
-//           dob: "1993-12-07T23:00:00.000Z",
-//           bloodGroup: "B+",
-//           address: address,
-//           city: city,
-//           state: state,
-//           country: "Nigeria",
-//           bikeDetails: {
-//             type: "bike",
-//             company: bikeCompany,
-//             regNo: bikeRegNo,
-//             RC_ownerName: bikeOwner,
-//             bikeNo: "",
-//             bikeModel: bikeModel,
-//             regDate: bikeDate,
-//           },
-//         },
-//       }).unwrap();
-//       // TODO extra login
-//       console.log(data.data);
-//       enqueueSnackbar(data.message, { variant: "success" });
-//       setAddress("");
-//       setCity("");
-//       setPhoneNumber("");
-//       setState("");
-//       setEmail("");
-//       setName("");
-//       setPassword("");
-//       setConfirmPassword("");
-//       setLiscence("");
-//       // onSubmit('')
-//       // // redirect();
-//     } catch (error) {
-//       enqueueSnackbar(error?.data?.message, "Failed to login", {
-//         variant: "error",
-//       });
-//     }
-//   };
+  //   const onSave = async () => {
+  //     // const  data = {
+  //     //       email: email,
+  //     //       phoneNo: phoneNumber,
+  //     //       password: password,
+  //     //       userType: "rider",
+  //     //       companyId: authUser._id,
+  //     //       fname: name,
+  //     //       // lname: null,
+  //     //       // email: "rider2@gmail.com",
+  //     //       // phoneNo: "",
+  //     //       // password:
+  //     //       //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+  //     //       dob: "1993-12-07T23:00:00.000Z",
+  //     //       bloodGroup: "B+",
+  //     //       address: address,
+  //     //       city: city,
+  //     //       state: state,
+  //     //       country: "Nigeria",
+  //     //       bikeDetails: {
+  //     //         type: "bike",
+  //     //         company: bikeCompany,
+  //     //         regNo: bikeRegNo,
+  //     //         RC_ownerName: bikeOwner,
+  //     //         bikeNo: '',
+  //     //         bikeModel: bikeModel,
+  //     //         // regDate: bikeDate,
+  //     //       },
+  //     //     }
+  //     // console.log(data)
+  //     try {
+  //       // alert('saveed')
+  //       const data = await addBikeMuation({
+  //         data: {
+  //           email: email,
+  //           phoneNo: phoneNumber,
+  //           password: password,
+  //           userType: "rider",
+  //           companyId: authUser._id,
+  //           fname: name,
+  //           // lname: null,
+  //           // email: "rider2@gmail.com",
+  //           // phoneNo: "",
+  //           // password:
+  //           //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+  //           dob: "1993-12-07T23:00:00.000Z",
+  //           bloodGroup: "B+",
+  //           address: address,
+  //           city: city,
+  //           state: state,
+  //           country: "Nigeria",
+  //           bikeDetails: {
+  //             type: "bike",
+  //             company: bikeCompany,
+  //             regNo: bikeRegNo,
+  //             RC_ownerName: bikeOwner,
+  //             bikeNo: "",
+  //             bikeModel: bikeModel,
+  //             regDate: bikeDate,
+  //           },
+  //         },
+  //       }).unwrap();
+  //       // TODO extra login
+  //       console.log(data.data);
+  //       enqueueSnackbar(data.message, { variant: "success" });
+  //       setAddress("");
+  //       setCity("");
+  //       setPhoneNumber("");
+  //       setState("");
+  //       setEmail("");
+  //       setName("");
+  //       setPassword("");
+  //       setConfirmPassword("");
+  //       setLiscence("");
+  //       // onSubmit('')
+  //       // // redirect();
+  //     } catch (error) {
+  //       enqueueSnackbar(error?.data?.message, "Failed to login", {
+  //         variant: "error",
+  //       });
+  //     }
+  //   };
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
@@ -343,7 +343,7 @@ function EditBikes({editbikeObj}) {
           <div className="w-full ">
             <p className="font-bold">Drivers Phone No.</p>
             <TextField
-            disabled
+              disabled
               className="w-full bg-[#EBEBEB]"
               multiline={true}
               value={phoneNumber}
@@ -356,7 +356,7 @@ function EditBikes({editbikeObj}) {
           <div className="w-full mr-[5%]">
             <p className="font-bold">Email Address</p>
             <TextField
-            disabled
+              disabled
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#EBEBEB]"
               value={email}
@@ -410,17 +410,15 @@ function EditBikes({editbikeObj}) {
           </div>
         </div>
 
-        <Typography variant="h4">Bike Details</Typography>
-
+        {/* <Typography variant="h4">Bike Details</Typography> */}
+{/* 
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
             <p className="font-bold">Bike Company</p>
             <TextField
               onChange={(e) => setBikeCompany(e.target.value)}
               className="w-full bg-[#EBEBEB]"
-              // value={name}
-              // multiline={true}
-              // rows={1.5}
+              
               value={bikeCompany}
             />
           </div>
@@ -428,8 +426,7 @@ function EditBikes({editbikeObj}) {
             <p className="font-bold">Bike Model</p>
             <TextField
               className="w-full bg-[#EBEBEB]"
-              // multiline={true}
-              // rows={1.5}
+             
               onChange={(e) => setBikeModel(e.target.value)}
               value={bikeModel}
             />
@@ -441,9 +438,7 @@ function EditBikes({editbikeObj}) {
             <TextField
               onChange={(e) => setBikeRegNo(e.target.value)}
               className="w-full bg-[#EBEBEB]"
-              // value={name}
-              // multiline={true}
-              // rows={1.5}
+              
               value={bikeRegNo}
             />
           </div>
@@ -460,15 +455,7 @@ function EditBikes({editbikeObj}) {
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
-            {/* <p className="font-bold">Bike Reg. Date</p>
-            <TextField
-              onChange={setBikeDate}
-              className="w-full bg-[#EBEBEB]"
-              // value={name}
-              // multiline={true}
-              // rows={1.5}
-              value={bikeDate}
-            /> */}
+           
             <div>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <div className="flex-between">
@@ -491,32 +478,9 @@ function EditBikes({editbikeObj}) {
               </LocalizationProvider>
             </div>
           </div>
-        </div>
-
-        {/* <div className="flex justify-between my-10">
-          <div className="w-full mr-[5%]">
-            <p className="font-bold">Create Temporary Password</p>
-            <TextField
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#EBEBEB]"
-              // value={name}
-              multiline={true}
-              rows={1.5}
-              value={password}
-            />
-          </div>
-          <div className="w-full ">
-            <p className="font-bold">Confirm Password</p>
-            <TextField
-              className="w-full bg-[#EBEBEB]"
-              multiline={true}
-              rows={1.5}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-            />
-          </div>
         </div> */}
 
+        
         <div className="w-full flex justify-between mb-8 gap-12">
           <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
             Save

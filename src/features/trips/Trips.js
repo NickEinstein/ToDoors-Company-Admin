@@ -91,6 +91,7 @@ function Trips(props) {
 
   const handleClose = () => {
     setOpen(false);
+    getBikes()
   };
 
   const handleChange = (event) => {
@@ -155,6 +156,7 @@ function Trips(props) {
   function createData(
     place,
     origin,
+    image,
     destination,
     rider,
     orderId,
@@ -169,6 +171,7 @@ function Trips(props) {
     return {
       place,
       origin,
+      image,
       destination,
       rider,
       orderId,
@@ -186,6 +189,7 @@ function Trips(props) {
     createData(
       e.fname,
       e.state,
+      e.profileUrl,
       e.bikeDetails.regNo,
       e.phoneNo,
       moment(e.bikeDetails.regDate).format("ll"),
@@ -362,12 +366,19 @@ function Trips(props) {
                 >
                   <div
                     onClick={() => setOpens(true)}
-                    className="w-1/5 border3b px-3 py-3  text-center"
+                    className="w-1/5 border3b px-3 py-3 flex gap-2 items-center  text-center"
                   >
-                    <Button className="h-7 bg-primary-main">
-                      {row.origin}
-                    </Button>
-                    <p className="font-semibold my-2">{row.place}</p>
+                    <Avatar
+                      className="w-[52px] h-[52px] rounded-full"
+                      src={row?.image}
+                    />
+
+                    <div>
+                      <Button className="h-7 bg-primary-main">
+                        {row.origin}
+                      </Button>
+                      <p className="font-semibold my-2">{row.place}</p>
+                    </div>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">
@@ -432,7 +443,10 @@ function Trips(props) {
             >
               <DialogTitle id="alert-dialog-title">{"Edit Rider"}</DialogTitle>
               <DialogContent className="w-full ">
-                <EditBikes editbikeObj={editbikeObj} />
+                <EditBikes
+                  handleClose={handleClose}
+                  editbikeObj={editbikeObj}
+                />
               </DialogContent>
               {/* <DialogActions>
                 <Button onClick={handleClose}>Disagree</Button>

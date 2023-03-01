@@ -301,6 +301,7 @@ function Trips(props) {
   //     }
   //   }
   // });
+  // const formattedTime = moment(inputDate).format("HH:mm:ss");
 
   // const classes = useRowStyles();
   const style = {
@@ -413,7 +414,7 @@ function Trips(props) {
                   >
                     <p className="text-[#959595] mb-2">Rider</p>
                     <div className="flex items-center gap-3">
-                      <Avatar src = {row?.riderId?.profileUrl}/>
+                      <Avatar src={row?.riderId?.profileUrl} />
                       <p
                         onClick={() => {
                           setOpen(true);
@@ -452,7 +453,9 @@ function Trips(props) {
                   >
                     <p className="text-[#959595] mb-2 ">Start Time:</p>
                     <p className="font-bold">
-                      {moment(row?.bookingTime).format("HH:mm")}
+                      {/* <p>{row?.bookingTime}</p> */}
+                      <p>{moment(row?.bookingTime).format("ll")}</p>
+                      <p>{moment.utc(row?.bookingTime).zone(0).format("HH:mm")}</p>
                     </p>
                   </div>
                   <div
