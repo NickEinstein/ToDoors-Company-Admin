@@ -124,7 +124,9 @@ function Trips(props) {
       //  body: { ...payload },
       auth: true,
     });
-    setAllBikez(res.data.data);
+    setAllBikez(res?.data?.data.sort((a, b) => a.created_at - b.created_at).reverse());
+    console.log(res?.data?.data.sort((a, b) => a.created_at - b.created_at));
+    console.log(res?.data?.data);
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();
@@ -192,7 +194,7 @@ function Trips(props) {
       e.profileUrl,
       e.bikeDetails.regNo,
       e.phoneNo,
-      moment(e.bikeDetails.regDate).format("ll"),
+      moment(e?.created_at).format("ll"),
       "N200,000",
       "11 Sept. 9:00am",
       "15 Sept. 1:00am",

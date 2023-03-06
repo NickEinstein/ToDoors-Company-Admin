@@ -78,6 +78,11 @@ import { Column } from "@ant-design/plots";
 // import { Dashboard } from "@mui/icons-material";
 
 const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
+
+const [dataz,setDataz] = useState([
+  
+])
+
   const brandColor = "#0C3BAA";
   const paletteSemanticRed = "#F4664A";
 
@@ -95,48 +100,52 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
   console.log(data2);
   // console.log([...data2]);
   const data = [
-    // {
-    //   year: "1951 ",
-    //   value: 38,
-    // },
-    // {
-    //   year: "1952 ",
-    //   value: 52,
-    // },
-    // {
-    //   year: "1956 ",
-    //   value: 61,
-    // },
-    // {
-    //   year: "1957 ",
-    //   value: 145,
-    // },
-    // {
-    //   year: "1959 ",
-    //   value: 88,
-    // },
+    {
+      year: "Jan ",
+      value: 0,
+    },
+    {
+      year: "Feb ",
+      value: 0,
+    },
+    {
+      year: "Mar",
+      value: 0,
+    },
+    {
+      year: "Apr ",
+      value: 0,
+    },
+    {
+      year: "May ",
+      value: 0,
+    },
 
-    // {
-    //   year: "1960 ",
-    //   value: 18,
-    // },
-    // {
-    //   year: "1961",
-    //   value: 38,
-    // },
-    // {
-    //   year: "1962 ",
-    //   value: 28,
-    // },
-    // {
-    //   year: "1963 ",
-    //   value: 58,
-    // },
-    // {
-    //   year: "1964 ",
-    //   value: 38,
-    // },
+    {
+      year: "Jun ",
+      value: 0,
+    },
+    {
+      year: "Jul",
+      value: 0,
+    },
+    {
+      year: "Aug ",
+      value: 0,
+    },
+    {
+      year: "Sept ",
+      value: 0,
+    },
+    {
+      year: "Oct ",
+      value: 0,
+    },
     ...data2,
+    {
+      year: "Dec ",
+      value: 0,
+    },
   ];
 
   console.log(data);

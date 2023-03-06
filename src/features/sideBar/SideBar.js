@@ -36,6 +36,8 @@ import { RiCarLine, RiShieldLine } from "react-icons/ri";
 import { IoCarSharp } from "react-icons/";
 import { MdAddBox } from "react-icons/md";
 import useLogout from "hooks/useLogout";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 ;
 const drawerWidth = 240;
@@ -44,6 +46,10 @@ export default function PermanentDrawerLeft() {
   const history = useNavigate();
   const { logout } = useLogout();
 
+ const location = useLocation();
+ const currentUrl = location.pathname;
+
+ console.log(currentUrl);
 
   const [outcasts, setOutcasts] = React.useState([
     { name: "Logout", linx: RouteEnum.HOME, image: logouts },
@@ -121,6 +127,10 @@ export default function PermanentDrawerLeft() {
     // logout()
   };
 
+  useEffect(()=>{
+changeColorOnActive()
+  },[currentUrl])
+
   // const logout = (push) => {
   //   localStorage.removeItem("il");
   //   console.log('hi')
@@ -130,16 +140,16 @@ export default function PermanentDrawerLeft() {
   // const pat =
 
   const changeColorOnActive = (num) => {
-    console.log(num)
+    // console.log(num)
     let k = pat.map((e, index) => ({
       key: e.name,
       name: e.name,
       d: e.d,
-      imageboolean: num == index ? false : true,
+      imageboolean: e.d == currentUrl ? false : true,
 
       image: e.image,
       image2: e.image2,
-      color: num == index ? true : false,
+      color: e.d == currentUrl ? true : false,
     }));
 
     console.log(k)
@@ -183,7 +193,7 @@ export default function PermanentDrawerLeft() {
           {pat.map((text, index) => (
             <ListItem
               // key={index}
-              className={index === 0 ? "mb-12" : ""}
+              className={index === 0 ? "mb-5" : ""}
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
                 color: text.color ? "white" : "",

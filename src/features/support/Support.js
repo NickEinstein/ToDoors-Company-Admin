@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -30,6 +30,7 @@ import trustedBy3 from "images/Rectangle 106.png";
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
 import {
+  Autocomplete,
   Avatar,
   Button,
   Card,
@@ -39,6 +40,7 @@ import {
   MenuItem,
   Rating,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -53,6 +55,7 @@ import ToDoorSearch from "common/ToDoorSearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 // import { post,  } from "services/fetch";
 import { post } from "services/fetchUpload";
+import { get } from "services/fetLocation";
 function ManageRiders(props) {
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");
@@ -71,7 +74,8 @@ function ManageRiders(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [ridersPicture, setRidersPicture] = useState("");
   const [ridersPictureName, setRidersPictureName] = useState("");
-  const [start_date, setStart_date] = useState(null);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
   const [imgData, setImgData] = useState(null);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
@@ -387,6 +391,52 @@ function ManageRiders(props) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
 
+   const top100Films = 
+     states.map((e) => ({
+       title: e?.name,
+       year: e.id,
+       alias: e?.alias,
+     }))
+   
+
+     const top10Films = cities.map((e) => ({
+       title: e?.name,
+       year: e.id,
+       alias: e?.alias,
+     }));
+   
+
+   useEffect(() => {
+     getStates();
+   }, []);
+
+   const getStates = async () => {
+     const res = await get({
+       endpoint: `states`,
+       // body: { ...payload },
+       auth: false,
+     });
+     setStates(res?.data?.data)
+   };
+
+    // useEffect(() => {
+    //   getStates();
+    // }, []);
+
+    const getCities = async (val) => {
+
+      const pp = states.find((e)=>e.name == val)
+      console.log(pp)
+      const res = await get({
+        endpoint: `regions/${pp.alias}`,
+        // body: { ...payload },
+        auth: false,
+      });
+      setCities(res?.data?.data);
+    };
+
+ 
+
   return (
     <div className="add-bike">
       <ToDoorSearch />
@@ -463,7 +513,7 @@ function ManageRiders(props) {
                   <DatePicker
                     className=" mr-8 w-full"
                     // label="Basic example"
-                    value={start_date}
+                    value={liscence}
                     onChange={(newValue) => {
                       // console.log(newValue)
                       // setWorkList({ ...workList, start_date: newValue });
@@ -491,23 +541,68 @@ function ManageRiders(props) {
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
             <p className="font-bold">City</p>
-            <TextField
+            {/* <TextField
               onChange={(e) => setCity(e.target.value)}
               className="w-full bg-[#EBEBEB]"
               value={city}
               multiline={true}
               rows={1.5}
-            />
+            /> */}
+            <Stack spacing={2} sx={{ width: 300 }}>
+              <Autocomplete
+                // freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={top10Films.map((option) => option.title)}
+                onChange={(e, val) => {
+                  // getCities(val);
+                  setCity(val);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    className="w-full bg-[#EBEBEB]"
+                    multiline
+                    rows={1.5}
+                    {...params}
+                    // label="Search input"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+            </Stack>
           </div>
           <div className="w-full">
             <p className="font-bold">State</p>
-            <TextField
-              className="w-full bg-[#EBEBEB]"
-              multiline={true}
-              value={state}
-              rows={1.5}
-              onChange={(e) => setState(e.target.value)}
-            />
+
+            <Stack spacing={2} sx={{ width: 300 }}>
+              <Autocomplete
+                // freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={top100Films.map((option) => option.title)}
+                onChange={(e, val) => {
+                  getCities(val);
+                  setState(val);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    className="w-full bg-[#EBEBEB]"
+                    multiline
+                    rows={1.5}
+                    {...params}
+                    // value={'ji'}
+                    // label="Search input"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+            </Stack>
           </div>
         </div>
         <div className="flex justify-between my-10">
