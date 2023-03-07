@@ -540,44 +540,9 @@ function ManageRiders(props) {
         </div>
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
-            <p className="font-bold">City</p>
-            {/* <TextField
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-[#EBEBEB]"
-              value={city}
-              multiline={true}
-              rows={1.5}
-            /> */}
-            <Stack spacing={2} sx={{ width: 300 }}>
-              <Autocomplete
-                // freeSolo
-                id="free-solo-2-demo"
-                disableClearable
-                options={top10Films.map((option) => option.title)}
-                onChange={(e, val) => {
-                  // getCities(val);
-                  setCity(val);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    className="w-full bg-[#EBEBEB]"
-                    multiline
-                    rows={1.5}
-                    {...params}
-                    // label="Search input"
-                    InputProps={{
-                      ...params.InputProps,
-                      type: "search",
-                    }}
-                  />
-                )}
-              />
-            </Stack>
-          </div>
-          <div className="w-full">
             <p className="font-bold">State</p>
 
-            <Stack spacing={2} sx={{ width: 300 }}>
+            <Stack spacing={2}>
               <Autocomplete
                 // freeSolo
                 id="free-solo-2-demo"
@@ -594,6 +559,41 @@ function ManageRiders(props) {
                     rows={1.5}
                     {...params}
                     // value={'ji'}
+                    // label="Search input"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+            </Stack>
+          </div>
+          <div className="w-full ">
+            <p className="font-bold">City</p>
+            {/* <TextField
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              value={city}
+              multiline={true}
+              rows={1.5}
+            /> */}
+            <Stack spacing={2}>
+              <Autocomplete
+                // freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={top10Films.map((option) => option.title)}
+                onChange={(e, val) => {
+                  // getCities(val);
+                  setCity(val);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    className="w-full bg-[#EBEBEB]"
+                    multiline
+                    rows={1.5}
+                    {...params}
                     // label="Search input"
                     InputProps={{
                       ...params.InputProps,

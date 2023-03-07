@@ -94,7 +94,7 @@ const [dataz,setDataz] = useState([
   const data2 = companyMonthly
     ? companyMonthly?.map((e) => ({
         year: getMonth(e._id.month),
-        value: e?.total_earning,
+        value: e?.total_earning || e?.trips_count,
       }))
     : [];
   console.log(data2);

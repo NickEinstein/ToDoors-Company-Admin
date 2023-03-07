@@ -50,17 +50,19 @@ import { AccountCircle } from "@mui/icons-material";
 import ToDoorSearch from "common/ToDoorSearch";
 import ManageCompanyCard from "features/manageCompanies/ManageCompanyCard";
 import NewWallCards from "common/NewWallCards";
-import TripsMap from "features/manageRiders/TripsMap";
+import TripsMap from "features/manageriders/TripsMap";
 import Maps from "features/maps/Maps";
 
 function Dashboard(props) {
-  const [age, setAge] = React.useState("");
+  const [earnings, setEarnings] = React.useState(true);
+  const [val, setVal] = React.useState("Earnings");
   const [userId, setUserId] = React.useState("635fbde0bfadb9f5ea56afa4");
   const [show, setshow] = React.useState();
+  const [companyMonthly, setCompanyMonthly] = useState();
   const handleChange = (event) => {
     console.log(event);
-    setAge(event.target.value);
-    console.log(event);
+    setEarnings(!earnings);
+    // console.log(event);
   };
 
   const switsh = () => setshow(!show);
@@ -139,6 +141,14 @@ function Dashboard(props) {
   console.log(allCompanyRiderTripsStats);
 
   //  riderTripStatics;
+
+  useEffect(() => {
+    earnings
+      ? setCompanyMonthly(getMonthlyEarningsResult?.data?.data)
+      : setCompanyMonthly(getMonthlyTripsResult?.data?.data);
+
+    earnings ? setVal("Earnings") : setVal("Rides");
+  }, [earnings, getMonthlyEarningsResult, getMonthlyTripsResult]);
 
   return (
     <div>
@@ -289,7 +299,7 @@ function Dashboard(props) {
             // style={{ top: "-20px" }}
           >
             <p className=" flex  self-end text-primary-main font-bold">
-              Earnings
+              {earnings ? "Earnings" : "Rides"} Over the last 12 Months
             </p>
             <div className="flex items-center">
               {/* <span className="text-xs mr-1 opacity-50">
@@ -308,7 +318,7 @@ function Dashboard(props) {
           </div>
           <Divider className="my-2" />
           <div className="flex items-center w-1/5 mt-4">
-            {/* <Box className=" w-full" sx={{ minWidth: 120 }}>
+            <Box className=" w-full" sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <Select
                   // initialValues='August'
@@ -317,18 +327,17 @@ function Dashboard(props) {
                   size="small"
                   // labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  value={val}
                   // renderValue={(e)=>e.target.value<p>{age}</p>}
                   // return selected.join(", ");
                   // label="Age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>January</MenuItem>
-                  <MenuItem value={20}>February</MenuItem>
-                  <MenuItem value={30}>March</MenuItem>
+                  <MenuItem value={"Earnings"}>Earnings</MenuItem>
+                  <MenuItem value={"Rides"}>Rides</MenuItem>
                 </Select>
               </FormControl>
-            </Box> */}
+            </Box>
             {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
 
             {/* <Button className="p-3 w-1/3 ml-4">Search</Button> */}
@@ -336,7 +345,7 @@ function Dashboard(props) {
           <div className=" flex mt-10 w-full justify-center">
             <div className=" w-3/5 mb-10">
               <DashboardChart
-                companyMonthly={getMonthlyEarningsResult?.data?.data}
+                companyMonthly={companyMonthly}
                 companyMonthlyTrips={getMonthlyTripsResult?.data?.data}
               />
             </div>
