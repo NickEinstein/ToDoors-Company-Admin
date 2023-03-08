@@ -103,7 +103,7 @@ export default function PermanentDrawerLeft() {
       image2: addBikes,
       image: addBikesW,
       color: false,
-      d: RouteEnum.SUPPORT,
+      d: RouteEnum.ADDRIDERS,
     },
     {
       name: "Profile",
@@ -112,6 +112,15 @@ export default function PermanentDrawerLeft() {
       image: addBikesW,
       color: false,
       d: RouteEnum.PROFILE,
+    },
+
+    {
+      name: "Support",
+      imageboolean: true,
+      // image2: addBikes,
+      // image: addBikesW,
+      color: false,
+      d: RouteEnum.SUPPORT,
     },
     // { name: "Maps", d: RouteEnum.MAPS, image: map, color: false },
     // { name: "Reviews", d: RouteEnum.MANAGE_COMPANIES },

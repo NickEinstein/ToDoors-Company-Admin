@@ -12,6 +12,7 @@ export const RouteEnum = {
   MANAGE_RIDERS: "/wallet",
   TRIPS: "/manage-riders",
   MAPS: "/maps",
-  SUPPORT: "/add-riders",
+  ADDRIDERS: "/add-riders",
+  SUPPORT: "/support",
   PROFILE: "/profile",
 };

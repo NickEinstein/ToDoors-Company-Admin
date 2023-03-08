@@ -70,11 +70,15 @@ const ROUTES = configureRoutes([
     element: lazy(() => import("features/maps/Maps")),
   },
   {
-    path: RouteEnum.SUPPORT,
+    path: RouteEnum.ADDRIDERS,
     element: lazy(() => import("features/addriders/Support")),
   },
   {
     path: RouteEnum.PROFILE,
     element: lazy(() => import("features/profile/Profile")),
+  },
+  {
+    path: RouteEnum.SUPPORT,
+    element: lazy(() => import("features/support/Support")),
   },
 ]);
