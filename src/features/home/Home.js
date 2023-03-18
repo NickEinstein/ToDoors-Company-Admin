@@ -209,7 +209,7 @@ function Home(props) {
         <div
           className="relative flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
-            minWidth: "40%",
+            // minWidth: "40%",
             // minHeight: "100%",
             position: "relative",
             // backgroundImage: `url(${snake})`,

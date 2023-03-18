@@ -86,7 +86,6 @@ const [dataz,setDataz] = useState([
   const brandColor = "#0C3BAA";
   const paletteSemanticRed = "#F4664A";
 
-  console.log(companyMonthly);
   const getMonth = (val) => {
     if (val == 11) return "Nov";
   };
@@ -97,8 +96,6 @@ const [dataz,setDataz] = useState([
         value: e?.total_earning || e?.trips_count,
       }))
     : [];
-  console.log(data2);
-  // console.log([...data2]);
   const data = [
     {
       year: "Jan ",
@@ -148,7 +145,6 @@ const [dataz,setDataz] = useState([
     },
   ];
 
-  console.log(data);
   // const config = {
   //   data,
   //   xField: "year",
@@ -245,12 +241,9 @@ const [dataz,setDataz] = useState([
       {...config}
       onReady={(plot) => {
         plot.on("plot:click", (evt) => {
-          console.log(evt);
           const { x, y } = evt;
           const { xField } = plot.options;
           const tooltipData = plot.chart.getTooltipItems({ x, y });
-          console.log(tooltipData);
-          //   console.log(xField);
         });
       }}
     />

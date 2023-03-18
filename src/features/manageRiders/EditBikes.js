@@ -90,7 +90,6 @@ function EditBikes({ editbikeObj, handleClose }) {
 
   // const handleChange = (event) => {
   //   setAge(event.target.value);
-  //   console.log(event)
   // };
   const history = useNavigate();
 
@@ -166,13 +165,11 @@ function EditBikes({ editbikeObj, handleClose }) {
 
   const authUser = useAuthUser();
 
-  //   console.log(authUser);
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateBikeMuation, updateBikeMutationResult] =
     UserApi.useUpdateBikeMutation({ userId });
 
-  console.log(editbikeObj);
 
   const onSubmit = async () => {
     let payload = {
@@ -212,7 +209,6 @@ function EditBikes({ editbikeObj, handleClose }) {
 
     enqueueSnackbar("updated successfully", { variant: "success" });
 
-    console.log(res);
     handleClose()
   };
 
@@ -245,7 +241,6 @@ function EditBikes({ editbikeObj, handleClose }) {
   //     //         // regDate: bikeDate,
   //     //       },
   //     //     }
-  //     // console.log(data)
   //     try {
   //       // alert('saveed')
   //       const data = await addBikeMuation({
@@ -279,7 +274,6 @@ function EditBikes({ editbikeObj, handleClose }) {
   //         },
   //       }).unwrap();
   //       // TODO extra login
-  //       console.log(data.data);
   //       enqueueSnackbar(data.message, { variant: "success" });
   //       setAddress("");
   //       setCity("");
@@ -465,11 +459,8 @@ function EditBikes({ editbikeObj, handleClose }) {
                     value={bikeDate}
                     onChange={setBikeDate}
                     // onChange={(newValue) => {
-                    //   // console.log(newValue)
                     //   // setWorkList({ ...workList, start_date: newValue });
                     //   setBikeDate(moment(newValue).format("YYYY-MM-DD"));
-                    //   console.log(newValue);
-                    //   console.log(moment(newValue).format("YYYY-MM-DD"));
                     //   // setValue(newValue);
                     // }}
                     renderInput={(params) => <TextField {...params} />}

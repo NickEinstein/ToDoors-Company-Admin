@@ -60,9 +60,7 @@ function Dashboard(props) {
   const [show, setshow] = React.useState();
   const [companyMonthly, setCompanyMonthly] = useState();
   const handleChange = (event) => {
-    console.log(event);
     setEarnings(!earnings);
-    // console.log(event);
   };
 
   const switsh = () => setshow(!show);
@@ -88,7 +86,6 @@ function Dashboard(props) {
     }),
 
     onSubmit: async (values) => {
-      console.log(values);
       // localStorage.setItem('location', values.location)
       redirect();
 
@@ -138,7 +135,6 @@ function Dashboard(props) {
 
   const allCompanyRiderTripsStats =
     getRiderTripStatisticsQueryResult?.data?.data;
-  console.log(allCompanyRiderTripsStats);
 
   //  riderTripStatics;
 

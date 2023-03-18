@@ -30,11 +30,7 @@ import { Button, Card, CardActions, CardContent, Input, Divider, Select, TextFie
 import { useNavigate } from 'react-router-dom';
 
 function WallCards(props) {
-  const [age, setAge] = React.useState('');
-  const handleChange = (event) => {
-    setAge(event.target.value);
-    console.log(event)
-  };
+  
   const history = useNavigate();
 
 
@@ -58,14 +54,11 @@ function WallCards(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values)
-      // localStorage.setItem('location', values.location)
       redirect()
 
       try {
         const data = await loginMuation({ data: values }).unwrap();
         // TODO extra login
-        // redirect()
         enqueueSnackbar("Logged in successful", { variant: "success" });
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
@@ -76,10 +69,7 @@ function WallCards(props) {
   });
 
 
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
-
+  
   return (
    
     <div className=''>
@@ -116,7 +106,6 @@ function WallCards(props) {
        
       </CardContent>
       
-        {/* <Button size="small">Learn More</Button> */}
     </Card>
     </div>
   );

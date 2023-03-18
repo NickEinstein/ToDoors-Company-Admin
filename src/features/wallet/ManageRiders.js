@@ -95,14 +95,12 @@ getTotalEarningsAndAvailableBalance()
   
     
     const openModal = (bol) => {
-      console.log('hi')
       setCloseModal(!closeModal);
       // setSuspend(bol);
     };
   
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event);
   };
   const history = useNavigate();
 
@@ -150,11 +148,9 @@ getTotalEarningsAndAvailableBalance()
     //     data: zz,
     //   }).unwrap();
     //   // TODO extra login
-    //   console.log(data.data);
     //   enqueueSnackbar(data.message, { variant: "success" });
     //   // redirect();
     // } catch (error) {
-    //   console.log(error.data);
     //   enqueueSnackbar(error?.data?.message, "Failed to login", {
     //     variant: "error",
     //   });

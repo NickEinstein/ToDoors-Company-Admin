@@ -57,7 +57,6 @@ function Trips(props) {
   const [riderId, setRiderId] = React.useState();
   const handleChange = (event) => {
     setRiderId(event.target.value);
-    console.log(event.target.value);
   };
   const history = useNavigate();
 
@@ -67,7 +66,6 @@ function Trips(props) {
 
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data?.data;
-  console.log(user);
 
   const getHistoryQueryResult = UserApi?.useGetHistoryQuery({
     to: end_date,
@@ -75,15 +73,12 @@ function Trips(props) {
     riderId: riderId,
   });
 
-  console.log(start_date)
 
   const allHistory = getHistoryQueryResult?.data?.data;
-  console.log(allHistory);
 
   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
   const allBikes = getAllBikesQueryResult?.data?.data;
-  console.log(allBikes)
 
   function createData(
     paymentStatus,
@@ -266,7 +261,6 @@ function Trips(props) {
       //   password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
       // localStorage.setItem('location', values.location)
       redirect();
 
@@ -338,11 +332,8 @@ function Trips(props) {
                     // label="Basic example"
                     value={start_date}
                     onChange={(newValue) => {
-                      // console.log(newValue)
                       // setWorkList({ ...workList, start_date: newValue });
                       setStart_date(moment(newValue).format("YYYY-MM-DD"));
-                      console.log(newValue);
-                      console.log(moment(newValue).format("YYYY-MM-DD"));
                       // setValue(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
@@ -353,11 +344,8 @@ function Trips(props) {
                     // label="Basic example"
                     value={end_date}
                     onChange={(newValue) => {
-                      // console.log(newValue)
                       // setWorkList({ ...workList, start_date: newValue });
                       setEnd_date(moment(newValue).format("YYYY-MM-DD"));
-                      console.log(newValue);
-                      console.log();
                       // setValue(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}

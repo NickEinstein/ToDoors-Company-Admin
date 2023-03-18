@@ -42,7 +42,6 @@ function ManageCompanyCard(props) {
   const [age, setAge] = React.useState("");
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event);
   };
   const history = useNavigate();
 
@@ -65,7 +64,6 @@ function ManageCompanyCard(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
       // localStorage.setItem('location', values.location)
       redirect();
 

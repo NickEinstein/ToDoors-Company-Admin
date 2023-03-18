@@ -49,7 +49,6 @@ export default function PermanentDrawerLeft() {
  const location = useLocation();
  const currentUrl = location.pathname;
 
- console.log(currentUrl);
 
   const [outcasts, setOutcasts] = React.useState([
     { name: "Logout", linx: RouteEnum.HOME, image: logouts },
@@ -131,7 +130,6 @@ export default function PermanentDrawerLeft() {
   ]);
 
   const redirect = (push) => {
-    console.log(push);
     history(push);
     // logout()
   };
@@ -142,14 +140,12 @@ changeColorOnActive()
 
   // const logout = (push) => {
   //   localStorage.removeItem("il");
-  //   console.log('hi')
   //   history(push);
   // };
 
   // const pat =
 
   const changeColorOnActive = (num) => {
-    // console.log(num)
     let k = pat.map((e, index) => ({
       key: e.name,
       name: e.name,
@@ -161,7 +157,6 @@ changeColorOnActive()
       color: e.d == currentUrl ? true : false,
     }));
 
-    console.log(k)
 
     
 

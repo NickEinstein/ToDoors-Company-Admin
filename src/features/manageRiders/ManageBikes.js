@@ -16,7 +16,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import toDoorLogo from "images/Ellipse 30.png";
 // import ManageCompanyCard from 'common/ManageCompanyCard'
-import ManageTripsTable from "./ManageTripsTable";
+import ManageTripsTable from "./ManageBikesTable";
 // import { RouteEnum } from "constants/RouteConstants";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
@@ -79,10 +79,8 @@ function Trips(props) {
 
   // const [open, setOpen] = React.useState("");
   const [opens, setOpens] = React.useState(false);
-  const [age, setAge] = React.useState("");
   const [show, setShow] = React.useState(false);
   const [route, setRoute] = React.useState({});
-  const [b, setb] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -94,16 +92,11 @@ function Trips(props) {
     getBikes()
   };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-    console.log(event);
-  };
+ 
   const history = useNavigate();
-  console.log("hi");
 
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
-  console.log(user);
 
   // const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
@@ -125,14 +118,11 @@ function Trips(props) {
       auth: true,
     });
     setAllBikez(res?.data?.data.sort((a, b) => a.created_at - b.created_at).reverse());
-    console.log(res?.data?.data.sort((a, b) => a.created_at - b.created_at));
-    console.log(res?.data?.data);
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();
 
   const toDelete = async (userId) => {
-    console.log(userId);
     try {
       const data = await deleteBikeMuation({
         data: { userId },
@@ -151,7 +141,6 @@ function Trips(props) {
 
   const toEdit = async (obj) => {
     handleClickOpen()
-    console.log(obj?.obj);
     setEditbikeObj(obj?.obj);
   };
 
@@ -205,8 +194,6 @@ function Trips(props) {
     )
   );
 
-  console.log(raws);
-  // console.log(allBikes?.map((e) => e._id));
   const rows = [
     createData(
       "Lagos",
@@ -295,7 +282,6 @@ function Trips(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
       // localStorage.setItem('location', values.location)
       redirect();
 

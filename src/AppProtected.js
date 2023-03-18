@@ -63,7 +63,7 @@ const ROUTES = configureRoutes([
   },
   {
     path: RouteEnum.TRIPS,
-    element: lazy(() => import("features/manageriders/Trips")),
+    element: lazy(() => import("features/manageriders/ManageBikes")),
   },
   {
     path: RouteEnum.MAPS,
@@ -71,7 +71,7 @@ const ROUTES = configureRoutes([
   },
   {
     path: RouteEnum.ADDRIDERS,
-    element: lazy(() => import("features/addriders/Support")),
+    element: lazy(() => import("features/addriders/AddRider")),
   },
   {
     path: RouteEnum.PROFILE,

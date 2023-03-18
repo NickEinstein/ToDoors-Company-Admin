@@ -53,7 +53,6 @@ function SupportChart({ setOpen, open }) {
   const [show, setShow] = useState(false);
   const handleShow = (event) => {
     setShow(!show);
-    // console.log("john");
   };
   const history = useNavigate();
 
@@ -61,60 +60,12 @@ function SupportChart({ setOpen, open }) {
     history("/complete-signUp");
   };
 
-  const top100Films = [
-    { label: "Edo State", year: 1994 },
-    { label: "Oredo", year: 1972 },
-  ];
 
-  const tableArray = [
-    {
-      image: gigLogo,
-      name: "Nickky Samuel jonas  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
 
-    {
-      image: gigLogo,
-      name: "John jimmy Samuel  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-  ];
-
-  const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
-  const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      username: yup.string().trim().required(),
-      password: yup.string().trim().required(),
-    }),
-    onSubmit: async (values) => {
-      console.log(values);
-      // localStorage.setItem('location', values.location)
-      redirect();
-
-      try {
-        const data = await loginMuation({ data: values }).unwrap();
-        // TODO extra login
-        // redirect()
-        enqueueSnackbar("Logged in successful", { variant: "success" });
-      } catch (error) {
-        enqueueSnackbar(error?.data?.message, "Failed to login", {
-          variant: "error",
-        });
-      }
-    },
-  });
+ 
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;

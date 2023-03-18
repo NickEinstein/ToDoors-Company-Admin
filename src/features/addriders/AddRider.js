@@ -36,7 +36,9 @@ import {
   Card,
   CardActions,
   CardContent,
+  IconButton,
   Input,
+  InputAdornment,
   MenuItem,
   Rating,
   Select,
@@ -79,7 +81,6 @@ function ManageRiders(props) {
   const [imgData, setImgData] = useState(null);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
-  //   console.log(event)
   // };
   const history = useNavigate();
 
@@ -87,112 +88,15 @@ function ManageRiders(props) {
     history(RouteEnum.TRIPS);
   };
 
-  const tableArray = [
-    {
-      image: gigLogo,
-      name: "Taiwo Daniel  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-      message: "Hello",
-    },
+ 
 
-    {
-      image: gigLogo,
-      name: "Triumph Boyace  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      message: "Hi",
-      ratings: "4",
-    },
-    {
-      image: gigLogo,
-      name: "Tina Kumi  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      message: "I've been waiting",
-      ratings: "4",
-    },
-  ];
 
-  const bikerx = {
-    fname: null,
-    lname: null,
-    email: "rider2@gmail.com",
-    phoneNo: "+23490762795",
-    password: "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
-    dob: "1993-12-07T23:00:00.000Z",
-    bloodGroup: "B+",
-    address: null,
-    city: "Maryland",
-    state: "Lagos",
-    country: "Nigeria",
-
-    profileUrl:
-      "http://res.cloudinary.com/todoorapp/image/upload/v1505805106/noun_17237_agwqgt.png",
-    userType: "rider",
-    bikeDetails: {
-      type: "bike",
-      company: "Maruti Suzuki",
-      regNo: "NYC 123",
-      RC_ownerName: null,
-      bikeNo: null,
-      bikeModel: "Swift Dzire",
-      regDate: "2016-12-31T23:00:00.000Z",
-    },
-    licenceDetails: {
-      licenceNo: null,
-      issueDate: null,
-      expDate: null,
-    },
-    bankDetails: {
-      accountNo: null,
-      holderName: null,
-      bank: null,
-    },
-    companyId: "635fbe0bbfadb9f5ea56afc2",
-  };
 
   const authUser = useAuthUser();
 
-  console.log(authUser);
 
   const { enqueueSnackbar } = useSnackbar();
   const [addBikeMuation, addBikeMutationResult] = UserApi.useAddBikeMutation();
-
-  //   const formik = useFormik({
-  //     initialValues: {
-  //     email:"",
-  //     phoneNo: "+2348094432806",
-  //     password:"",
-  //     userType: "rider",
-  //     companyId:''
-  // },
-
-  //     validationSchema: yup.object({
-  //       email: yup.string().trim().required(),
-  //       password: yup.string().trim().required(),
-  //     }),
-  //     onSubmit: async (values) => {
-  //       console.log(values);
-  //       localStorage.setItem("il", true);
-  //       // redirect();
-  //       // history('/dashboard')
-
-  //       try {
-  //         const data = await addBikeMuation({ data: values }).unwrap();
-  //         // TODO extra login
-  //         console.log(data.data);
-  //         enqueueSnackbar("Logged in successful", { variant: "success" });
-  //         redirect();
-  //       } catch (error) {
-  //         enqueueSnackbar(error?.data?.message, "Failed to login", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     },
-  //   });
-  console.log(show);
 
   const onSubmit = async () => {
     if (ridersPicture) {
@@ -200,16 +104,12 @@ function ManageRiders(props) {
         const data = await addBikeMuation({
           data: {
             email: email,
-            phoneNo: phoneNumber,
+            phoneNo: `+234${phoneNumber}`,
             password: password,
             userType: "rider",
             companyId: authUser._id,
             fname: name,
-            // lname: null,
-            // email: "rider2@gmail.com",
-            // phoneNo: "",
-            // password:
-            //   "$2b$10$K2BQR9MZOVjVmSIjleNPuewEgJdsav8mXAs4AfaJfA3gO2k0FopaG",
+
             dob: "1993-12-07T23:00:00.000Z",
             bloodGroup: "B+",
             address: address,
@@ -228,7 +128,6 @@ function ManageRiders(props) {
           },
         }).unwrap();
         // TODO extra login
-        console.log(data.data);
         onUpload(data?.data?.user?._id);
 
         enqueueSnackbar(data.message, { variant: "success" });
@@ -273,7 +172,6 @@ function ManageRiders(props) {
     //         // regDate: bikeDate,
     //       },
     //     }
-    // console.log(data)
     if (ridersPicture) {
       try {
         // alert('saveed')
@@ -308,7 +206,6 @@ function ManageRiders(props) {
           },
         }).unwrap();
         // TODO extra login
-        console.log(data.data);
         onUpload(data?.data?.user?._id);
         enqueueSnackbar(data.message, { variant: "success" });
         setAddress("");
@@ -333,12 +230,22 @@ function ManageRiders(props) {
       });
   };
 
+  const handlePhoneNumber = (e) => {
+    if (e.target.value.length > 0 && e.target.value.charAt(0) !== "0") {
+      setPhoneNumber(e.target.value);
+    } else {
+      setPhoneNumber("");
+
+      enqueueSnackbar("Number cannot start with 0", {
+        variant: "error",
+      });
+    }
+  };
+
   const onFileChange = (event) => {
     // Update the state
     // setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
     if (event.target.files[0]) {
-      console.log("picture: ", event.target.files);
       //  setPicture(event.target.files[0]);
       const reader = new FileReader();
       reader.addEventListener("load", () => {
@@ -358,7 +265,6 @@ function ManageRiders(props) {
 
     // Details of the uploaded file
     setRidersPictureName(selectedFile.name);
-    console.log(selectedFile.name);
     setRidersPicture(formData);
     // onUpload();
     // Request made to the backend api
@@ -391,51 +297,44 @@ function ManageRiders(props) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
 
-   const top100Films = 
-     states.map((e) => ({
-       title: e?.name,
-       year: e.id,
-       alias: e?.alias,
-     }))
-   
+  const top100Films = states.map((e) => ({
+    title: e?.name,
+    year: e.id,
+    alias: e?.alias,
+  }));
 
-     const top10Films = cities.map((e) => ({
-       title: e?.name,
-       year: e.id,
-       alias: e?.alias,
-     }));
-   
+  const top10Films = cities.map((e) => ({
+    title: e?.name,
+    year: e.id,
+    alias: e?.alias,
+  }));
 
-   useEffect(() => {
-     getStates();
-   }, []);
+  useEffect(() => {
+    getStates();
+  }, []);
 
-   const getStates = async () => {
-     const res = await get({
-       endpoint: `states`,
-       // body: { ...payload },
-       auth: false,
-     });
-     setStates(res?.data?.data)
-   };
+  const getStates = async () => {
+    const res = await get({
+      endpoint: `states`,
+      // body: { ...payload },
+      auth: false,
+    });
+    setStates(res?.data?.data);
+  };
 
-    // useEffect(() => {
-    //   getStates();
-    // }, []);
+  // useEffect(() => {
+  //   getStates();
+  // }, []);
 
-    const getCities = async (val) => {
-
-      const pp = states.find((e)=>e.name == val)
-      console.log(pp)
-      const res = await get({
-        endpoint: `regions/${pp.alias}`,
-        // body: { ...payload },
-        auth: false,
-      });
-      setCities(res?.data?.data);
-    };
-
- 
+  const getCities = async (val) => {
+    const pp = states.find((e) => e.name == val);
+    const res = await get({
+      endpoint: `regions/${pp.alias}`,
+      // body: { ...payload },
+      auth: false,
+    });
+    setCities(res?.data?.data);
+  };
 
   return (
     <div className="add-bike">
@@ -477,17 +376,24 @@ function ManageRiders(props) {
           <div className="w-full ">
             <p className="font-bold">Drivers Phone No.</p>
             <TextField
-              className="w-full bg-[#EBEBEB]"
-              multiline={true}
-              inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
-              type="number"
+            size="medium"
+              className="w-full bg-[#EBEBEB] border-none"
+            
+              InputProps={{
+                
+                startAdornment: (
+                  <InputAdornment position="start">
+                     +234
+                  </InputAdornment>
+                ),
+              }}
+              // type="number"
               value={phoneNumber}
-              rows={1.5}
+             
               onChange={(e) => {
                 const regex = /^[0-9\b]+$/;
                 if (e.target.value === "" || regex.test(e.target.value)) {
-                  setPhoneNumber(e.target.value);
-                  console.log(e.target.value);
+                  handlePhoneNumber(e);
                   // setNum(e.target.value);
                 }
               }}
@@ -515,12 +421,9 @@ function ManageRiders(props) {
                     // label="Basic example"
                     value={liscence}
                     onChange={(newValue) => {
-                      // console.log(newValue)
                       // setWorkList({ ...workList, start_date: newValue });
                       // setStart_date(moment(newValue).format("YYYY-MM-DD"));
-                      // console.log(newValue);
 
-                      console.log(moment(newValue).format("YYYY-MM-DD"));
                       setLiscence(moment(newValue).format("YYYY-MM-DD"));
                       // setValue(newValue);
                     }}
@@ -688,11 +591,8 @@ function ManageRiders(props) {
                     value={bikeDate}
                     onChange={setBikeDate}
                     // onChange={(newValue) => {
-                    //   // console.log(newValue)
                     //   // setWorkList({ ...workList, start_date: newValue });
                     //   setBikeDate(moment(newValue).format("YYYY-MM-DD"));
-                    //   console.log(newValue);
-                    //   console.log(moment(newValue).format("YYYY-MM-DD"));
                     //   // setValue(newValue);
                     // }}
                     renderInput={(params) => <TextField {...params} />}
@@ -706,20 +606,20 @@ function ManageRiders(props) {
         <div className="flex justify-between my-10">
           <div className="w-full mr-[5%]">
             <p className="font-bold">Create Temporary Password</p>
-            <TextField
+            <PasswordTextField
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-[#EBEBEB]"
               // value={name}
-              multiline={true}
+              // multiline={true}
               rows={1.5}
               value={password}
             />
           </div>
           <div className="w-full ">
             <p className="font-bold">Confirm Password</p>
-            <TextField
+            <PasswordTextField
               className="w-full bg-[#EBEBEB]"
-              multiline={true}
+              // multiline={true}
               rows={1.5}
               onChange={(e) => setConfirmPassword(e.target.value)}
               value={confirmPassword}

@@ -40,10 +40,8 @@ function Home(props) {
   const [age, setAge] = React.useState("");
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event);
   };
 
-  // console.log(localStorage.getItem('authUser'))
   const history = useNavigate();
 
   const redirect = () => {
@@ -57,7 +55,6 @@ function Home(props) {
     history("/forgot-password");
   };
 
-  // console.log(localStorage.getItem('authUser'))
 
   // const authUser = useAuthUser();
 
@@ -74,7 +71,6 @@ function Home(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
       localStorage.setItem("il", true);
       redirect();
       // history('/dashboard')
@@ -141,7 +137,6 @@ function Home(props) {
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
-                //   // console.log(e)
                 //   // localStorage.setItem ('location', e.target.value)
                 // }}
                 name="username"
@@ -159,7 +154,6 @@ function Home(props) {
                 // onChange={handleChange}
                 //     onChange={(e)=>{
                 //   alert('k')
-                //   // console.log(e)
                 //   // localStorage.setItem ('password', e.target.value)
                 // }}
                 name="password"

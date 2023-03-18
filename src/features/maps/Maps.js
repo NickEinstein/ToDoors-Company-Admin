@@ -68,7 +68,6 @@ function Trips({ switsh }) {
   const [age, setAge] = useState("");
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event);
   };
 
   const [data, setData] = useState(null);
@@ -83,7 +82,6 @@ function Trips({ switsh }) {
          //  body: { ...payload },
          auth: true,
        });
-       console.log(res);
        //  setAllBikez(res.data.data);
      };
 
@@ -129,8 +127,6 @@ function Trips({ switsh }) {
       timeDelay,
     };
   }
-  console.log(process.env.TO_DOOR_MAP_API_KEY);
-  console.log(process.env.REACT_APP_SOFTWORK_API);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",

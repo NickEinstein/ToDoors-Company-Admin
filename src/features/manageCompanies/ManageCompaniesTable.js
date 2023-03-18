@@ -41,7 +41,6 @@ function ManageCompaniesTable({tableArray}) {
   const [show, setShow] = React.useState('');
   // const handleChange = (event) => {
   //   setAge(event.target.value);
-  //   console.log(event)
   // };
   const history = useNavigate();
    function numberWithCommas(x) {
@@ -87,7 +86,6 @@ const openBelow =()=>{
 }
 
 
-console.log(tableArray)
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }

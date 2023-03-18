@@ -50,7 +50,6 @@ function ManageRiders(props) {
 
  const authUser = useAuthUser();
 
- console.log(authUser);
 
  
 
@@ -68,12 +67,10 @@ function ManageRiders(props) {
   const [selectedFile, setSelectedFile] = useState(true);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
-  //   console.log(event)
   // };
   const history = useNavigate();
   // const authUser = useAuthUser();
 
-//   console.log(authUser)
 
   const redirect = () => {
     // history('/complete-signUp');
@@ -81,7 +78,6 @@ function ManageRiders(props) {
 
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
-  console.log(user);
 
 // address;
 // city;
@@ -146,7 +142,6 @@ function ManageRiders(props) {
   const  onFileChange = (event) => {
     // Update the state
     // setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
 onFileUpload(event.target.files[0])
 
   };
@@ -171,7 +166,6 @@ onFileUpload(event.target.files[0])
     formData.append("image", selectedFile);
 
     // Details of the uploaded file
-    console.log(selectedFile);
 onUpload(formData)
     // Request made to the backend api
     // Send formData object
@@ -206,7 +200,6 @@ onUpload(formData)
   //       password: yup.string().trim().required(),
   //     }),
   //     onSubmit: async (values) => {
-  //       console.log(values);
   //       localStorage.setItem("il", true);
   //       // redirect();
   //       // history('/dashboard')
@@ -214,7 +207,6 @@ onUpload(formData)
   //       try {
   //         const data = await updateUserMuation({ data: values }).unwrap();
   //         // TODO extra login
-  //         console.log(data.data);
   //         enqueueSnackbar("Logged in successful", { variant: "success" });
   //         redirect();
   //       } catch (error) {
@@ -224,7 +216,6 @@ onUpload(formData)
   //       }
   //     },
   //   });
-  console.log(show);
 
   const onSubmit = async () => {
     // tryNewPost()
@@ -235,11 +226,9 @@ onUpload(formData)
         data: yy
       }).unwrap();
       // TODO extra login
-      console.log(data.data);
       enqueueSnackbar(data.message, { variant: "success" });
       // redirect();
     } catch (error) {
-      console.log(error.data)
       enqueueSnackbar(error?.data?.message, "Failed to login", {
         variant: "error",
       });
@@ -269,11 +258,9 @@ onUpload(formData)
     //     data: zz,
     //   }).unwrap();
     //   // TODO extra login
-    //   console.log(data.data);
     //   enqueueSnackbar(data.message, { variant: "success" });
     //   // redirect();
     // } catch (error) {
-    //   console.log(error.data);
     //   enqueueSnackbar(error?.data?.message, "Failed to login", {
     //     variant: "error",
     //   });
