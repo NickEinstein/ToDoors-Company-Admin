@@ -117,11 +117,9 @@ function Trips(props) {
       //  body: { ...payload },
       auth: true,
     });
-<<<<<<<< HEAD:src/features/trips/ManageBikes.js
-    setAllBikez(res?.data?.data.sort((a, b) => a.created_at - b.created_at).reverse());
-========
+
     setAllBikez(res.data.data);
->>>>>>>> parent of 7df82d9 (latest):src/features/trips/Trips.js
+
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();

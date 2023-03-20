@@ -56,8 +56,9 @@ import SupportChart from "./SupportChart";
 import ToDoorSearch from "common/ToDoorSearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 // import { post,  } from "services/fetch";
-import { post } from "services/fetchUpload";
-import { get } from "services/fetLocation";
+import { post,get } from "services/fetchUpload";
+// import { get } from "services/fetLocation";
+
 function ManageRiders(props) {
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");

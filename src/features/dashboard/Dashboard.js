@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import { MdRefresh, MdOutlineSearch, MdSearch } from "react-icons/md";
@@ -61,7 +61,6 @@ function Dashboard(props) {
   const [companyMonthly, setCompanyMonthly] = useState();
   const handleChange = (event) => {
     console.log(event)
-    setAge(event.target.value);
     console.log(event);
   };
 
