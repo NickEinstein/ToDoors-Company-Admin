@@ -5,7 +5,7 @@ import { Navigate, useRoutes } from "react-router-dom";
 import Suspense from "common/Suspense";
 import { configureRoutes } from "utils/RouteUtils";
 import { RouteEnum } from "constants/RouteConstants";
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 import SideBar from "features/sideBar/SideBar";
 
 function AppProtected(props) {
@@ -16,14 +16,20 @@ function AppProtected(props) {
   return (
     <>
       {/* <Container maxWidth="xl"> */}
-      {
-        <div className="flex ">
-          <SideBar />
-          <Box className="px-8" component="" sx={{ flexGrow: 1 }}>
-            <Suspense>{routes}</Suspense>
-          </Box>
-        </div>
-      }
+      { 
+     
+      <div className="flex ">
+        <SideBar/>
+        <Box
+        className="px-8"
+        component=""
+        sx={{ flexGrow: 1,  }}
+      >
+          <Suspense>{routes}</Suspense>
+
+         </Box>
+        
+      </div>}
 
       {/* </Container> */}
     </>
@@ -59,11 +65,11 @@ const ROUTES = configureRoutes([
   },
   {
     path: RouteEnum.MANAGE_RIDERS,
-    element: lazy(() => import("features/wallet/Wallet")),
+    element: lazy(() => import("features/manageRider/ManageRiders")),
   },
   {
     path: RouteEnum.TRIPS,
-    element: lazy(() => import("features/manageriders/ManageBikes")),
+    element: lazy(() => import("features/trips/Trips")),
   },
   {
     path: RouteEnum.MAPS,

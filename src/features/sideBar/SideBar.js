@@ -36,8 +36,6 @@ import { RiCarLine, RiShieldLine } from "react-icons/ri";
 import { IoCarSharp } from "react-icons/";
 import { MdAddBox } from "react-icons/md";
 import useLogout from "hooks/useLogout";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 ;
 const drawerWidth = 240;
@@ -45,9 +43,6 @@ const drawerWidth = 240;
 export default function PermanentDrawerLeft() {
   const history = useNavigate();
   const { logout } = useLogout();
-
- const location = useLocation();
- const currentUrl = location.pathname;
 
 
   const [outcasts, setOutcasts] = React.useState([
@@ -134,10 +129,6 @@ export default function PermanentDrawerLeft() {
     // logout()
   };
 
-  useEffect(()=>{
-changeColorOnActive()
-  },[currentUrl])
-
   // const logout = (push) => {
   //   localStorage.removeItem("il");
   //   history(push);
@@ -146,15 +137,16 @@ changeColorOnActive()
   // const pat =
 
   const changeColorOnActive = (num) => {
+    console.log(num)
     let k = pat.map((e, index) => ({
       key: e.name,
       name: e.name,
       d: e.d,
-      imageboolean: e.d == currentUrl ? false : true,
+      imageboolean: num == index ? false : true,
 
       image: e.image,
       image2: e.image2,
-      color: e.d == currentUrl ? true : false,
+      color: num == index ? true : false,
     }));
 
 
@@ -197,7 +189,7 @@ changeColorOnActive()
           {pat.map((text, index) => (
             <ListItem
               // key={index}
-              className={index === 0 ? "mb-5" : ""}
+              className={index === 0 ? "mb-12" : ""}
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
                 color: text.color ? "white" : "",

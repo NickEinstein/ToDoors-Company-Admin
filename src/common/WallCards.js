@@ -141,7 +141,7 @@ function WallCards(props) {
                   : "text-left font- text-primary-main z-10 "
               }
             >
-              {props.count} <span className="text-ssm">Naira</span>
+              {props.count || 20} <span className="text-ssm">Naira</span>
             </Typography>
 
             {props.button && (

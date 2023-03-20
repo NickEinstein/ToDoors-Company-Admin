@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import { MdRefresh, MdOutlineSearch, MdSearch } from "react-icons/md";
@@ -24,7 +24,7 @@ import background from "images/background.png";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
 import trustedBy2 from "images/Rectangle 7.png";
-import { get } from "services/fetLocation";
+import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
@@ -50,6 +50,7 @@ import { AccountCircle } from "@mui/icons-material";
 import ToDoorSearch from "common/ToDoorSearch";
 import ManageCompanyCard from "features/manageCompanies/ManageCompanyCard";
 import NewWallCards from "common/NewWallCards";
+import TripsMap from "features/trips/TripsMap";
 import Maps from "features/maps/Maps";
 
 function Dashboard(props) {
@@ -59,10 +60,12 @@ function Dashboard(props) {
   const [show, setshow] = React.useState();
   const [companyMonthly, setCompanyMonthly] = useState();
   const handleChange = (event) => {
-    setEarnings(!earnings);
+    console.log(event)
+    setAge(event.target.value);
+    console.log(event);
   };
 
-  const switsh = () => setshow(!show);
+  const switsh = ()=> setshow(!show)
   const history = useNavigate();
 
   const redirect = () => {
@@ -83,7 +86,7 @@ function Dashboard(props) {
       username: yup.string().trim().required(),
       password: yup.string().trim().required(),
     }),
-
+    
     onSubmit: async (values) => {
       // localStorage.setItem('location', values.location)
       redirect();
@@ -101,39 +104,43 @@ function Dashboard(props) {
     },
   });
 
-  function numberWithCommas(x) {
-    // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    //  formState.target_amount=cleanupNumber(serPrice.value)
-    return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+function numberWithCommas(x) {
+  // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //  formState.target_amount=cleanupNumber(serPrice.value)
+  return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
   // if (authUser.accessToken) {
   //   return <Navigate to={RouteEnum.HOME} />;
   // }
-  // const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery(
-  //   {}
-  // );
-  // const companyStatistics = getCompanyStatisticsQueryResult?.data;
-  const getMonthlyEarningsResult = UserApi?.useGetEarningsByMonthQuery();
-  const getMonthlyTripsResult = UserApi?.useGetTripsByMonthQuery();
+// const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery(
+//   {}
+// );
+// const companyStatistics = getCompanyStatisticsQueryResult?.data;
+   const getMonthlyEarningsResult = UserApi?.useGetEarningsByMonthQuery();
+   const getMonthlyTripsResult = UserApi?.useGetTripsByMonthQuery();
 
-  const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery(
-    {}
-  );
-  const companyStatistics = getCompanyStatisticsQueryResult?.data;
 
-  const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
+const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery({});
+const companyStatistics = getCompanyStatisticsQueryResult?.data;
 
-  const allBikes = getAllBikesQueryResult?.data?.data;
 
-  const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
 
-  const getRiderTripStatisticsQueryResult =
-    // UserApi?.useGetRiderTripStatisticsQuery({ date: "2022-11-13" });
-    UserApi?.useGetRiderTripStatisticsQuery();
+   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
-  const allCompanyRiderTripsStats =
-    getRiderTripStatisticsQueryResult?.data?.data;
+   const allBikes = getAllBikesQueryResult?.data?.data;
+
+  
+const getUserQueryResult =
+  UserApi?.useGetUserQuery({ userId });
+
+    const getRiderTripStatisticsQueryResult =
+      // UserApi?.useGetRiderTripStatisticsQuery({ date: "2022-11-13" });
+      UserApi?.useGetRiderTripStatisticsQuery();
+
+    const allCompanyRiderTripsStats = getRiderTripStatisticsQueryResult?.data?.data;
+    console.log(allCompanyRiderTripsStats);
+
 
   //  riderTripStatics;
 
@@ -366,6 +373,7 @@ function Dashboard(props) {
   );
 }
 
+
 const listOfTrips = {
   success: true,
   message: "user trip history",
@@ -433,5 +441,5 @@ const listOfTrips = {
       riderReviewByCustomer: "great",
     },
   ],
-};
+}
 export default Dashboard;
