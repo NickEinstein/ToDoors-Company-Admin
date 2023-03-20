@@ -16,7 +16,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import toDoorLogo from "images/Ellipse 30.png";
 // import ManageCompanyCard from 'common/ManageCompanyCard'
-import ManageTripsTable from "./ManageBikesTable";
+// import ManageTripsTable from "./ManageBikesTable";
 // import { RouteEnum } from "constants/RouteConstants";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
