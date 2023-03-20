@@ -61,10 +61,10 @@ const ROUTES = configureRoutes([
     path: RouteEnum.MANAGE_RIDERS,
     element: lazy(() => import("features/wallet/Wallet")),
   },
-  {
-    path: RouteEnum.TRIPS,
-    element: lazy(() => import("features/manageriders/ManageBikes")),
-  },
+  // {
+  //   path: RouteEnum.TRIPS,
+  //   element: lazy(() => import("features/manageriders/ManageBikes")),
+  // },
   {
     path: RouteEnum.MAPS,
     element: lazy(() => import("features/maps/Maps")),
