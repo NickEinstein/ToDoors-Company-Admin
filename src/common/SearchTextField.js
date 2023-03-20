@@ -10,7 +10,6 @@ const SearchTextField = forwardRef(
   function SearchTextField(props, ref) {
     const { InputProps, ...rest } = props;
 
-    console.log("InputProps", InputProps);
     return (
       <TextField
         ref={ref}

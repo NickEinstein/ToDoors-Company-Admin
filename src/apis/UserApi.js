@@ -20,7 +20,6 @@ export const UserApi = todoorsApi.injectEndpoints({
     }),
     getCompanyStatistics: builder.query({
       query: (arg) => {
-        const { userType } = arg;
         return {
           url: `${BASE_URL}/company/companyStatistics`,
           method: "GET",

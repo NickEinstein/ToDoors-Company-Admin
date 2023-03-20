@@ -1,50 +1,19 @@
 import React, { useState } from "react";
 import UserApi from "apis/UserApi";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import { useSnackbar } from "notistack";
 import {put} from "services/fetchUpload";
-// import { Button, TextField, Typography } from "@mui/material";
-import PasswordTextField from "common/PasswordTextField";
-import { getTextFieldFormikProps } from "utils/FormikUtils";
-import { BsFillCircleFill, BsPeople } from "react-icons/bs";
 import useAuthUser from "hooks/useAuthUser";
-import { deepOrange } from "@mui/material/colors";
-import { post, get } from "services/fetch";
-
 import edit from "images/edit.svg";
-// import ManageCompanyCard from 'common/ManageCompanyCard'
-
-// import { RouteEnum } from "constants/RouteConstants";
-// import ReactDOM from 'react-dom';
-// import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
-// import trustedBy3 from "images/Rectangle 106.png";
-// import LoginHeader from './LoginHeader';
-// import trustedBy3 from './images/trustedBy-3.png'
-// import trustedBy4 from './images/trustedBy-4.png'
 import {
   Avatar,
   Button,
-  Card,
-  CardActions,
-  CardContent,
   Divider,
-  Input,
-  MenuItem,
-  Rating,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import WallCards from "common/WallCards";
-import ManageCompanyCard from "features/manageCompanies/ManageCompanyCard";
-import ManageCompaniesTable from "features/manageCompanies/ManageCompaniesTable";
-// import useAuthUser from "hooks/useAuthUser";
-
 import { RiArrowLeftSLine } from "react-icons/ri";
-// import SupportChart from "./SupportChart";
 import ToDoorSearch from "common/ToDoorSearch";
 function ManageRiders(props) {
 
@@ -59,34 +28,16 @@ function ManageRiders(props) {
   const [state, setState] = React.useState(authUser?.state);
   const [email, setEmail] = useState(authUser?.email);
   const [companyName, setCompanyName] = useState(authUser.fname);
-  const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
   const [country, setCountry] = useState(authUser?.country);
   const [userId, setUserId] = React.useState(authUser._id);
   const [showProfile, setShowProfile] = useState(true);
-  const [selectedFile, setSelectedFile] = useState(true);
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
   const history = useNavigate();
-  // const authUser = useAuthUser();
 
 
-  const redirect = () => {
-    // history('/complete-signUp');
-  };
 
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
 
-// address;
-// city;
-// phoneNumber;
-// state;
-// email;
-// companyName;
-// show;
-// country;
 
   let yy = {
         fname: companyName,
@@ -101,15 +52,6 @@ function ManageRiders(props) {
   };
 
   
-  // const getBikes = async () => {
-  //   // const deleteRider = async () => {
-  //   const res = await get({
-  //     endpoint: `api/company/bikes`,
-  //     //  body: { ...payload },
-  //     auth: true,
-  //   });
-  //   // setAllBikez(res.data.data);
-  // };
 
   const tableArray = [
     {
@@ -140,26 +82,11 @@ function ManageRiders(props) {
   ];
 
   const  onFileChange = (event) => {
-    // Update the state
-    // setSelectedFile(event.target.files[0]);
 onFileUpload(event.target.files[0])
 
   };
 
-  //  const upload = async () => {
-  //    // const deleteRider = async () => {
-  //    const res = await get({
-  //      endpoint: `api/payment/getAllBanks`,
-  //      //  body: { ...payload },
-  //      auth: true,
-  //    });
-  //    setListOfBanks(res?.data?.response?.data);
-  //    //  setAllBikez(res.data.data);
-  //  };
-
-  // On file upload (click the upload button)
   const onFileUpload = async  (selectedFile) => {
-    // Create an object of formData
     const formData = new FormData();
 
     // Update the formData object
@@ -167,14 +94,6 @@ onFileUpload(event.target.files[0])
 
     // Details of the uploaded file
 onUpload(formData)
-    // Request made to the backend api
-    // Send formData object
-    // const res = await put({
-    //   endpoint: `api/users/upload`,
-    //    body: formData,
-    //   auth: true,
-    // });
-    // axios.post("api/uploadfile", formData);
   };
      
 
@@ -186,48 +105,14 @@ onUpload(formData)
   const [updateUserUploadMuation, updateUserUploadMutationResult] =
     UserApi.useUpdateUserUploadMutation();
 
-  //   const formik = useFormik({
-  //     initialValues: {
-  //     email:"",
-  //     phoneNo: "+2348094432806",
-  //     password:"",
-  //     userType: "rider",
-  //     companyId:''
-  // },
-
-  //     validationSchema: yup.object({
-  //       email: yup.string().trim().required(),
-  //       password: yup.string().trim().required(),
-  //     }),
-  //     onSubmit: async (values) => {
-  //       localStorage.setItem("il", true);
-  //       // redirect();
-  //       // history('/dashboard')
-
-  //       try {
-  //         const data = await updateUserMuation({ data: values }).unwrap();
-  //         // TODO extra login
-  //         enqueueSnackbar("Logged in successful", { variant: "success" });
-  //         redirect();
-  //       } catch (error) {
-  //         enqueueSnackbar(error?.data?.message, "Failed to login", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     },
-  //   });
 
   const onSubmit = async () => {
-    // tryNewPost()
-    // alert('ji')
     
     try {
       const data = await updateUserMuation({
         data: yy
       }).unwrap();
-      // TODO extra login
       enqueueSnackbar(data.message, { variant: "success" });
-      // redirect();
     } catch (error) {
       enqueueSnackbar(error?.data?.message, "Failed to login", {
         variant: "error",
@@ -236,9 +121,6 @@ onUpload(formData)
   };
 
   const onUpload = async (zz) => {
-    // tryNewPost()
-    // alert('ji')
-
      const res = await put({
        endpoint: `api/users/upload`,
              body: zz,
@@ -253,23 +135,8 @@ onUpload(formData)
 
 
 
-    // try {
-    //   const data = await updateUserUploadMuation({
-    //     data: zz,
-    //   }).unwrap();
-    //   // TODO extra login
-    //   enqueueSnackbar(data.message, { variant: "success" });
-    //   // redirect();
-    // } catch (error) {
-    //   enqueueSnackbar(error?.data?.message, "Failed to login", {
-    //     variant: "error",
-    //   });
-    // }
   };
 
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
 
   return (
     <div className="add-bike">
@@ -278,7 +145,6 @@ onUpload(formData)
       <div class="">
         {!showProfile && (
           <div
-            // onClick={handleShow}
             className="flex items-center mb-2 cursor-pointer w-16 p-2"
           >
             <div
@@ -303,18 +169,8 @@ onUpload(formData)
         {showProfile && (
           <div>
             <div className="flex gap-8">
-              {/* <Avatar
-              sx={{ bgcolor: deepOrange[500] }}
-              alt="Remy Sharp"
-              src="/broken-image.jpg"
-            >
-              B
-            </Avatar> */}
-              {/* <Avatar
-              sx={{ bgcolor: deepOrange[500] }}
-              alt="Remy Sharp"
-              src="/broken-image.jpg"
-            /> */}
+             
+             
               <div className="flex">
                 <Avatar
                   sx={{ width: 100, height: 100 }}
@@ -451,25 +307,6 @@ onUpload(formData)
                 Upload Profile Picture
               </Button>
             </label>
-            {/* <div className="flex justify-between my-10">
-            <div className="w-full mr-[5%]">
-              <p className="font-bold">Create Temporary Password</p>
-              <TextField
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#EBEBEB]"
-                multiline={true}
-                rows={1.5}
-              />
-            </div>
-            <div className="w-full ">
-              <p className="font-bold">Confirm Password</p>
-              <TextField
-                className="w-full bg-[#EBEBEB]"
-                multiline={true}
-                rows={1.5}
-              />
-            </div>
-          </div> */}
             <div className="w-full mb-8 mt-4">
               <Button onClick={onSubmit} className="h-12 w-2/6 bg-primary-main">
                 Update Company Profile

@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Container, Toolbar, Typography, useMediaQuery } from "@mui/material";
+import {  useMediaQuery } from "@mui/material";
 import { MediaQueryBreakpointEnum } from "constants/Global";
 import { Navigate, useRoutes } from "react-router-dom";
 import Suspense from "common/Suspense";
@@ -9,13 +9,12 @@ import Box from "@mui/material/Box";
 import SideBar from "features/sideBar/SideBar";
 
 function AppProtected(props) {
-  const islg = useMediaQuery(MediaQueryBreakpointEnum.lg);
-  const ismd = useMediaQuery(MediaQueryBreakpointEnum.md);
+  // const islg = useMediaQuery(MediaQueryBreakpointEnum.lg);
+  // const ismd = useMediaQuery(MediaQueryBreakpointEnum.md);
 
   const routes = useRoutes(ROUTES);
   return (
     <>
-      {/* <Container maxWidth="xl"> */}
       {
         <div className="flex ">
           <SideBar />
@@ -25,7 +24,6 @@ function AppProtected(props) {
         </div>
       }
 
-      {/* </Container> */}
     </>
   );
 }
@@ -35,19 +33,14 @@ export default AppProtected;
 const ROUTES = configureRoutes([
   {
     path: "*",
-    // element: lazy(() => import("features/home/Home")),
 
     element: <Navigate to={RouteEnum.DASHBOARD} replace />,
   },
-  // {
-  //   path: RouteEnum.HOME,
-  //   element: lazy(() => import("features/home/Home")),
-  // },
+ 
   {
     path: RouteEnum.FORGOTPASSWORD,
     element: lazy(() => import("features/login/ForgotPassword")),
 
-    // element: <Navigate to={RouteEnum.HOME} replace />,
   },
   {
     path: RouteEnum.DASHBOARD,

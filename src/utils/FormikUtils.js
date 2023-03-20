@@ -20,9 +20,6 @@ export function getCheckFieldFormikProps(
   // unCheckedValue = false
 ) {
   const textFieldProps = getTextFieldFormikProps(formik, key);
-  // if (key === "allowAttributeConfiguration") {
-  //   console.log(textFieldProps.value);
-  // }
   const value =
     typeof checkedValue === "boolean"
       ? !!textFieldProps.value

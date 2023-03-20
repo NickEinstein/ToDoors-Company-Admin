@@ -4,44 +4,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
 import { useSnackbar } from "notistack";
-import { post, get, put } from "services/fetch";
-
-// import { Button, TextField, Typography } from "@mui/material";
-import PasswordTextField from "common/PasswordTextField";
-import { getTextFieldFormikProps } from "utils/FormikUtils";
-import useAuthUser from "hooks/useAuthUser";
-import { Navigate } from "react-router-dom";
-import { RouteEnum } from "constants/RouteConstants";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import toDoorLogo from "images/Ellipse 30.png";
-// import ManageCompanyCard from 'common/ManageCompanyCard'
-// import ManageTripsTable from "./ManageBikesTable";
-// import { RouteEnum } from "constants/RouteConstants";
-// import ReactDOM from 'react-dom';
-// import trustedBy1 from './images/Vector.png'
-// import BorderColorIcon from "@mui/icons-material/BorderColorj";
 import gigLogo from "images/Ellipse 56.png";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import edit from "images/edit.svg";
 import { GiTrashCan } from "react-icons/gi";
-import trustedBy3 from "images/Rectangle 106.png";
-// import LoginHeader from './LoginHeader';
-// import trustedBy3 from './images/trustedBy-3.png'
-// import trustedBy4 from './images/trustedBy-4.png'
+
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {
   Button,
-  TableBody,
-  TableCell,
-  Table,
-  TextField,
-  TableContainer,
-  Paper,
-  TableHead,
-  TableRow,
   Typography,
-  Badge,
-  Rating,
   Modal,
   Box,
   Avatar,
@@ -49,35 +18,18 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  DialogActions,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import WallCards from "common/WallCards";
-import TripsMap from "./TripsMap";
-import { selectRowsFn } from "@tanstack/react-table";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
-// import ManageCompanyCard from '.features/manageCompanies/ManageCompanyCard';
-// import { makeStyles } from "@material-ui/core/styles";
-// import Paper from "@material-ui/core/Paper";
-// import { makeStyles } from '@mui/styles';
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
-import { AiTwotoneDelete } from "react-icons/ai";
 import EditBikes from "./EditBikes";
+import { get } from "services/fetLocation";
 
 function Trips(props) {
   const [userId, setUserId] = React.useState();
   const [editbikeObj, setEditbikeObj] = React.useState();
 
-  const [showBikeDetails, setShowBikeDetails] = React.useState(false);
   const [allBikez, setAllBikez] = React.useState([]);
 
-  // const [open, setOpen] = React.useState("");
   const [opens, setOpens] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [route, setRoute] = React.useState({});
@@ -98,10 +50,6 @@ function Trips(props) {
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
 
-  // const getgetAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
-
-  // let allBikes = getgetAllBikesQueryResult?.data?.data;
-
   const redirect = () => {
     history("/complete-signUp");
   };
@@ -111,10 +59,8 @@ function Trips(props) {
   }, []);
 
   const getBikes = async () => {
-    // const deleteRider = async () => {
     const res = await get({
       endpoint: `api/company/bikes`,
-      //  body: { ...payload },
       auth: true,
     });
     setAllBikez(res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse());
@@ -130,7 +76,6 @@ function Trips(props) {
       // window.location.reload();
       getBikes();
       // TODO extra login
-      // redirect()
       enqueueSnackbar("Bike deleted successfully!", { variant: "success" });
     } catch (error) {
       enqueueSnackbar(error?.data?.message, "Failed to login", {
@@ -245,13 +190,8 @@ let raws =[]
       "15 Sept. 1:00am",
       "-"
     ),
-    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    // createData('Eclair', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
 
-  console.log(raws);
 
   const tableArray = [
     {
@@ -271,7 +211,6 @@ let raws =[]
     },
   ];
 
-  const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
@@ -286,13 +225,11 @@ let raws =[]
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      // localStorage.setItem('location', values.location)
       redirect();
 
       try {
         const data = await loginMuation({ data: values }).unwrap();
         // TODO extra login
-        // redirect()
         enqueueSnackbar("Logged in successful", { variant: "success" });
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
@@ -302,11 +239,7 @@ let raws =[]
     },
   });
 
-  const handleShow = (e) => {
-    setShow(true);
-    setRoute(e);
-  };
-
+ 
   const style = {
     position: "absolute",
     top: "50%",
@@ -320,21 +253,6 @@ let raws =[]
     boxShadow: 24,
     p: 4,
   };
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
-  //  const useRowStyles = makeStyles({
-  //   root: ({ open }) => ({
-  //     backgroundColor: "pink"
-  //   }),
-  //   tableBody: {
-  //     "& > :not(:last-child)": {
-  //       borderBottom: "25px solid red"
-  //     }
-  //   }
-  // });
-
-  // const classes = useRowStyles();
 
   return (
     <div>
@@ -393,7 +311,6 @@ let raws =[]
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">Reg Date</p>
                     <p className="font-semibold my-2">{row.orderId}</p>
-                    {/* <Rating className="my-2" value={4} /> */}
                   </div>
                   <div className="w-1/5 cursor-pointer flex gap-5 items-center px-3 py-3  border3b text-center">
                     <div class="ml-16">
@@ -426,9 +343,6 @@ let raws =[]
           </div>
 
           <div>
-            {/* <Button variant="outlined" onClick={}>
-              Open alert dialog
-            </Button> */}
             <Dialog
               open={open}
               onClose={handleClose}
@@ -436,8 +350,6 @@ let raws =[]
               maxWidth="lg"
               style={{ width: "" }}
               className=""
-              // aria-labelledby="alert-dialog-title"
-              // aria-describedby="alert-dialog-description"
             >
               <DialogTitle id="alert-dialog-title">{"Edit Rider"}</DialogTitle>
               <DialogContent className="w-full ">
@@ -446,46 +358,13 @@ let raws =[]
                   editbikeObj={editbikeObj}
                 />
               </DialogContent>
-              {/* <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={handleClose} autoFocus>
-                  Agree
-                </Button>
-              </DialogActions> */}
             </Dialog>
           </div>
         </div>
       )}
 
-      {/* <ManageTripsTable tableArray={tableArray} /> */}
 
-      {/* {show && (
-        <div>
-          <div>
-            <div
-              onClick={() => setShow(!show)}
-              className="flex items-center mb-8 cursor-pointer w-16 p-2"
-            >
-              <div
-                style={{ border: "1px solid #494949" }}
-                className="border-solid w-5 mr-2 rounded h-5 flex justify-center items-center"
-              >
-                <RiArrowLeftSLine
-                  className=""
-                  style={{ fontSize: "22px", color: "#494949" }}
-                />
-              </div>
-              <p style={{ color: "#494949" }} className="text-base">
-                Back
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-      <div className="w-full flex items-center justify-center">
-        <TripsMap route={route} width={show} />
-      </div> */}
-
+     
       <Modal
         // open={true}
         open={opens}
@@ -497,18 +376,7 @@ let raws =[]
           <Box sx={style}>
             <div>
               <div className="flex gap-8">
-                {/* <Avatar
-              sx={{ bgcolor: deepOrange[500] }}
-              alt="Remy Sharp"
-              src="/broken-image.jpg"
-            >
-              B
-            </Avatar> */}
-                {/* <Avatar
-              sx={{ bgcolor: deepOrange[500] }}
-              alt="Remy Sharp"
-              src="/broken-image.jpg"
-            /> */}
+               
                 <div className="flex">
                   <Avatar
                     sx={{ width: 100, height: 100 }}

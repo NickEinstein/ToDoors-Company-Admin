@@ -7,10 +7,6 @@ import Cookies from "universal-cookie";
 // import { decodeToken, logout } from "../utility/auth";
 
 const getToken = () => {
-  console.log(localStorage.getItem("token"));
-  // const t = decodeToken("t");
-  // const token = t && t.t;
-  // console.log(cookies.get("token"));
   const token = localStorage.getItem("token");
 
   // localStorage.getItem("token");
@@ -35,8 +31,6 @@ const fetchBackend = async (
     "Access-Control-Allow-Methods": "POST GET OPTIONS",
     updateType: "profile",
   };
-  console.log(endpoint);
-  console.log(body);
   const path = paths[endpoint] || endpoint;
   let url = `${process.env.REACT_APP_TODOORS_API}/${path}`;
   // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
@@ -71,16 +65,11 @@ const fetchBackend = async (
     options.data = body;
   }
 
-  // console.log(options);
   return axios(options).then(
     (res) => res,
     async (err) => {
       if (err && err.response && err.response.status === 401) {
-        // log the user out and return
-        // console.log("UNAUTHORIZED REQUEST...");
-        // await logout("/", true);
       }
-      // console.log(err.response);
       return err.response;
     }
   );

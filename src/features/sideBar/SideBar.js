@@ -1,23 +1,15 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import { BsGrid, BsPeople } from "react-icons/bs";
-import MailIcon from "@mui/icons-material/Mail";
 import clipboard from "images/clipboard-text.svg";
 import clipboardW from "images/clipboard-text white.svg";
 import dashboard from "images/category-2.svg";
-// import companies from "images/lifebuoy.png";
 import dashboardW from "images/category-2 white.svg";
 import wallet from "images/wallet-minus.svg";
 import walletW from "images/wallet-minus white.svg";
@@ -29,17 +21,11 @@ import logouts from "images/logout.png";
 import LoginHeader from "common/LoginHeader";
 import { RouteEnum } from "constants/RouteConstants";
 import { useNavigate } from "react-router-dom";
-import { Logout } from "@mui/icons-material";
-import { TbFileText } from "react-icons/tb";
-import { GiWallet } from "react-icons/gi";
-import { RiCarLine, RiShieldLine } from "react-icons/ri";
-import { IoCarSharp } from "react-icons/";
-import { MdAddBox } from "react-icons/md";
 import useLogout from "hooks/useLogout";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-;
+
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
@@ -73,13 +59,7 @@ export default function PermanentDrawerLeft() {
       color: false,
     },
 
-    // {
-    //   name: "Help & Support",
-    //   image2: <RiShieldLine color="white" size={26} />,
-    //   imageboolean: true,
-    //   image: <RiShieldLine size={26} />,
-    //   color: false,
-    // },
+  
     {
       name: "Wallet",
       imageboolean: true,
@@ -121,29 +101,15 @@ export default function PermanentDrawerLeft() {
       color: false,
       d: RouteEnum.SUPPORT,
     },
-    // { name: "Maps", d: RouteEnum.MAPS, image: map, color: false },
-    // { name: "Reviews", d: RouteEnum.MANAGE_COMPANIES },
-    // { name: "Reviews", d: "", image: message, color: false },
-    // { name: "Support", d: RouteEnum.SUPPORT, image: messages },
-
-    // { name: "Support", d: RouteEnum.SUPPORT },
   ]);
 
   const redirect = (push) => {
     history(push);
-    // logout()
   };
 
   useEffect(()=>{
 changeColorOnActive()
   },[currentUrl])
-
-  // const logout = (push) => {
-  //   localStorage.removeItem("il");
-  //   history(push);
-  // };
-
-  // const pat =
 
   const changeColorOnActive = (num) => {
     let k = pat.map((e, index) => ({
@@ -165,17 +131,7 @@ changeColorOnActive()
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#1E1E1E" }}>
-      {/* <CssBaseline /> */}
-      {/* <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
+      
       <Drawer
         sx={{
           width: drawerWidth,
@@ -188,21 +144,17 @@ changeColorOnActive()
         variant="permanent"
         anchor="left"
       >
-        {/* <Toolbar /> */}
         <div className="px-3 py-5">
           <LoginHeader />
         </div>
-        {/* <Divider /> */}
         <List>
           {pat.map((text, index) => (
             <ListItem
-              // key={index}
               className={index === 0 ? "mb-5" : ""}
               style={{
                 backgroundColor: text.color ? "#0C3BAA" : "",
                 color: text.color ? "white" : "",
               }}
-              // inkBarStyle={{ background: "yellow" }}
               key={text.name}
               disablePadding
             >

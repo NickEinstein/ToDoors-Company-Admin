@@ -8,8 +8,6 @@ function PasswordTextField(props) {
   const [isVisible, setVisible] = React.useState(false);
   const handleVisible = React.useCallback(() => setVisible((p) => !p), []);
 
-  console.log(isVisible);
-
   return (
     <TextField
       type={isVisible ? "text" : "password"}

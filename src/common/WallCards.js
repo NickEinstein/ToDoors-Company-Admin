@@ -38,11 +38,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function WallCards(props) {
-  const [age, setAge] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-    console.log(event);
-  };
+ 
   const history = useNavigate();
 
   const redirect = () => {
@@ -64,14 +60,11 @@ function WallCards(props) {
       password: yup.string().trim().required(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      // localStorage.setItem('location', values.location)
       redirect();
 
       try {
         const data = await loginMuation({ data: values }).unwrap();
         // TODO extra login
-        // redirect()
         enqueueSnackbar("Logged in successful", { variant: "success" });
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
@@ -80,10 +73,6 @@ function WallCards(props) {
       }
     },
   });
-
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
 
   return (
     <div className="relative">
@@ -104,15 +93,9 @@ function WallCards(props) {
           minHeight: !props.short && 120,
           maxHeight: props.short && 105,
         }}
-        // sx={{
-        //   minWidth: props.big ? 220 : 155,
-        //   minHeight: props.big ? 160 : 120,
-        // }}
+       
       >
-        {/* <img
-          className="absolute z-0 top-0 left-0 w-[100%] h-[100%]"
-          src={snake}
-        /> */}
+        
         <CardContent className={props.big ? "pr-24" : ""}>
           <div>
             <Typography
@@ -157,7 +140,6 @@ function WallCards(props) {
           </div>
         </CardContent>
 
-        {/* <Button size="small">Learn More</Button> */}
       </Card>
     </div>
   );

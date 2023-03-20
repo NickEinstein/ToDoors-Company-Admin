@@ -3,51 +3,28 @@ import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
-// import { Button, TextField, Typography } from "@mui/material";
 import moment from "moment";
 import useAuthUser from "hooks/useAuthUser";
-// import moment from 'moment'
 import gigLogo from "images/Ellipse 56.png";
 
 import {
   Button,
-  TableBody,
-  TableCell,
-  Table,
   TextField,
-  TableContainer,
-  Paper,
-  TableHead,
-  TableRow,
-  Typography,
-  Badge,
-  InputLabel,
   Select,
   MenuItem,
-  FormControl,
   Modal,
   Box,
   Avatar,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import WallCards from "common/WallCards";
-// import TripsMap from "./TripsMap";
-import { selectRowsFn } from "@tanstack/react-table";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
-// import ManageCompanyCard from '.features/manageCompanies/ManageCompanyCard';
-// import { makeStyles } from "@material-ui/core/styles";
-// import Paper from "@material-ui/core/Paper";
-// import { makeStyles } from '@mui/styles';
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
-import AgentComponent from "common/AgentComponent";
 
 function Trips(props) {
-  const [age, setAge] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [showBikeDetails, setShowBikeDetails] = React.useState(false);
@@ -72,7 +49,6 @@ function Trips(props) {
     from: start_date,
     riderId: riderId,
   });
-
 
   const allHistory = getHistoryQueryResult?.data?.data;
 
@@ -222,10 +198,6 @@ function Trips(props) {
       "15 Sept. 1:00am",
       "-"
     ),
-    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    // createData('Eclair', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
 
   const tableArray = [
@@ -246,68 +218,26 @@ function Trips(props) {
     },
   ];
 
-  const authUser = useAuthUser();
-
-  const { enqueueSnackbar } = useSnackbar();
-  const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
-
   const formik = useFormik({
     initialValues: {
       //   username: "",
       //   password: "",
     },
-    validationSchema: yup.object({
-      //   username: yup.string().trim().required(),
-      //   password: yup.string().trim().required(),
-    }),
+    validationSchema: yup.object({}),
     onSubmit: async (values) => {
-      // localStorage.setItem('location', values.location)
       redirect();
-
-      //   try {
-      //     const data = await loginMuation({ data: values }).unwrap();
-      //     // TODO extra login
-      //     // redirect()
-      //     enqueueSnackbar("Logged in successful", { variant: "success" });
-      //   } catch (error) {
-      //     enqueueSnackbar(error?.data?.message, "Failed to login", {
-      //       variant: "error",
-      //     });
-      //   }
     },
   });
 
-  //   const handleShow = (e) => {
-  //     setShow(true);
-  //     setRoute(e);
-  //   };
-
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
-  //  const useRowStyles = makeStyles({
-  //   root: ({ open }) => ({
-  //     backgroundColor: "pink"
-  //   }),
-  //   tableBody: {
-  //     "& > :not(:last-child)": {
-  //       borderBottom: "25px solid red"
-  //     }
-  //   }
-  // });
-  // const formattedTime = moment(inputDate).format("HH:mm:ss");
-
-  // const classes = useRowStyles();
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "70%",
-    minHeight:'700px',
+    minHeight: "700px",
     bgcolor: "background.paper",
     borderRadius: "3%",
-    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -341,29 +271,18 @@ function Trips(props) {
 
                   <DatePicker
                     className=" mr-8 w-full"
-                    // label="Basic example"
                     value={end_date}
                     onChange={(newValue) => {
-                      // setWorkList({ ...workList, start_date: newValue });
                       setEnd_date(moment(newValue).format("YYYY-MM-DD"));
-                      // setValue(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
                   />
 
                   <div>
-                    {/* <InputLabel >
-                          Age
-                        </InputLabel> */}
                     <Select
-                      //   labelId="demo-simple-select-autowidth-label"
-                      //   id="demo-simple-select-autowidth"
-                      // value={age}
                       onChange={handleChange}
                       sx={{ width: "200px" }}
                       autoWidth
-
-                      //   label="Age"
                     >
                       <MenuItem value="">
                         <em>None</em>
@@ -406,7 +325,6 @@ function Trips(props) {
                       <p
                         onClick={() => {
                           setOpen(true);
-                          // setUserId(row.riderId);
                         }}
                         className="font-bold"
                       >
@@ -429,7 +347,6 @@ function Trips(props) {
                         To:
                       </span>
                       <span className="font-bold "> {row.destAddress}</span>
-                      {/* {row.name} */}
                     </p>
                   </div>
                   <div
@@ -441,9 +358,10 @@ function Trips(props) {
                   >
                     <p className="text-[#959595] mb-2 ">Start Time:</p>
                     <p className="font-bold">
-                      {/* <p>{row?.bookingTime}</p> */}
                       <p>{moment(row?.bookingTime).format("ll")}</p>
-                      <p>{moment.utc(row?.bookingTime).zone(0).format("HH:mm")}</p>
+                      <p>
+                        {moment.utc(row?.bookingTime).zone(0).format("HH:mm")}
+                      </p>
                     </p>
                   </div>
                   <div
@@ -484,8 +402,6 @@ function Trips(props) {
         </div>
       )}
 
-      {/* <ManageTripsTable tableArray={tableArray} /> */}
-
       {show && (
         <div>
           <div>
@@ -509,9 +425,7 @@ function Trips(props) {
           </div>
         </div>
       )}
-      <div className="w-full flex items-center justify-center">
-        {/* <TripsMap route={route} width={show} /> */}
-      </div>
+      <div className="w-full flex items-center justify-center"></div>
 
       <Modal
         // open={true}

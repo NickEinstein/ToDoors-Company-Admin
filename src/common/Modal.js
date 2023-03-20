@@ -1,33 +1,28 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { Autocomplete, InputAdornment, TextField } from '@mui/material';
-import { MdArrowBackIosNew } from 'react-icons/md';
-import { HiSelector } from 'react-icons/hi';
-import { get, post } from 'services/fetch';
-
+import { Autocomplete, InputAdornment, TextField } from "@mui/material";
+import { MdArrowBackIosNew } from "react-icons/md";
+import { HiSelector } from "react-icons/hi";
+import { get, post } from "services/fetch";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  borderRadius:'3%',
+  bgcolor: "background.paper",
+  borderRadius: "3%",
   // border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
-
-
-
-
-export default function BasicModal({closeModal, openModal, suspend}) {
+export default function BasicModal({ closeModal, openModal, suspend }) {
   const [open, setOpen] = React.useState(false);
   const [listOfBanks, setListOfBanks] = React.useState([]);
   const [bankInfo, setBankInfo] = React.useState(null);
@@ -38,16 +33,15 @@ export default function BasicModal({closeModal, openModal, suspend}) {
   const [withDrawalAmount, setWithDrawalAmount] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-;
-   React.useEffect(() => {
-     getBanks();
-   }, []);
+  React.useEffect(() => {
+    getBanks();
+  }, []);
 
-const top100Films = listOfBanks.map((e) => ({
-  id: e?.id,
-  code: e?.code,
-  label: e?.name,
-}));
+  const top100Films = listOfBanks.map((e) => ({
+    id: e?.id,
+    code: e?.code,
+    label: e?.name,
+  }));
   const verifyAccount = async () => {
     let payload = {
       account_number: accountNumber,
@@ -59,60 +53,48 @@ const top100Films = listOfBanks.map((e) => ({
       body: { ...payload },
       auth: true,
     });
-    console.log(res?.data);
-    // setCurrent((current)=>current+1)}
-
-    // history("/complete-signUp");
   };
 
-   const getBanks = async () => {
-     // const deleteRider = async () => {
-     const res = await get({
-       endpoint: `api/payment/getAllBanks`,
-       //  body: { ...payload },
-       auth: true,
-     });
-     setListOfBanks(res?.data?.response?.data);
-     //  setAllBikez(res.data.data);
-   };
-   const increaseCurrent = ()=>{
-    if(current <2)
-
-   { 
-    if(current<1){
-      verifyAccount()
-      return
+  const getBanks = async () => {
+    // const deleteRider = async () => {
+    const res = await get({
+      endpoint: `api/payment/getAllBanks`,
+      //  body: { ...payload },
+      auth: true,
+    });
+    setListOfBanks(res?.data?.response?.data);
+    //  setAllBikez(res.data.data);
+  };
+  const increaseCurrent = () => {
+    if (current < 2) {
+      if (current < 1) {
+        verifyAccount();
+        return;
+      }
+      setCurrent((current) => current + 1);
     }
-    setCurrent((current)=>current+1)}
-   }
-    const decreaseCurrent = () => {
-    if (current >0) setCurrent((current) => current - 1);
+  };
+  const decreaseCurrent = () => {
+    if (current > 0) setCurrent((current) => current - 1);
+  };
+
+  const payRecipient = async () => {
+    let payload = {
+      account_bank: "044",
+      account_number: "0690000040",
+      amount: 5500,
     };
 
-    const payRecipient = async ()=>{
-      let payload = {
-        account_bank: "044",
-        account_number: "0690000040",
-        amount: 5500,
-      };
-      
-      // {
-      //   account_bank: bankInfo?.code,
-      //   account_number: accountNumber,
-      //   amount: withDrawalAmount,
-      // };
-       const res = await post({
-         endpoint: `api/payment/Withdrawal`,
-          body: { ...payload },
-         auth: true,
-       });
-    }
+    const res = await post({
+      endpoint: `api/payment/Withdrawal`,
+      body: { ...payload },
+      auth: true,
+    });
+  };
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
-        // open={true}
         open={closeModal}
         onClose={openModal}
         aria-labelledby="modal-modal-title"
@@ -215,30 +197,8 @@ const top100Films = listOfBanks.map((e) => ({
                   options={top100Films}
                   sx={{ width: 300 }}
                   onChange={(e, v) => setBankInfo(v)}
-                  renderInput={(params) => (
-                    <TextField
-                      // InputProps={{
-                      //   endAdornment: (
-                      //     <InputAdornment position="start">
-                      //       <HiSelector size={20} />
-                      //     </InputAdornment>
-                      //   ),
-                      // }}
-                      {...params}
-                      // label="Banks"
-                    />
-                  )}
+                  renderInput={(params) => <TextField {...params} />}
                 />
-                {/* <TextField
-                  className="w-full bg-[#EBEBEB]"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <HiSelector size={20} />
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
               </div>
 
               <div className="text-left my-8">
