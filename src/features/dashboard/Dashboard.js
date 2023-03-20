@@ -50,7 +50,6 @@ import { AccountCircle } from "@mui/icons-material";
 import ToDoorSearch from "common/ToDoorSearch";
 import ManageCompanyCard from "features/manageCompanies/ManageCompanyCard";
 import NewWallCards from "common/NewWallCards";
-import TripsMap from "features/manageriders/TripsMap";
 import Maps from "features/maps/Maps";
 
 function Dashboard(props) {
