@@ -117,7 +117,7 @@ function Trips(props) {
       //  body: { ...payload },
       auth: true,
     });
-    setAllBikez(res?.data?.data.sort((a, b) => a.created_at - b.created_at).reverse());
+    setAllBikez(res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse());
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();
@@ -175,24 +175,26 @@ function Trips(props) {
       obj,
     };
   }
-
-  let raws = allBikez?.map((e) =>
-    createData(
-      e.fname,
-      e.state,
-      e.profileUrl,
-      e.bikeDetails.regNo,
-      e.phoneNo,
-      moment(e?.created_at).format("ll"),
-      "N200,000",
-      "11 Sept. 9:00am",
-      "15 Sept. 1:00am",
-      "-",
-      "",
-      e._id,
-      e
-    )
-  );
+let raws =[]
+ raws = allBikez?.length
+   ? allBikez?.map((e) =>
+       createData(
+         e.fname,
+         e.state,
+         e.profileUrl,
+         e.bikeDetails.regNo,
+         e.phoneNo,
+         moment(e?.created_at).format("ll"),
+         "N200,000",
+         "11 Sept. 9:00am",
+         "15 Sept. 1:00am",
+         "-",
+         "",
+         e._id,
+         e
+       )
+     )
+   : [];
 
   const rows = [
     createData(
@@ -248,6 +250,8 @@ function Trips(props) {
     // createData('Cupcake', 305, 3.7, 67, 4.3),
     // createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
+
+  console.log(raws);
 
   const tableArray = [
     {
@@ -335,6 +339,12 @@ function Trips(props) {
   return (
     <div>
       <ToDoorSearch />
+      <Typography variant="h5" className="my-8">
+        Manage Riders/Bikes
+      </Typography>
+
+      {raws?.length <1 && <Typography className="text-center mt-36" variant="h3">No Registered Riders For This Company</Typography>}
+
       {!show && (
         <div className="">
           <div sx={{ minWidth: 650 }} aria-label="simple table">
@@ -449,7 +459,7 @@ function Trips(props) {
 
       {/* <ManageTripsTable tableArray={tableArray} /> */}
 
-      {show && (
+      {/* {show && (
         <div>
           <div>
             <div
@@ -474,7 +484,7 @@ function Trips(props) {
       )}
       <div className="w-full flex items-center justify-center">
         <TripsMap route={route} width={show} />
-      </div>
+      </div> */}
 
       <Modal
         // open={true}

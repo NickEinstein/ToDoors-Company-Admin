@@ -335,7 +335,9 @@ function Trips(props) {
 
   return (
     <div>
-      <ToDoorSearch />
+      {/* <ToDoorSearch /> */}
+
+      <Typography variant="h4" className="my-8">Manage Riders/Bikes</Typography>
       {!show && (
         <div className="">
           <div sx={{ minWidth: 650 }} aria-label="simple table">
