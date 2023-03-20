@@ -20,7 +20,7 @@ import ManageTripsTable from "./ManageBikesTable";
 // import { RouteEnum } from "constants/RouteConstants";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
-// import BorderColorIcon from "@mui/icons-material/BorderColor";
+// import BorderColorIcon from "@mui/icons-material/BorderColorj";
 import gigLogo from "images/Ellipse 56.png";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import edit from "images/edit.svg";
