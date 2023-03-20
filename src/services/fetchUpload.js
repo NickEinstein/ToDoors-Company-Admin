@@ -33,12 +33,12 @@ const fetchBackend = async (
     "Access-Control-Allow-Origin": "*",
     // "Access-Control-Allow-Methods": "POST",
     "Access-Control-Allow-Methods": "POST GET OPTIONS",
-    "updateType":"profile"
+    updateType: "profile",
   };
   console.log(endpoint);
   console.log(body);
   const path = paths[endpoint] || endpoint;
-  let url = `${process.env.REACT_APP_SOFTWORK_API}/${path}`;
+  let url = `${process.env.REACT_APP_TODOORS_API}/${path}`;
   // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
 
   if (param) {

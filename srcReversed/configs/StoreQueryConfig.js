@@ -1,11 +1,11 @@
 import axios from "axios";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { SoftworkHttp } from "./HttpConfig";
+import { TodoorsHttp } from "./HttpConfig";
 import { StoreQueryTagEnum } from "constants/StoreConstants";
 
 export const todoorsApi = createApi({
   reducerPath: "todoors",
-  baseQuery: axiosBaseQuery({}, SoftworkHttp),
+  baseQuery: axiosBaseQuery({}, TodoorsHttp),
   endpoints: (builder) => ({}),
 });
 

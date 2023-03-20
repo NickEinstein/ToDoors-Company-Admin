@@ -73,7 +73,7 @@ function TripsMap({ route, width }) {
   };
 
   // console.log(process.env.TO_DOOR_MAP_API_KEY)
-  // console.log(process.env.REACT_APP_SOFTWORK_API)
+  // console.log(process.env.REACT_APP_TODOORS_API)
 
   const calculateRoute = async (origin, destination) => {
     if (origin == "" || destination == "") {

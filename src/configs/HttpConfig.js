@@ -1,8 +1,8 @@
 import axios from "axios";
 
-console.log(process.env.REACT_APP_SOFTWORK_API)
-export const SoftworkHttp = axios.create({
-  baseURL: process.env.REACT_APP_SOFTWORK_API,
+console.log(process.env.REACT_APP_TODOORS_API);
+export const TodoorsHttp = axios.create({
+  baseURL: process.env.REACT_APP_TODOORS_API,
 });
 
-export default SoftworkHttp;
+export default TodoorsHttp;
