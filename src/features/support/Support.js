@@ -26,7 +26,6 @@ import trustedBy3 from "images/Rectangle 106.png";
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
 import {
-  Avatar,
   Button,
   Card,
   CardActions,
@@ -46,23 +45,9 @@ import ManageCompaniesTable from "features/manageCompanies/ManageCompaniesTable"
 import { RiArrowLeftSLine } from "react-icons/ri";
 import SupportChart from "./SupportChart";
 import ToDoorSearch from "common/ToDoorSearch";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-// import { post,  } from "services/fetch";
-import { post } from "services/fetchUpload";
 function ManageRiders(props) {
   const [age, setAge] = React.useState("");
   const [show, setShow] = useState(false);
-  const [liscence, setLiscence] = useState("");
-  const [bikeCompany, setBikeCompany] = useState("");
-  const [bikeModel, setBikeModel] = useState("");
-  const [bikeRegNo, setBikeRegNo] = useState("");
-  const [bikeOwner, setBikeOwner] = useState("");
-  const [bikeDate, setBikeDate] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [ridersPicture, setRidersPicture] = useState("");
-  const [ridersPictureName, setRidersPictureName] = useState("");
-  const [start_date, setStart_date] = useState(null);
-  const [imgData, setImgData] = useState(null);
   // const handleChange = (event) => {
   //   setAge(event.target.value);
   //   console.log(event)
@@ -147,5 +132,68 @@ function ManageRiders(props) {
           Please click here to be directed to our support page
         </a>
       </Button>
-     </div>
-  )}
+      {/* {!show && (
+        <div>
+          <div className="mb-4">
+            <Button
+              startIcon={<BsPeople />}
+              className="px-7 py-2 text-base mr-4 min-w-[140px]"
+            >
+              Customers
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<img src={customer} />}
+              className="px-7 bg-transparent text-[#8C8C8C] border2 py-2 text-base min-w-[120px]"
+            >
+              Riders
+            </Button>
+          </div>
+
+          <div className="mb-4 flex">
+            <p
+              style={{ borderBottom: "2px solid #0C3BAA" }}
+              className="mr-4 p-1"
+            >
+              All Messages
+            </p>
+            <div className="flex items-center">
+              <p className="p-1">Unread</p>
+              <BsFillCircleFill color="blue" fontSize={6} />
+            </div>
+          </div>
+
+          {tableArray.map((e) => (
+            <div
+              style={{ border: "1px solid #DADADA" }}
+              className=" px-5 mt-1 flex justify-between border2 background-table min-h-[50%]"
+            >
+              <div className="w-full flex items-center p-2 ">
+                <img src={gigLogo} className="rounded-full" />
+                <div className="w-full p-3 ">
+                  <Typography variant="h6">{e.name}</Typography>
+                  <p className="medium-size">{e.message}</p>
+                </div>
+              </div>
+              <div className=" w-full flex justify-end items-center p-2 ">
+                <p
+                  onClick={() => {
+                    setShow(!show);
+                  }}
+                  className="font-bold cursor-pointer"
+                >
+                  View Profile
+                </p>
+              </div>
+              
+            </div>
+          ))}
+        </div>
+      )} */}
+
+      {/* {show && <SupportChart setOpen={setShow} open={show} />} */}
+    </div>
+  );
+}
+
+export default ManageRiders;

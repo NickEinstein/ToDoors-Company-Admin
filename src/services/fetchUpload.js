@@ -38,8 +38,8 @@ const fetchBackend = async (
   console.log(endpoint);
   console.log(body);
   const path = paths[endpoint] || endpoint;
-  let url = `${process.env.REACT_APP_SOFTWORK_API}/${path}`;
-  // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
+  // let url = `${process.env.REACT_APP_SOFTWORK_API}/${path}`;
+  let url = `company.todoor.com/api ${path}`;
 
   if (param) {
     url += `/${param}`;
