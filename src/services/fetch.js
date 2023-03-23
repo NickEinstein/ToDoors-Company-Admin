@@ -34,6 +34,8 @@ const fetchBackend = async (
   let url = `${process.env.REACT_APP_TODOORS_API}/${path}`;
   // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
 
+console.log(process.env.REACT_APP_TODOORS_API);
+
   if (param) {
     url += `/${param}`;
   }

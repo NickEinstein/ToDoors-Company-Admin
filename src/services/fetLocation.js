@@ -26,8 +26,8 @@ const fetchBackend = async (
     "Access-Control-Allow-Methods": "POST GET OPTIONS",
   };
   const path = paths[endpoint] || endpoint;
-  let url = `https://locus.fkkas.com/api/${path}`;
-  // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
+  // let url = `https://locus.fkkas.com/api/${path}`;
+  let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
 
   if (param) {
     url += `/${param}`;

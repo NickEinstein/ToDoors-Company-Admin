@@ -24,7 +24,7 @@ import background from "images/background.png";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
 import trustedBy2 from "images/Rectangle 7.png";
-import { get } from "services/fetLocation";
+import { get } from "services/fetch";
 // import LoginHeader from './LoginHeader';
 // import trustedBy3 from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'

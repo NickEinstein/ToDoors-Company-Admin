@@ -22,7 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import ToDoorSearch from "common/ToDoorSearch";
 import EditBikes from "./EditBikes";
-import { get } from "services/fetLocation";
+import { get } from "services/fetch";
 
 function Trips(props) {
   const [userId, setUserId] = React.useState();
