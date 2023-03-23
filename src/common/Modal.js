@@ -28,6 +28,7 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
   const [bankInfo, setBankInfo] = React.useState(null);
   const [ConfirmWithdrawal, setConfirmWithdrawal] = React.useState(false);
   const [Confirm, setConfirm] = React.useState(false);
+  const [recipientsDetails, setRecipientsDetails] = React.useState();
   const [current, setCurrent] = React.useState(0);
   const [accountNumber, setAccountNumber] = React.useState(0);
   const [withDrawalAmount, setWithDrawalAmount] = React.useState(0);
@@ -53,6 +54,11 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
       body: { ...payload },
       auth: true,
     });
+    console.log(res)
+    setRecipientsDetails(res?.data?.response?.data)
+    if(res.status == 200)
+      setCurrent((current) => current + 1);
+
   };
 
   const getBanks = async () => {
@@ -80,9 +86,9 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
 
   const payRecipient = async () => {
     let payload = {
-      account_bank: "044",
-      account_number: "0690000040",
-      amount: 5500,
+      account_number: accountNumber,
+      account_bank: bankInfo?.code,
+      amount: +withDrawalAmount,
     };
 
     const res = await post({
@@ -90,6 +96,8 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
       body: { ...payload },
       auth: true,
     });
+
+    closeModal()
   };
 
   return (
@@ -130,14 +138,16 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
                   </div>
                   <div className="flex items-center justify-between mb-3">
                     <p>Company</p>
-                    <Typography className="font-bold">GIG Logistics</Typography>
+                    <Typography className="font-bold">
+                      {recipientsDetails?.account_name?.toUpperCase()}
+                    </Typography>
                   </div>
                 </div>
                 <Button
                   onClick={() => increaseCurrent()}
                   className="w-full mb-3 mt-9 bg-primary-main"
                 >
-                  COnfirm Withdrawal
+                  Confirm Withdrawal
                 </Button>
                 <div class=" flex justify-between text-center text-primary-main font-bold">
                   <div
@@ -162,8 +172,8 @@ export default function BasicModal({ closeModal, openModal, suspend }) {
               </div>
               <p className="mb-2 text-center px-8">
                 You are transferring{" "}
-                <span class="font-bold">NGN {withDrawalAmount} </span>
-                to <span class="font-bold">TO-DOOR UBA Bank</span>
+                <span class="font-bold">NGN {withDrawalAmount} to </span> <br />
+                <p class="font-bold mt-2">{recipientsDetails?.account_name}</p>
               </p>
 
               <div className="mt-10 flex justify-between items-center">
