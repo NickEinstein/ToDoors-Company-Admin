@@ -71,23 +71,30 @@
 
 // ReactDOM.render(<DemoColumn />, document.getElementById("container"));
 
-
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Column } from "@ant-design/plots";
 // import { Dashboard } from "@mui/icons-material";
 
 const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
-
-const [dataz,setDataz] = useState([
-  
-])
+  const [dataz, setDataz] = useState([]);
 
   const brandColor = "#0C3BAA";
   const paletteSemanticRed = "#F4664A";
 
   const getMonth = (val) => {
+    if (val == 1) return "Jan";
+    if (val == 2) return "Feb";
+    if (val == 3) return "Mar";
+    if (val == 4) return "Apr";
+    if (val == 5) return "May";
+    if (val == 6) return "Jun";
+    if (val == 7) return "Jul";
+    if (val == 8) return "Aug";
+    if (val == 9) return "Sept";
+    if (val == 10) return "Oct";
     if (val == 11) return "Nov";
+    if (val == 12) return "Dec";
   };
 
   const data2 = companyMonthly
@@ -96,13 +103,16 @@ const [dataz,setDataz] = useState([
         value: e?.total_earning || e?.trips_count,
       }))
     : [];
-  const data = [
+
+  console.log(data2);
+
+  let data = [
     {
-      year: "Jan ",
+      year: "Jan",
       value: 0,
     },
     {
-      year: "Feb ",
+      year: "Feb",
       value: 0,
     },
     {
@@ -110,16 +120,16 @@ const [dataz,setDataz] = useState([
       value: 0,
     },
     {
-      year: "Apr ",
+      year: "Apr",
       value: 0,
     },
     {
-      year: "May ",
+      year: "May",
       value: 0,
     },
 
     {
-      year: "Jun ",
+      year: "Jun",
       value: 0,
     },
     {
@@ -127,23 +137,42 @@ const [dataz,setDataz] = useState([
       value: 0,
     },
     {
-      year: "Aug ",
+      year: "Aug",
       value: 0,
     },
     {
-      year: "Sept ",
+      year: "Sept",
       value: 0,
     },
     {
-      year: "Oct ",
+      year: "Oct",
       value: 0,
     },
-    ...data2,
+
     {
-      year: "Dec ",
+      year: "Nov",
+      value: 0,
+    },
+
+    {
+      year: "Dec",
       value: 0,
     },
   ];
+
+   data = data.map((obj) => {
+    const newDataObj = data2.find((newObj) => newObj.year === obj.year);
+    console.log(newDataObj);
+    if (newDataObj) {
+      return { ...obj, value: newDataObj.value };
+    } else {
+      return obj;
+    }
+  });
+
+  
+
+  // console.log(updatedArray);
 
   // const config = {
   //   data,
@@ -249,6 +278,6 @@ const [dataz,setDataz] = useState([
     />
   );
 };
-export default DashboardChart
+export default DashboardChart;
 
 // ReactDOM.render(<DemoColumn />, document.getElementById("container"));
