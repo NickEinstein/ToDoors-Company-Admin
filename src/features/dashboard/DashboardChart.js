@@ -237,27 +237,32 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
       },
       offset: 10,
     },
-    legend: false,
+    legend: true,
     xAxis: {
       label: {
+
         autoHide: true,
         autoRotate: false,
       },
     },
     yAxis: {
-      label: false,
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+      // label: false,
       grid: {
-        line: false,
+        // line: false,
         // line: {
         //   style: {
-        //     stroke: "black",
-        //     lineWidth: 2,
-        //     lineDash: [4, 5],
-        //     strokeOpacity: 0.7,
-        //     shadowColor: "black",
-        //     shadowBlur: 10,
-        //     shadowOffsetX: 5,
-        //     shadowOffsetY: 5,
+        //     // stroke: "black",
+        //     lineWidth: 1,
+        //     // lineDash: [4, 5],
+        //     // strokeOpacity: 0.7,
+        //     // shadowColor: "black",
+        //     // shadowBlur: 10,
+        //     // shadowOffsetX: 5,
+        //     // shadowOffsetY: 5,
         //     cursor: "pointer",
         //   },
         // },
