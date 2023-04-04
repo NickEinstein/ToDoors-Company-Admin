@@ -63,8 +63,8 @@ function ManageRiders(props) {
   const [city, setCity] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [state, setState] = React.useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [liscence, setLiscence] = useState("");
@@ -100,6 +100,64 @@ function ManageRiders(props) {
 
   const onSubmit = async () => {
     if (ridersPicture) {
+
+      if (!email) {
+        enqueueSnackbar("Email is Required", {
+          variant: "error",
+        });
+        return
+      }
+
+      if (!phoneNumber) {
+        enqueueSnackbar("phoneNumber Required", {
+          variant: "error",
+        });
+        return;
+      }
+      if (!password) {
+        enqueueSnackbar("password Required", {
+          variant: "error",
+        });
+        return;
+      }
+      if (!name) {
+        enqueueSnackbar("Driver's name Required", {
+          variant: "error",
+        });
+        return;
+      }
+      if (!address) {
+        enqueueSnackbar("Address Required", {
+          variant: "error",
+        });
+        return;
+      }
+      if (!city) {
+        enqueueSnackbar("City Required", {
+          variant: "error",
+        });
+        return;
+      }
+      if (!state) {
+        enqueueSnackbar("State Required", {
+          variant: "error",
+        });
+        return;
+      }
+     
+       if (!bikeRegNo) {
+         enqueueSnackbar("Bike Reg No Required", {
+           variant: "error",
+         });
+         return;
+       }
+      
+         if (!bikeModel) {
+           enqueueSnackbar("Bike Model Required", {
+             variant: "error",
+           });
+           return;
+         }
       try {
         const data = await addBikeMuation({
           data: {
@@ -173,6 +231,63 @@ function ManageRiders(props) {
     //       },
     //     }
     if (ridersPicture) {
+       if (!email) {
+         enqueueSnackbar("Email is Required", {
+           variant: "error",
+         });
+         return;
+       }
+
+       if (!phoneNumber) {
+         enqueueSnackbar("phoneNumber Required", {
+           variant: "error",
+         });
+         return;
+       }
+       if (!password) {
+         enqueueSnackbar("password Required", {
+           variant: "error",
+         });
+         return;
+       }
+       if (!name) {
+         enqueueSnackbar("Driver's name Required", {
+           variant: "error",
+         });
+         return;
+       }
+       if (!address) {
+         enqueueSnackbar("Address Required", {
+           variant: "error",
+         });
+         return;
+       }
+       if (!city) {
+         enqueueSnackbar("City Required", {
+           variant: "error",
+         });
+         return;
+       }
+       if (!state) {
+         enqueueSnackbar("State Required", {
+           variant: "error",
+         });
+         return;
+       }
+      
+       if (!bikeRegNo) {
+         enqueueSnackbar("Bike Reg No Required", {
+           variant: "error",
+         });
+         return;
+       }
+      
+       if (!bikeModel) {
+         enqueueSnackbar("Bike Model Required", {
+           variant: "error",
+         });
+         return;
+       }
       try {
         // alert('saveed')
         const data = await addBikeMuation({
@@ -217,12 +332,29 @@ function ManageRiders(props) {
         setPassword("");
         setConfirmPassword("");
         setLiscence("");
+        setBikeCompany('')
+        setBikeModel('')
+        setBikeRegNo('')
         // onSubmit('')
-        // redirect();
+        redirect();
       } catch (error) {
-        enqueueSnackbar(error?.data?.message, "Failed to login", {
-          variant: "error",
-        });
+         Object.keys(error?.data?.errors?.message?.errors).forEach(
+          (key) => {
+            console.log(`${key}: ${error?.data?.errors?.message?.errors[key]}`);
+            enqueueSnackbar(
+              error?.data?.errors?.message?.errors[key],
+              "Failed to login",
+              {
+                variant: "error",
+              }
+            );
+            // return { key, value };
+          }
+        );
+
+        // console.log(arr)
+
+       
       }
     } else
       enqueueSnackbar("Profile picture Required", {
@@ -290,7 +422,10 @@ function ManageRiders(props) {
       enqueueSnackbar(res?.data?.message, { variant: "success" });
       redirect();
       setRidersPicture("");
-    } else enqueueSnackbar(res?.data?.message, { variant: "error" });
+    } else {
+      console.log(res)
+      
+      enqueueSnackbar(res?.data?.message||'File too large', { variant: "error" });}
   };
 
   // if (authUser.accessToken) {

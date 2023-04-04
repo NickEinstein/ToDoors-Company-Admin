@@ -39,6 +39,7 @@ export function axiosBaseQuery(baseConfig = {}, http = axios) {
         meta: { request: response.request, response },
       };
     } catch (error) {
+      console.log(error.response.data.errors);
       return {
         error: error.response
           ? {
