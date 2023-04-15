@@ -27,6 +27,7 @@ import { get } from "services/fetch";
 function Trips(props) {
   const [userId, setUserId] = React.useState();
   const [editbikeObj, setEditbikeObj] = React.useState();
+  // const [PgeNo, setPageNo] = React.useState();
 
   const [allBikez, setAllBikez] = React.useState([]);
 
@@ -34,6 +35,15 @@ function Trips(props) {
   const [show, setShow] = React.useState(false);
   const [route, setRoute] = React.useState({});
   const [open, setOpen] = React.useState(false);
+  const [pageNo, setPageNo] = useState(1);
+
+  const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
+  const user = getUserQueryResult?.data;
+
+  const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery({ pageNo });
+  const totalPages=(getAllBikesQueryResult?.data?.meta?.totalNoOfPages);
+  const bikers = getAllBikesQueryResult?.data?.data;
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,21 +51,34 @@ function Trips(props) {
 
   const handleClose = () => {
     setOpen(false);
-    getBikes()
+    getBikes();
   };
 
- 
-  const history = useNavigate();
+  const handleClick = (event, page) => {
+    event.preventDefault();
+    setPageNo(page);
+    onPageChange(page);
+  };
 
-  const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
-  const user = getUserQueryResult?.data;
+  const onPageChange = (page) => {
+    setPageNo(page);
+
+    console.log(page);
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  const history = useNavigate();
 
   const redirect = () => {
     history("/complete-signUp");
   };
 
   useEffect(() => {
-    getBikes();
+    // getBikes();
   }, []);
 
   const getBikes = async () => {
@@ -63,7 +86,9 @@ function Trips(props) {
       endpoint: `api/company/bikes`,
       auth: true,
     });
-    setAllBikez(res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse());
+    setAllBikez(
+      res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse()
+    );
   };
   const [deleteBikeMuation, deleteBikeMutationResult] =
     UserApi.useDeleteBikeMutation();
@@ -85,7 +110,7 @@ function Trips(props) {
   };
 
   const toEdit = async (obj) => {
-    handleClickOpen()
+    handleClickOpen();
     setEditbikeObj(obj?.obj);
   };
 
@@ -120,26 +145,26 @@ function Trips(props) {
       obj,
     };
   }
-let raws =[]
- raws = allBikez?.length
-   ? allBikez?.map((e) =>
-       createData(
-         e.fname,
-         e.state,
-         e.profileUrl,
-         e.bikeDetails.regNo,
-         e.phoneNo,
-         moment(e?.created_at).format("ll"),
-         "N200,000",
-         "11 Sept. 9:00am",
-         "15 Sept. 1:00am",
-         "-",
-         "",
-         e._id,
-         e
-       )
-     )
-   : [];
+  let raws = [];
+  raws = bikers?.length
+    ? bikers?.map((e) =>
+        createData(
+          e.fname,
+          e.state,
+          e.profileUrl,
+          e.bikeDetails.regNo,
+          e.phoneNo,
+          moment(e?.created_at).format("ll"),
+          "N200,000",
+          "11 Sept. 9:00am",
+          "15 Sept. 1:00am",
+          "-",
+          "",
+          e._id,
+          e
+        )
+      )
+    : [];
 
   const rows = [
     createData(
@@ -192,7 +217,6 @@ let raws =[]
     ),
   ];
 
-
   const tableArray = [
     {
       image: gigLogo,
@@ -210,7 +234,6 @@ let raws =[]
       ratings: "4",
     },
   ];
-
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
@@ -239,7 +262,6 @@ let raws =[]
     },
   });
 
- 
   const style = {
     position: "absolute",
     top: "50%",
@@ -260,8 +282,53 @@ let raws =[]
       <Typography variant="h5" className="my-8">
         Manage Riders/Bikes
       </Typography>
+      <nav className="flex justify-center">
+        <ul className="flex">
+          {pageNo > 1 && (
+            <li>
+              <a
+                href="#"
+                onClick={() => onPageChange(pageNo - 1)}
+                className="py-2 px-4 bg-gray-400 text-white font-bold rounded-l hover:bg-gray-600"
+              >
+                Prev
+              </a>
+            </li>
+          )}
+          {pageNumbers.map((number) => (
+            <li key={number}>
+              <a
+                href="#"
+                onClick={() => onPageChange(number)}
+                className={
+                  pageNo === number
+                    ? "py-2 px-4 bg-primary-main text-white font-bold"
+                    : "py-2 px-4 hover:bg-gray-400/10"
+                }
+              >
+                {number}
+              </a>
+            </li>
+          ))}
+          {pageNo < pageNumbers.length && (
+            <li>
+              <a
+                href="#"
+                onClick={() => onPageChange(pageNo + 1)}
+                className="py-2 px-4 bg-gray-400 text-white font-bold rounded-r hover:bg-gray-600"
+              >
+                Next
+              </a>
+            </li>
+          )}
+        </ul>
+      </nav>
 
-      {raws?.length <1 && <Typography className="text-center mt-36" variant="h3">No Registered Riders For This Company</Typography>}
+      {raws?.length < 1 && (
+        <Typography className="text-center mt-36" variant="h3">
+          No Registered Riders For This Company
+        </Typography>
+      )}
 
       {!show && (
         <div className="">
@@ -269,6 +336,7 @@ let raws =[]
             <div className="mt-3">
               {raws?.map((row) => (
                 <div
+                // key={}
                   onClick={() => {
                     setUserId(row.id);
                   }}
@@ -363,8 +431,6 @@ let raws =[]
         </div>
       )}
 
-
-     
       <Modal
         // open={true}
         open={opens}
@@ -376,7 +442,6 @@ let raws =[]
           <Box sx={style}>
             <div>
               <div className="flex gap-8">
-               
                 <div className="flex">
                   <Avatar
                     sx={{ width: 100, height: 100 }}

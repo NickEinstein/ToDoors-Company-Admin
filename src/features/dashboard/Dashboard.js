@@ -347,7 +347,9 @@ function Dashboard(props) {
           </div>
         </div>
       )}
-      {show && (
+      {
+      // show && 
+      (
         <div className="flex justify-between items-center mt-8">
           {/* <TripsMap/> */}
           <Maps switsh={switsh} hide={true} />
