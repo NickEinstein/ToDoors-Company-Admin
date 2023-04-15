@@ -302,12 +302,12 @@ function Dashboard(props) {
             </span> */}
               {/* ********************************************************************************* */}
               {/* Return to work on it */}
-              {/* <span
+              <span
                 onClick={switsh}
                 className="cursor-pointer p-2 text-primary-main font-bold"
               >
                 View Riders Location
-              </span> */}
+              </span>
               {/* *********************************************************************************** */}
             </div>
           </div>
@@ -347,9 +347,7 @@ function Dashboard(props) {
           </div>
         </div>
       )}
-      {
-      // show && 
-      (
+      {show && (
         <div className="flex justify-between items-center mt-8">
           {/* <TripsMap/> */}
           <Maps switsh={switsh} hide={true} />
