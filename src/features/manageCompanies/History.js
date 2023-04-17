@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -23,6 +23,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
+import { get } from "services/fetch";
 
 function Trips(props) {
   const [open, setOpen] = React.useState(false);
@@ -32,6 +33,7 @@ function Trips(props) {
   const [start_date, setStart_date] = React.useState();
   const [end_date, setEnd_date] = React.useState();
   const [riderId, setRiderId] = React.useState();
+  const [allHistory, setAllHistory] = React.useState();
   const handleChange = (event) => {
     setRiderId(event.target.value);
   };
@@ -50,7 +52,7 @@ function Trips(props) {
     riderId: riderId,
   });
 
-  const allHistory = getHistoryQueryResult?.data?.data;
+  // const allHistory = getHistoryQueryResult?.data?.data;
 
   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
@@ -200,6 +202,20 @@ function Trips(props) {
     ),
   ];
 
+  useEffect(()=>{
+getHistory()
+  },[])
+
+  const getHistory = async () => {
+    const res = await get({
+      endpoint: `api/company/history`,
+      auth: true,
+    });
+    setAllHistory(
+      res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse()
+    );
+  };
+
   const tableArray = [
     {
       image: gigLogo,
@@ -302,7 +318,7 @@ function Trips(props) {
             aria-label="simple table"
           >
             <div className="mt-3 ">
-              {allHistory?.map((row, idx) => (
+              {allHistory?.reverse()?.map((row, idx) => (
                 <div
                   className="flex"
                   key={row?.riderId?.fname}
@@ -372,7 +388,7 @@ function Trips(props) {
                     }
                   >
                     <p className="text-[#959595] mb-2">Distance</p>
-                    <p className="font-bold">{row?.tripDist} KM</p>
+                    <p className="font-bold">{row?.tripDist.toFixed(2)} KM</p>
                   </div>
 
                   <div

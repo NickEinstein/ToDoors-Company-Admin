@@ -42,7 +42,7 @@ function Trips(props) {
 
   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery({ pageNo });
   const totalPages=(getAllBikesQueryResult?.data?.meta?.totalNoOfPages);
-  const bikers = getAllBikesQueryResult?.data?.data;
+  // const bikers = getAllBikesQueryResult?.data?.data;
 
 
   const handleClickOpen = () => {
@@ -78,12 +78,12 @@ function Trips(props) {
   };
 
   useEffect(() => {
-    // getBikes();
-  }, []);
+    getBikes();
+  }, [pageNo]);
 
   const getBikes = async () => {
     const res = await get({
-      endpoint: `api/company/bikes`,
+      endpoint: `api/company/bikes?pageNo=${pageNo}`,
       auth: true,
     });
     setAllBikez(
@@ -146,8 +146,8 @@ function Trips(props) {
     };
   }
   let raws = [];
-  raws = bikers?.length
-    ? bikers?.map((e) =>
+  raws = allBikez?.length
+    ? allBikez?.map((e) =>
         createData(
           e.fname,
           e.state,
