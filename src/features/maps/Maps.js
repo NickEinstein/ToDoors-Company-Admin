@@ -91,7 +91,7 @@ function Trips(props) {
 
   const ridersUnderCompanyR = async (companyId) => {
     const res = await get({
-      endpoint: `api/super-admin/getActiveRiders`,
+      endpoint: `api/company/getActiveCompanyRiders`,
       //  body: { ...payload },
       auth: true,
     });
