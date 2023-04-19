@@ -71,16 +71,17 @@ export const UserApi = todoorsApi.injectEndpoints({
     //     ...config,
     //   }),
     // }),
-    //
+    
 
     getAllBikes: builder.query({
-      query: (arg) => {
-        const { pageNo } = arg;
-        console.log(pageNo)
+      query: (config) => {
+        // const { pageNo } = arg;
+        // console.log(pageNo)
         return {
           url: `${BASE_URL}/company/bikes`,
           method: "GET",
-          params: { pageNo },
+          ...config
+          // params: { pageNo },
         };
       },
     }),

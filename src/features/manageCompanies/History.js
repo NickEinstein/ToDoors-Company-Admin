@@ -29,11 +29,11 @@ function Trips(props) {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [showBikeDetails, setShowBikeDetails] = React.useState(false);
-  const [userId, setUserId] = React.useState("");
+  const [userId, setUserId] = React.useState(null);
   const [start_date, setStart_date] = React.useState();
   const [end_date, setEnd_date] = React.useState();
   const [riderId, setRiderId] = React.useState();
-  const [allHistory, setAllHistory] = React.useState();
+  // const [allHistory, setAllHistory] = React.useState();
   const handleChange = (event) => {
     setRiderId(event.target.value);
   };
@@ -52,7 +52,7 @@ function Trips(props) {
     riderId: riderId,
   });
 
-  // const allHistory = getHistoryQueryResult?.data?.data;
+  const allHistory = getHistoryQueryResult?.data?.data;
 
   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery();
 
@@ -202,19 +202,19 @@ function Trips(props) {
     ),
   ];
 
-  useEffect(()=>{
-getHistory()
-  },[])
+//   useEffect(()=>{
+// getHistory()
+//   },[])
 
-  const getHistory = async () => {
-    const res = await get({
-      endpoint: `api/company/history`,
-      auth: true,
-    });
-    setAllHistory(
-      res?.data?.data?.sort((a, b) => a.created_at - b.created_at).reverse()
-    );
-  };
+  // const getHistory = async () => {
+  //   const res = await get({
+  //     endpoint: `api/company/history`,
+  //     auth: true,
+  //   });
+  //   setAllHistory(
+  //     res?.data?.data
+  //   );
+  // };
 
   const tableArray = [
     {
@@ -303,8 +303,8 @@ getHistory()
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {allBikes?.map((e) => (
-                        <MenuItem value={e?._id}>{e?.fname}</MenuItem>
+                      {allBikes?.map((e, idx) => (
+                        <MenuItem key={idx} value={e?._id}>{e?.fname}</MenuItem>
                       ))}
                     </Select>
                   </div>
@@ -318,7 +318,7 @@ getHistory()
             aria-label="simple table"
           >
             <div className="mt-3 ">
-              {allHistory?.reverse()?.map((row, idx) => (
+              {allHistory?.map((row, idx) => (
                 <div
                   className="flex"
                   key={row?.riderId?.fname}
@@ -409,7 +409,7 @@ getHistory()
                     }
                   >
                     <p className="text-[#959595] mb-2">Fare</p>
-                    <p className="font-bold">NGN {row.tripAmt} (cash)</p>
+                    <p className="font-bold">NGN {row.tripAmt.toFixed(2)} (cash)</p>
                   </div>
                 </div>
               ))}
