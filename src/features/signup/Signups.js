@@ -48,9 +48,9 @@ function Home(props) {
       try {
         const data = await signupMuation({ data: values }).unwrap();
         // TODO extra login
-        enqueueSnackbar("Sign Up in successful", { variant: "success" });
-        console.log(data);
-        // redirect();
+        enqueueSnackbar(data?.message, { variant: "success" });
+        console.log(data?.message);
+        redirect();
       } catch (error) {
         console.log(error?.data?.errors?.message.errors);
         console.log(Object.keys(error?.data?.errors?.message.errors));
