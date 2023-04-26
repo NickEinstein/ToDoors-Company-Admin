@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -27,7 +27,7 @@ function Home(props) {
   };
 
   const { enqueueSnackbar } = useSnackbar();
-  const [signupMuation, ] = UserApi.useSignupMutation();
+  const [signupMuation] = UserApi.useSignupMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -49,11 +49,32 @@ function Home(props) {
         const data = await signupMuation({ data: values }).unwrap();
         // TODO extra login
         enqueueSnackbar("Sign Up in successful", { variant: "success" });
-        redirect();
+        console.log(data);
+        // redirect();
       } catch (error) {
-        enqueueSnackbar(error?.data?.message, "Failed to login", {
-          variant: "error",
-        });
+        console.log(error?.data?.errors?.message.errors);
+        console.log(Object.keys(error?.data?.errors?.message.errors));
+
+        let kk = Object.keys(error?.data?.errors?.message.errors);
+
+        for (let index = 0; index < kk.length; index++) {
+          console.log(
+            error?.data?.errors?.message.errors[kk[index]][0]
+            // Object.keys(error?.data?.errors?.message?.errors?.kk[index][0])
+          );
+
+          enqueueSnackbar(
+            error?.data?.errors?.message.errors[kk[index]][0],
+            "Failed to login",
+            {
+              variant: "error",
+            }
+          );
+        }
+
+        // enqueueSnackbar(error?.data?.message, "Failed to login", {
+        //   variant: "error",
+        // });
       }
     },
   });
