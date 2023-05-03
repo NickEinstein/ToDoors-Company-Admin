@@ -36,14 +36,20 @@ function Home(props) {
       password: "",
       userType: "company",
       fname: "",
+      country: '',
+      state: '',
+      city: '',
+      address: '',
+      dob: '',
     },
 
-    validationSchema: yup.object({
-      email: yup.string().trim().required(),
-      password: yup.string().trim().required(),
-    }),
+    // validationSchema: yup.object({
+    //   email: yup.string().trim().required(),
+    //   password: yup.string().trim().required(),
+    // }),
     onSubmit: async (values) => {
       localStorage.setItem("il", true);
+      console.log(values)
 
       try {
         const data = await signupMuation({ data: values }).unwrap();
@@ -99,38 +105,100 @@ function Home(props) {
             </div>
 
             <form onSubmit={formik.handleSubmit}>
-              <Typography variant="h6" className="mb-2">
-                Email Address
-              </Typography>
-              <TextField
-                size="medium"
-                className="w-full"
-                placeholder="Enter your email"
-                name="email"
-                {...getTextFieldFormikProps(formik, "email")}
-              />
-
-              <Typography variant="h6" className="mb-2 mt-4">
-                Phone Number
-              </Typography>
-              <TextField
-                size="medium"
-                className="w-full"
-                placeholder="Enter your Phone Number"
-                name="phoneNo"
-                {...getTextFieldFormikProps(formik, "phoneNo")}
-              />
-              <Typography variant="h6" className="mb-2 mt-4">
-                Company Name
-              </Typography>
-              <TextField
-                size="medium"
-                className="w-full"
-                placeholder="Enter your Company Name"
-                name="fname"
-                {...getTextFieldFormikProps(formik, "fname")}
-              />
-
+              <div class="flex gap-5 w-full">
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2">
+                    Email Address
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your email"
+                    name="email"
+                    {...getTextFieldFormikProps(formik, "email")}
+                  />
+                </div>
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2">
+                    Phone Number
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your Phone Number"
+                    name="phoneNo"
+                    {...getTextFieldFormikProps(formik, "phoneNo")}
+                  />
+                </div>
+              </div>
+              <div class="flex gap-5">
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2 mt-4">
+                    Company Name
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your Company Name"
+                    name="fname"
+                    {...getTextFieldFormikProps(formik, "fname")}
+                  />
+                </div>
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2 mt-4">
+                    City
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your Company Name"
+                    name="fname"
+                    {...getTextFieldFormikProps(formik, "city")}
+                  />
+                </div>
+              </div>
+              <div class="flex gap-5">
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2 mt-4">
+                    Country
+                  </Typography>
+                  <TextField
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your Company Name"
+                    name="fname"
+                    {...getTextFieldFormikProps(formik, "country")}
+                  />
+                </div>
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-2 mt-4">
+                    State
+                  </Typography>
+                  <TextField
+                    size="medium"
+                    className="w-full"
+                    placeholder="Enter your Company Name"
+                    name="fname"
+                    {...getTextFieldFormikProps(formik, "state")}
+                  />
+                </div>
+              </div>
+              <div className="w-full">
+                <Typography variant="h6" className="mb-2 mt-4">
+                  Address
+                </Typography>
+                <TextField
+                  size="medium"
+                  className="w-full"
+                  placeholder="Enter your Company Name"
+                  name="fname"
+                  {...getTextFieldFormikProps(formik, "address")}
+                />
+              </div>
               <Typography variant="h6" className="mt-4 mb-2">
                 Choose Password
               </Typography>

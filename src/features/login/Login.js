@@ -118,14 +118,14 @@ function Home(props) {
                 >
                   Sign In
                 </Button>
-                <Button
+                {/* <Button
                   variant="outlined"
                   startIcon={<FcGoogle />}
                   className="p-3 bg-white text-base text-black mt-4 w-full"
                   type="submit"
                 >
                   Sign In With Google
-                </Button>
+                </Button> */}
               </div>
             </form>
 
