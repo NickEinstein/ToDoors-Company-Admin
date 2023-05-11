@@ -506,7 +506,7 @@ function ManageRiders(props) {
     <div className="add-bike">
       <ToDoorSearch />
 
-      <div className="bg-yellow-400 mt-5 p-4 flex justify-between items-center">
+      {!authUser.verified && <div className="bg-yellow-400 mt-5 p-4 flex justify-between items-center">
         <p className="text-sm md:text-base font-medium text-gray-800">
           Please complete your profile and Verify Account to access Add Bikes
         </p>
@@ -517,7 +517,7 @@ function ManageRiders(props) {
           Complete Profile
         </button>
       </div>
-
+}
       <div class="pr-[15%]">
         {/* <div
           // onClick={handleShow}
