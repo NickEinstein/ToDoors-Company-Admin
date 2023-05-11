@@ -282,7 +282,7 @@ function ManageRiders(props) {
                 <div class="flex gap-6">
                   <div>
                     <Typography className="font-semibold">ID:</Typography>
-                    {user?.idPhotoUrl.endsWith(".pdf") ? (
+                    {user?.idPhotoUrl?.endsWith(".pdf") ? (
                       <a href={user?.idPhotoUrl} target="_blank">
                         <img
                           className="w-full h-32  border-blue-300"
@@ -300,7 +300,7 @@ function ManageRiders(props) {
                     <Typography className="font-semibold">
                       CAC Document:
                     </Typography>
-                    {user?.companyRegistrationPhotoUrl.endsWith(".pdf") ? (
+                    {user?.companyRegistrationPhotoUrl?.endsWith(".pdf") ? (
                       <a
                         href={user?.companyRegistrationPhotoUrl}
                         target="_blank"
