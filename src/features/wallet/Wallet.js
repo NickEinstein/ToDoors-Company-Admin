@@ -86,7 +86,7 @@ function ManageRiders(props) {
             button={true}
             green={true}
             name="Available Balance"
-            count={numberWithCommas(availableBalance)}
+            count={numberWithCommas(availableBalance||0)}
             openModal={openModal}
           />
         </div>

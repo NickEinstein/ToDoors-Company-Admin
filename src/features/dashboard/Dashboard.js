@@ -74,7 +74,7 @@ function Dashboard(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
-  console.log(authUser)
+  console.log(authUser);
 
   const formik = useFormik({
     initialValues: {
@@ -104,18 +104,11 @@ function Dashboard(props) {
   });
 
   function numberWithCommas(x) {
-    // serPrice.value = x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    //  formState.target_amount=cleanupNumber(serPrice.value)
+   
     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
-  // const getCompanyStatisticsQueryResult = UserApi.useGetCompanyStatisticsQuery(
-  //   {}
-  // );
-  // const companyStatistics = getCompanyStatisticsQueryResult?.data;
+  
   const getMonthlyEarningsResult = UserApi?.useGetEarningsByMonthQuery();
   const getMonthlyTripsResult = UserApi?.useGetTripsByMonthQuery();
 
@@ -147,15 +140,30 @@ function Dashboard(props) {
     earnings ? setVal("Earnings") : setVal("Rides");
   }, [earnings, getMonthlyEarningsResult, getMonthlyTripsResult]);
 
+  const [visible, setVisible] = useState(true);
+
+ 
   return (
     <div>
       {!show && (
         <div>
           <ToDoorSearch />
           <div className="mb-8">
-            {/* <span className="text-xs mr-1 opacity-50">
-            <MdRefresh />
-          </span> */}
+            {!authUser?.verified && (
+              <div className="bg-yellow-400 mt-5 p-4 flex justify-between items-center">
+                <p className="text-sm md:text-base font-medium text-gray-800">
+                  Please complete your profile and Verify Account to access Add
+                  Bikes
+                </p>
+                <button
+                  className="ml-4 bg-gray-800 text-white font-medium py-3 px-4 rounded hover:bg-gray-700 transition duration-200"
+                  onClick={() => history("/profile")}
+                >
+                  Complete Profile
+                </button>
+              </div>
+            )}
+           
             {/* <ToDoorSearch /> */}
             <Typography variant="h5" className="font-bold">
               Welcome Back

@@ -212,11 +212,19 @@ function ManageRiders(props) {
     setUploadArray(uploadArray?.filter((e) => e?.id !== array?.id));
     // console.log(k);
   };
+  function ImageFrame(link) {
+    return (
+      <iframe
+        title="image-frame"
+        src={link}
+        style={{ width: "100%", height: "500px" }}
+      />
+    );
+  }
 
   return (
     <div className="add-bike">
       <ToDoorSearch />
-
       <div class="">
         {!showProfile && (
           <div className="flex items-center mb-2 cursor-pointer w-16 p-2">
@@ -255,9 +263,15 @@ function ManageRiders(props) {
               </div>
               <div className="self-center">
                 <Typography variant="h6">{authUser?.fname}</Typography>
-                <Button className="text-white bg-primary-main" variant="h4">
-                  Level 1 Account
-                </Button>
+                <Button
+                    className={
+                      user?.verified
+                        ? "h-6 bg-green-400"
+                        : "h-6 bg-yellow-300 text-black font-bold"
+                    }
+                  >
+                    {user?.verified ? "Verified" : "Unverified"}
+                  </Button>
               </div>
             </div>
             <Divider className="my-8" />
@@ -406,7 +420,7 @@ function ManageRiders(props) {
               </div>
             </div>
 
-            <div class="flex items-center   justify-between w-full px-8">
+            <div class="flex items-start   justify-between w-full px-8">
               <div class="flex flex-col items-center gap-5 w-1/2 ">
                 <Typography className="font-bold">
                   Upload Profile Picture
@@ -436,6 +450,9 @@ function ManageRiders(props) {
                         className="w-32 h-32 border border-blue-300"
                         src={profilePic?.readerURL}
                       />
+                      <Typography className="text-center">
+                        {profilePic?.file?.name}
+                      </Typography>
                       {/* <Typography>{ridersPictureName.name}</Typography> */}
                       <div
                         onClick={() => setProfilePic("")}
@@ -448,7 +465,7 @@ function ManageRiders(props) {
                 </div>
               </div>
               <div class=" flex flex-col items-center gap-5 justify-center w-full ">
-                <div class="flex flex-col w-1/2 items-center gap-5 mt-8 justify-center ">
+                <div class="flex flex-col w-2/3 items-center gap-5 justify-center ">
                   <div class="flex items-center gap-5 justify-center w-full ">
                     <Typography className="font-semibold">
                       Upload Valid ID Card
@@ -500,7 +517,9 @@ function ManageRiders(props) {
                           className="w-[400px] h-32 border border-blue-300"
                           src={idPic?.readerURL}
                         />
-                        {/* <Typography>{ridersPictureName.name}</Typography> */}
+                        <Typography className="text-center">
+                          {idPic?.file?.name}
+                        </Typography>
                         <div
                           onClick={() => setidPic("")}
                           className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 -right-5 text-white rounded-full"
@@ -519,10 +538,10 @@ function ManageRiders(props) {
                   <input
                     onChange={(e) => onFileChange(e, "companyRegistration", 3)}
                     style={{ display: "none" }}
-                    id="contained-button-file"
+                    id="contained-button-filecac"
                     type="file"
                   />
-                  <label htmlFor="contained-button-file" className="mb-8">
+                  <label htmlFor="contained-button-filecac" className="mb-8">
                     <Button
                       variant="contained"
                       color="primary"
@@ -534,15 +553,19 @@ function ManageRiders(props) {
                 </div>
                 <div>
                   {CACdoc && (
-                    <div className="relative w-20">
-                      <Avatar
-                        className="w-32 h-32 border border-blue-300"
+                    <div className="relative">
+                      <img
+                        className="w-[400px] h-32 border border-blue-300"
+                        // className="w-32 h-32 border border-blue-300"
                         src={CACdoc?.readerURL}
                       />
+                      <Typography className="text-center">
+                        {CACdoc?.file?.name}
+                      </Typography>
                       {/* <Typography>{ridersPictureName.name}</Typography> */}
                       <div
                         onClick={() => setCACdoc("")}
-                        className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 left-32 text-white rounded-full"
+                        className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 -right-5 text-white rounded-full"
                       >
                         x
                       </div>
@@ -575,6 +598,7 @@ function ManageRiders(props) {
           </div>
         )}
       </div>
+      {/* {ImageFrame(user.profileUrl)} */}
     </div>
   );
 }

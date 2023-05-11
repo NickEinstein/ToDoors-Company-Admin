@@ -91,7 +91,7 @@ function NewWallCards(props) {
               variant={
                 props.small
                   ? "h3"
-                  : props.earnings
+                  : props.earnings && props.count
                   ? "h5"
                   : props.big
                   ? "h3"
@@ -107,7 +107,7 @@ function NewWallCards(props) {
                   : "text-center font-bold text-primary-main px-5"
               }
             >
-              {props.count}
+              {props.count||0}
             </Typography>
           </div>
         </div>

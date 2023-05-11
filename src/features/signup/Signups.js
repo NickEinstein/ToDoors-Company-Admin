@@ -28,7 +28,7 @@ function Home(props) {
   const [cities, setCities] = useState([]);
   const [city, setCity] = React.useState("");
   const [state, setState] = React.useState("");
-
+  const [phoneNo, setPhoneNo] = React.useState("");
   const history = useNavigate();
 
   const redirect = () => {
@@ -45,11 +45,11 @@ function Home(props) {
   const formik = useFormik({
     initialValues: {
       email: "",
-      phoneNo: "",
+      // phoneNo: "",
       password: "",
       userType: "company",
       fname: "",
-      country: "",
+      country: "Nigeria",
       state: "",
       city: "",
       address: "",
@@ -57,7 +57,7 @@ function Home(props) {
     },
 
     // validationSchema: yup.object({
-    //   email: yup.string().trim().required(),
+    //   phoneNo: yup.string().trim().required(),
     //   password: yup.string().trim().required(),
     // }),
     onSubmit: async (values) => {
@@ -65,7 +65,9 @@ function Home(props) {
       console.log(values);
 
       try {
-        const data = await signupMuation({ data: {...values, state:state, city:city} }).unwrap();
+        const data = await signupMuation({
+          data: { ...values, state: state, city: city, phoneNo: phoneNo },
+        }).unwrap();
         // TODO extra login
         enqueueSnackbar(data?.message, { variant: "success" });
         console.log(data?.message);
@@ -176,11 +178,21 @@ function Home(props) {
                     multiline
                     rows={1.5}
                     fullWidth
+                    type="number"
                     size="medium"
                     className="w-full"
                     placeholder="Enter your Phone Number"
                     name="phoneNo"
-                    {...getTextFieldFormikProps(formik, "phoneNo")}
+                    // onChange={(e) => setPhoneNo(e.target.value)}
+                    onChange={(e) => {
+                      const regex = /^[0-9\b]+$/;
+                      if (e.target.value === "" || regex.test(e.target.value)) {
+                        // setNum(e.target.value);
+                        setPhoneNo(e.target.value);
+                      }
+                    }}
+                    value={phoneNo}
+                    // {...getTextFieldFormikProps(formik, "phoneNo")}
                   />
                 </div>
               </div>
@@ -205,6 +217,7 @@ function Home(props) {
                     Country
                   </Typography>
                   <TextField
+                    value={"Nigeria"}
                     multiline
                     rows={1.5}
                     fullWidth
@@ -212,7 +225,8 @@ function Home(props) {
                     className="w-full"
                     placeholder="Enter your Country"
                     name="country"
-                    {...getTextFieldFormikProps(formik, "country")}
+                    // disabled
+                    // {...getTextFieldFormikProps(formik, "country")}
                   />
                 </div>
               </div>
@@ -300,6 +314,13 @@ function Home(props) {
                   {...getTextFieldFormikProps(formik, "address")}
                 />
               </div>
+
+              {/* <PasswordTextField
+                className="w-full "
+                placeholder="Enter your Password"
+                name="password"
+                {...getTextFieldFormikProps(formik, "password")}
+              /> */}
               <Typography
                 multiline
                 rows={1.5}
@@ -310,11 +331,12 @@ function Home(props) {
               </Typography>
 
               <PasswordTextField
-                multiline
-                rows={1.5}
-                className="w-full "
+                className="w-full"
+                // multiline
+                // rows={1.5}
                 placeholder="Enter your Password"
                 name="password"
+                type="password"
                 {...getTextFieldFormikProps(formik, "password")}
               />
 
@@ -323,8 +345,8 @@ function Home(props) {
               </Typography>
 
               <PasswordTextField
-                multiline
-                rows={1.5}
+                // multiline
+                // rows={1.5}
                 className="w-full "
                 placeholder="Confirm your Password"
                 name="password"

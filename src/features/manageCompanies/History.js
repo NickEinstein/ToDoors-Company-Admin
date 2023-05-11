@@ -15,6 +15,7 @@ import {
   Modal,
   Box,
   Avatar,
+  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -202,9 +203,9 @@ function Trips(props) {
     ),
   ];
 
-//   useEffect(()=>{
-// getHistory()
-//   },[])
+  //   useEffect(()=>{
+  // getHistory()
+  //   },[])
 
   // const getHistory = async () => {
   //   const res = await get({
@@ -304,7 +305,9 @@ function Trips(props) {
                         <em>None</em>
                       </MenuItem>
                       {allBikes?.map((e, idx) => (
-                        <MenuItem key={idx} value={e?._id}>{e?.fname}</MenuItem>
+                        <MenuItem key={idx} value={e?._id}>
+                          {e?.fname}
+                        </MenuItem>
                       ))}
                     </Select>
                   </div>
@@ -313,108 +316,117 @@ function Trips(props) {
             </div>
           </div>
 
-          <div
-            sx={{ minWidth: 650, backgroundColor: "#EBEBEB" }}
-            aria-label="simple table"
-          >
-            <div className="mt-3 ">
-              {allHistory?.map((row, idx) => (
-                <div
-                  className="flex"
-                  key={row?.riderId?.fname}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    marginTop: 10,
-                    backgroundColor: "",
-                  }}
-                >
+          {allBikes && allBikes.length > 0 ? (
+            <div
+              sx={{ minWidth: 650, backgroundColor: "#EBEBEB" }}
+              aria-label="simple table"
+            >
+              <div className="mt-3 ">
+                {allHistory?.map((row, idx) => (
                   <div
-                    className={
-                      idx !== rows.length - 1
-                        ? "w-[16%]  px-3 py-6  border4b text-left"
-                        : "w-[16%]  px-3 py-6  border3b border4b text-left"
-                    }
+                    className="flex"
+                    key={row?.riderId?.fname}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      marginTop: 10,
+                      backgroundColor: "",
+                    }}
                   >
-                    <p className="text-[#959595] mb-2">Rider</p>
-                    <div className="flex items-center gap-3">
-                      <Avatar src={row?.riderId?.profileUrl} />
-                      <p
-                        onClick={() => {
-                          setOpen(true);
-                        }}
-                        className="font-bold"
-                      >
-                        {row?.riderId?.fname}
+                    <div
+                      className={
+                        idx !== rows.length - 1
+                          ? "w-[16%]  px-3 py-6  border4b text-left"
+                          : "w-[16%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2">Rider</p>
+                      <div className="flex items-center gap-3">
+                        <Avatar src={row?.riderId?.profileUrl} />
+                        <p
+                          onClick={() => {
+                            setOpen(true);
+                          }}
+                          className="font-bold"
+                        >
+                          {row?.riderId?.fname}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      className={
+                        idx !== rows.length - 1
+                          ? "w-[21%]  px-3 py-6  border4b text-left"
+                          : "w-[21%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2">
+                        From: {row.pickUpAddress.toUpperCase()}
+                      </p>
+                      <p className="font-bold">
+                        <span className="text-[#959595] mb-2 font-semibold">
+                          To:
+                        </span>
+                        <span className="font-bold "> {row.destAddress}</span>
+                      </p>
+                    </div>
+                    <div
+                      className={
+                        idx !== rows?.length - 1
+                          ? "w-[16%]  px-3 py-6  border4b text-left"
+                          : "w-[16%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2 ">Start Time:</p>
+                      <p className="font-bold">
+                        <p>{moment(row?.bookingTime).format("ll")}</p>
+                        <p>
+                          {moment.utc(row?.bookingTime).zone(0).format("HH:mm")}
+                        </p>
+                      </p>
+                    </div>
+                    <div
+                      className={
+                        idx !== rows?.length - 1
+                          ? "w-[16%]  px-3 py-6  border4b text-left"
+                          : "w-[16%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2">Distance</p>
+                      <p className="font-bold">{row?.tripDist.toFixed(2)} KM</p>
+                    </div>
+
+                    <div
+                      className={
+                        idx !== rows.length - 1
+                          ? "w-[16%]  px-3 py-6  border4b text-left"
+                          : "w-[16%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2">Average Time:</p>
+                      <p className="font-bold">{row.travelTime}</p>
+                    </div>
+                    <div
+                      className={
+                        idx !== rows.length - 1
+                          ? "w-[16%]  px-3 py-6  border4b text-left"
+                          : "w-[16%]  px-3 py-6  border3b border4b text-left"
+                      }
+                    >
+                      <p className="text-[#959595] mb-2">Fare</p>
+                      <p className="font-bold">
+                        NGN {row.tripAmt.toFixed(2)} (cash)
                       </p>
                     </div>
                   </div>
-                  <div
-                    className={
-                      idx !== rows.length - 1
-                        ? "w-[21%]  px-3 py-6  border4b text-left"
-                        : "w-[21%]  px-3 py-6  border3b border4b text-left"
-                    }
-                  >
-                    <p className="text-[#959595] mb-2">
-                      From: {row.pickUpAddress.toUpperCase()}
-                    </p>
-                    <p className="font-bold">
-                      <span className="text-[#959595] mb-2 font-semibold">
-                        To:
-                      </span>
-                      <span className="font-bold "> {row.destAddress}</span>
-                    </p>
-                  </div>
-                  <div
-                    className={
-                      idx !== rows?.length - 1
-                        ? "w-[16%]  px-3 py-6  border4b text-left"
-                        : "w-[16%]  px-3 py-6  border3b border4b text-left"
-                    }
-                  >
-                    <p className="text-[#959595] mb-2 ">Start Time:</p>
-                    <p className="font-bold">
-                      <p>{moment(row?.bookingTime).format("ll")}</p>
-                      <p>
-                        {moment.utc(row?.bookingTime).zone(0).format("HH:mm")}
-                      </p>
-                    </p>
-                  </div>
-                  <div
-                    className={
-                      idx !== rows?.length - 1
-                        ? "w-[16%]  px-3 py-6  border4b text-left"
-                        : "w-[16%]  px-3 py-6  border3b border4b text-left"
-                    }
-                  >
-                    <p className="text-[#959595] mb-2">Distance</p>
-                    <p className="font-bold">{row?.tripDist.toFixed(2)} KM</p>
-                  </div>
-
-                  <div
-                    className={
-                      idx !== rows.length - 1
-                        ? "w-[16%]  px-3 py-6  border4b text-left"
-                        : "w-[16%]  px-3 py-6  border3b border4b text-left"
-                    }
-                  >
-                    <p className="text-[#959595] mb-2">Average Time:</p>
-                    <p className="font-bold">{row.travelTime}</p>
-                  </div>
-                  <div
-                    className={
-                      idx !== rows.length - 1
-                        ? "w-[16%]  px-3 py-6  border4b text-left"
-                        : "w-[16%]  px-3 py-6  border3b border4b text-left"
-                    }
-                  >
-                    <p className="text-[#959595] mb-2">Fare</p>
-                    <p className="font-bold">NGN {row.tripAmt.toFixed(2)} (cash)</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <Typography
+              variant="h4"
+              className="font-bold mt-16 text-center"
+            >{`There're currently No Rides History for this Company`}</Typography>
+          )}
         </div>
       )}
 
