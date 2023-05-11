@@ -217,7 +217,6 @@ function ManageRiders(props) {
     <div className="add-bike">
       <ToDoorSearch />
 
-     
       <div class="">
         {!showProfile && (
           <div className="flex items-center mb-2 cursor-pointer w-16 p-2">
@@ -301,7 +300,7 @@ function ManageRiders(props) {
                     <Typography className="font-semibold">
                       CAC Document:
                     </Typography>
-                    {user?.idPhotoUrl.endsWith(".pdf") ? (
+                    {user?.companyRegistrationPhotoUrl.endsWith(".pdf") ? (
                       <a
                         href={user?.companyRegistrationPhotoUrl}
                         target="_blank"
