@@ -130,6 +130,7 @@ function WallCards(props) {
             {props.button && (
               <div class="mt-4 ">
                 <Button
+                // disabled={!props?.isVerified}
                   onClick={() => props.openModal()}
                   className="bg-[#F7AD2B] px-16 text-white"
                 >

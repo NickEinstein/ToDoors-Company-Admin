@@ -10,6 +10,7 @@ import { MdRefresh } from "react-icons/md";
 import ToDoorSearch from "common/ToDoorSearch";
 import NewWallCards from "common/NewWallCards";
 import { get } from "services/fetch";
+import useAuthUser from "hooks/useAuthUser";
 function ManageRiders(props) {
   const [closeModal, setCloseModal] = React.useState(false);
   const [payMentTransactions, setPayMentTransactions] = React.useState([]);
@@ -20,6 +21,11 @@ function ManageRiders(props) {
     getPaymentTransactions();
     getTotalEarningsAndAvailableBalance();
   }, []);
+
+  const authUser = useAuthUser();
+
+  console.log(authUser)
+
 
   const getTotalEarningsAndAvailableBalance = async () => {
     const resTotalEarnings = await get({
@@ -75,6 +81,7 @@ function ManageRiders(props) {
         <div className="mr-4">
           <WallCards
             className="mr-3"
+            isVerified={authUser?.verified}
             rider={false}
             button={true}
             green={true}

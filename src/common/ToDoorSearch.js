@@ -26,6 +26,8 @@ function ToDoorSearch({ hide, pad }) {
     history("/profile");
   };
 
+  console.log(authUser)
+
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
 
@@ -72,8 +74,14 @@ function ToDoorSearch({ hide, pad }) {
                   <p className="text-[#1E1E1E] text-sm text-center mb-1">
                     {user?.fname?.toUpperCase()}, {user?.city}
                   </p>
-                  <Button className="h-6 bg-primary-main">
-                    Level 1 Account
+                  <Button
+                    className={
+                      user?.verified
+                        ? "h-6 bg-green-400"
+                        : "h-6 bg-yellow-300 text-black font-bold"
+                    }
+                  >
+                    {user?.verified ? "Verified" : "Unverified"}
                   </Button>
                 </div>
               </div>

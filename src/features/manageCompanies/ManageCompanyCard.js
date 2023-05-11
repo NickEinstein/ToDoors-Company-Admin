@@ -88,6 +88,7 @@ function ManageCompanyCard(props) {
     <div className="">
       <Card
         className=" text-black text-center relative"
+        // #FFCD0061
         sx={{ minWidth: 255, minHeight: 120, backgroundColor: "#EBEBEB" }}
       >
         <CardContent className="">

@@ -74,6 +74,8 @@ function Dashboard(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
+  console.log(authUser)
+
   const formik = useFormik({
     initialValues: {
       username: "",

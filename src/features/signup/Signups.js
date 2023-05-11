@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -11,11 +11,24 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import snake from "images/Mask group.png";
+import axios from "axios";
 
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { get } from "services/fetLocation";
 
 function Home(props) {
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [city, setCity] = React.useState("");
+  const [state, setState] = React.useState("");
+
   const history = useNavigate();
 
   const redirect = () => {
@@ -36,11 +49,11 @@ function Home(props) {
       password: "",
       userType: "company",
       fname: "",
-      country: '',
-      state: '',
-      city: '',
-      address: '',
-      dob: '',
+      country: "",
+      state: "",
+      city: "",
+      address: "",
+      dob: "",
     },
 
     // validationSchema: yup.object({
@@ -49,10 +62,10 @@ function Home(props) {
     // }),
     onSubmit: async (values) => {
       localStorage.setItem("il", true);
-      console.log(values)
+      console.log(values);
 
       try {
-        const data = await signupMuation({ data: values }).unwrap();
+        const data = await signupMuation({ data: {...values, state:state, city:city} }).unwrap();
         // TODO extra login
         enqueueSnackbar(data?.message, { variant: "success" });
         console.log(data?.message);
@@ -85,6 +98,40 @@ function Home(props) {
     },
   });
 
+  useEffect(() => {
+    getStates();
+  }, []);
+
+  const getStates = async () => {
+    const res = await get({
+      endpoint: `states`,
+      // body: { ...payload },
+      auth: false,
+    });
+    setStates(res?.data?.data);
+  };
+
+  const getCities = async (val) => {
+    const pp = states.find((e) => e.name == val);
+    const res = await get({
+      endpoint: `regions/${pp.alias}`,
+      // body: { ...payload },
+      auth: false,
+    });
+    setCities(res?.data?.data);
+  };
+
+  const top100Films = states?.map((e) => ({
+    title: e?.name,
+    year: e.id,
+    alias: e?.alias,
+  }));
+  const top10Films = cities?.map((e) => ({
+    title: e?.name,
+    year: e.id,
+    alias: e?.alias,
+  }));
+
   return (
     <div className="z  pl-24">
       <div className="flex justify-between ">
@@ -111,6 +158,8 @@ function Home(props) {
                     Email Address
                   </Typography>
                   <TextField
+                    multiline
+                    rows={1.5}
                     fullWidth
                     size="medium"
                     className="w-full"
@@ -124,6 +173,8 @@ function Home(props) {
                     Phone Number
                   </Typography>
                   <TextField
+                    multiline
+                    rows={1.5}
                     fullWidth
                     size="medium"
                     className="w-full"
@@ -139,6 +190,8 @@ function Home(props) {
                     Company Name
                   </Typography>
                   <TextField
+                    multiline
+                    rows={1.5}
                     fullWidth
                     size="medium"
                     className="w-full"
@@ -149,61 +202,116 @@ function Home(props) {
                 </div>
                 <div className="w-full">
                   <Typography variant="h6" className="mb-2 mt-4">
-                    City
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    size="medium"
-                    className="w-full"
-                    placeholder="Enter your Company Name"
-                    name="fname"
-                    {...getTextFieldFormikProps(formik, "city")}
-                  />
-                </div>
-              </div>
-              <div class="flex gap-5">
-                <div className="w-full">
-                  <Typography variant="h6" className="mb-2 mt-4">
                     Country
                   </Typography>
                   <TextField
+                    multiline
+                    rows={1.5}
+                    fullWidth
                     size="medium"
                     className="w-full"
-                    placeholder="Enter your Company Name"
-                    name="fname"
+                    placeholder="Enter your Country"
+                    name="country"
                     {...getTextFieldFormikProps(formik, "country")}
                   />
                 </div>
-                <div className="w-full">
-                  <Typography variant="h6" className="mb-2 mt-4">
-                    State
-                  </Typography>
-                  <TextField
-                    size="medium"
-                    className="w-full"
-                    placeholder="Enter your Company Name"
-                    name="fname"
-                    {...getTextFieldFormikProps(formik, "state")}
-                  />
+              </div>
+              <div className="flex justify-between my-4">
+                <div className="w-full mr-[5%]">
+                  <p className="font-bold">State</p>
+
+                  <Stack spacing={2}>
+                    <Autocomplete
+                      // freeSolo
+                      id="free-solo-2-demo"
+                      disableClearable
+                      options={top100Films?.map((option) => option.title)}
+                      onChange={(e, val) => {
+                        getCities(val);
+                        setState(val);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          multiline
+                          rows={1.5}
+                          className="w-full bg-[]"
+                          {...params}
+                          // value={'ji'}
+                          // label="Search input"
+                          InputProps={{
+                            ...params.InputProps,
+                            type: "search",
+                          }}
+                        />
+                      )}
+                    />
+                  </Stack>
+                </div>
+                <div className="w-full ">
+                  <p className="font-bold">City</p>
+                  {/* <TextField
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full bg-[#EBEBEB]"
+              value={city}
+              multiline={true}
+              rows={1.5}
+            /> */}
+                  <Stack spacing={2}>
+                    <Autocomplete
+                      multiline
+                      rows={1.5}
+                      // freeSolo
+                      id="free-solo-2-demo"
+                      disableClearable
+                      options={top10Films?.map((option) => option.title)}
+                      onChange={(e, val) => {
+                        // getCities(val);
+                        setCity(val);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          className="w-full bg-[]"
+                          multiline
+                          rows={1.5}
+                          {...params}
+                          // label="Search input"
+                          InputProps={{
+                            ...params.InputProps,
+                            type: "search",
+                          }}
+                        />
+                      )}
+                    />
+                  </Stack>
                 </div>
               </div>
+
               <div className="w-full">
                 <Typography variant="h6" className="mb-2 mt-4">
                   Address
                 </Typography>
                 <TextField
+                  multiline
+                  rows={1.5}
                   size="medium"
                   className="w-full"
-                  placeholder="Enter your Company Name"
-                  name="fname"
+                  placeholder="Enter your Adress"
+                  name="address"
                   {...getTextFieldFormikProps(formik, "address")}
                 />
               </div>
-              <Typography variant="h6" className="mt-4 mb-2">
+              <Typography
+                multiline
+                rows={1.5}
+                variant="h6"
+                className="mt-4 mb-2"
+              >
                 Choose Password
               </Typography>
 
               <PasswordTextField
+                multiline
+                rows={1.5}
                 className="w-full "
                 placeholder="Enter your Password"
                 name="password"
@@ -215,6 +323,8 @@ function Home(props) {
               </Typography>
 
               <PasswordTextField
+                multiline
+                rows={1.5}
                 className="w-full "
                 placeholder="Confirm your Password"
                 name="password"

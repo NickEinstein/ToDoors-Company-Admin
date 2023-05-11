@@ -20,7 +20,8 @@ const fetchBackend = async (
   body,
   pQuery,
   param,
-  multipart
+  multipart,
+  updateType
 ) => {
   const headers = {
     // "X-API-KEY": "fq05322d-429b-4f77-8a4p-a97ry62eb37k",
@@ -29,8 +30,9 @@ const fetchBackend = async (
     "Access-Control-Allow-Origin": "*",
     // "Access-Control-Allow-Methods": "POST",
     "Access-Control-Allow-Methods": "POST GET OPTIONS",
-    updateType: "profile",
+    updatetype: updateType,
   };
+  console.log(updateType);
   const path = paths[endpoint] || endpoint;
   let url = `${process.env.REACT_APP_TODOORS_API}/${path}`;
   // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
@@ -92,8 +94,8 @@ export const get = ({ endpoint, pQuery, param = null, auth = true }) =>
  * @param {boolean} auth
  * @param {boolean} multipart
  */
-export const post = ({ endpoint, body, auth = true, multipart }) =>
-  fetchBackend(endpoint, "POST", auth, body, null, null, multipart);
+export const post = ({ endpoint, body, auth = true, multipart, updateType }) =>
+  fetchBackend(endpoint, "POST", auth, body, null, null, multipart, updateType);
 
 /**
  *
@@ -105,8 +107,8 @@ export const post = ({ endpoint, body, auth = true, multipart }) =>
  * @param {boolean} multipart
  */
 
-export const put = ({ endpoint, body, auth = true, multipart }) =>
-  fetchBackend(endpoint, "PUT", auth, body, null, null, multipart);
+export const put = ({ endpoint, body, auth = true, multipart, updateType }) =>
+  fetchBackend(endpoint, "PUT", auth, body, null, null, multipart, updateType);
 
 /**
  *
