@@ -877,7 +877,7 @@ function ManageRiders(props) {
 
         <div className="w-full flex justify-between my-8 gap-12">
           <Button
-            disabled={!authUser.verifies}
+            disabled={!authUser.verified}
             onClick={onSubmit}
             className="h-12 w-2/6 bg-primary-main"
           >
@@ -885,7 +885,7 @@ function ManageRiders(props) {
           </Button>
 
           <Button
-            disabled={!authUser.verifies}
+            disabled={!authUser.verified}
             onClick={() => onSave()}
             className="h-12 w-2/6 bg-primary-main"
           >

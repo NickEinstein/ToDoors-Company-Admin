@@ -25,6 +25,7 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import ToDoorSearch from "common/ToDoorSearch";
 import { get } from "services/fetch";
+import { AiFillWarning } from "react-icons/ai";
 
 function Trips(props) {
   const [open, setOpen] = React.useState(false);
@@ -422,10 +423,20 @@ function Trips(props) {
               </div>
             </div>
           ) : (
-            <Typography
-              variant="h4"
-              className="font-bold mt-16 text-center"
-            >{`There're currently No Rides History for this Company`}</Typography>
+            <div className="w-full flex flex-col justify-center items-center gap-5 my-40">
+              <AiFillWarning style={{ fontSize: "40px", color: "blue" }} />
+
+              <Typography className="font-bold" variant="h5">
+                History
+              </Typography>
+              <Typography variant="">
+                There're currently No Rides History for this Company
+              </Typography>
+            </div>
+            // <Typography
+            //   variant="h4"
+            //   className="font-bold mt-16 text-center"
+            // >{`There're currently No Rides History for this Company`}</Typography>
           )}
         </div>
       )}

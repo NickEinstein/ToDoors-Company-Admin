@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import ToDoorSearch from "common/ToDoorSearch";
 import EditBikes from "./EditBikes";
 import { get } from "services/fetch";
+import { AiFillWarning } from "react-icons/ai";
 
 function Trips(props) {
   const [userId, setUserId] = React.useState();
@@ -325,9 +326,18 @@ function Trips(props) {
       </nav>
 
       {raws?.length < 1 && (
-        <Typography className="text-center mt-36" variant="h3">
-          No Registered Riders For This Company
-        </Typography>
+        <div className="w-full flex flex-col justify-center items-center gap-5 my-40">
+          <AiFillWarning style={{ fontSize: "40px", color: "blue" }} />
+
+          <Typography className="font-bold" variant="h5">
+            Manage Riders
+          </Typography>
+          <Typography variant="">
+            No Riders have been registered by your company
+          </Typography>
+
+          <Button onClick={()=>history('/add-riders')}>Add Riders</Button>
+        </div>
       )}
 
       {!show && (
@@ -336,7 +346,7 @@ function Trips(props) {
             <div className="mt-3">
               {raws?.map((row) => (
                 <div
-                // key={}
+                  // key={}
                   onClick={() => {
                     setUserId(row.id);
                   }}
@@ -374,7 +384,7 @@ function Trips(props) {
                     <p className="text-[#959595] text-[11px] h-6">
                       Phone Number
                     </p>
-                    <p className="font-semibold my-2">{row.rider}</p>
+                    <p className="font-semibold my-2">{`+234${row.rider}`}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">Reg Date</p>
@@ -484,17 +494,17 @@ function Trips(props) {
                   <Typography className="font-semibold">
                     Email address:
                   </Typography>
-                  <Typography className="font-semibold">ID Card:</Typography>
+                  {/* <Typography className="font-semibold">ID Card:</Typography>
                   <Typography className="font-semibold">
                     Last Login Image
-                  </Typography>
+                  </Typography> */}
                 </div>
                 <div className="flex flex-col gap-3">
-                  <Typography>{user?.city}</Typography>
+                  <Typography>{user?.addres}</Typography>
                   <Typography>{user?.phoneNo}</Typography>
                   <Typography>{user?.email}</Typography>
-                  <Typography>{"****"}</Typography>
-                  <Typography>{"***"}</Typography>
+                  {/* <Typography>{"****"}</Typography>
+                  <Typography>{"***"}</Typography> */}
                 </div>
               </div>
             </div>

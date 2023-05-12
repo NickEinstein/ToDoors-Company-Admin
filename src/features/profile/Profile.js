@@ -20,10 +20,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import ToDoorSearch from "common/ToDoorSearch";
+import { AiFillWarning } from "react-icons/ai";
 function ManageRiders(props) {
   const authUser = useAuthUser();
 
-  const [address, setAddress] = React.useState(authUser?.homeAddress);
+  const [address, setAddress] = React.useState(authUser?.address);
   const [city, setCity] = React.useState(authUser?.city);
   const [phoneNumber, setPhoneNumber] = React.useState(authUser?.phoneNo);
   const [state, setState] = React.useState(authUser?.state);
@@ -261,17 +262,22 @@ function ManageRiders(props) {
                   className="self-end cursor-pointer"
                 />
               </div>
-              <div className="self-center">
+              <div className="self-center flex flex-col gap-2">
                 <Typography variant="h6">{authUser?.fname}</Typography>
-                <Button
-                    className={
-                      user?.verified
-                        ? "h-6 bg-green-400"
-                        : "h-6 bg-yellow-300 text-black font-bold"
-                    }
-                  >
-                    {user?.verified ? "Verified" : "Unverified"}
+                {/* <Button
+                  className={
+                    user?.verified
+                      ? "h-6 bg-green-400"
+                      : "h-6 bg-yellow-300 text-black font-bold"
+                  }
+                >
+                  {user?.verified ? "Verified" : "Unverified"}
+                </Button> */}
+                {!user?.verified && (
+                  <Button onClick={() => setShowProfile(false)}>
+                    Proceed to Verification
                   </Button>
+                )}
               </div>
             </div>
             <Divider className="my-8" />
@@ -279,7 +285,7 @@ function ManageRiders(props) {
               <div className="flex flex-col gap-5 font-semibold">
                 <div class="flex items-center gap-5">
                   <Typography className="font-semibold">Address:</Typography>
-                  <Typography>{user?.homeAddress}</Typography>
+                  <Typography>{user?.address}</Typography>
                 </div>
                 <div class="flex items-center gap-5">
                   <Typography className="font-semibold">
@@ -293,42 +299,77 @@ function ManageRiders(props) {
                   </Typography>
                   <Typography>{user?.email}</Typography>
                 </div>
-                <div class="flex gap-6">
-                  <div>
+                <div class="flex flex-col gap-6">
+                  <div className="flex gap-5 items-center">
                     <Typography className="font-semibold">ID:</Typography>
-                    {user?.idPhotoUrl?.endsWith(".pdf") ? (
-                      <a href={user?.idPhotoUrl} target="_blank">
-                        <img
-                          className="w-full h-32  border-blue-300"
-                          src={pdf}
-                        />
-                      </a>
+                    {user?.idPhotoUrl ? (
+                      <div>
+                        <a href={user?.idPhotoUrl} target="_blank">
+                          <Typography className="text-primary-main" variant="">
+                            {" "}
+                            Uploaded.
+                          </Typography>
+                        </a>
+
+                        {/* {user?.idPhotoUrl?.endsWith(".pdf") ? (
+                          <a href={user?.idPhotoUrl} target="_blank">
+                            <img
+                              className="w-full h-32  border-blue-300"
+                              src={pdf}
+                            />
+                          </a>
+                        ) : (
+                          <img
+                            className="w-[300px] h-32  border-blue-300"
+                            src={user?.idPhotoUrl}
+                          />
+                        )} */}
+                      </div>
                     ) : (
-                      <img
-                        className="w-[300px] h-32  border-blue-300"
-                        src={user?.idPhotoUrl}
-                      />
+                      <div className="w-full flex flex-col justify-start items-start gap-5">
+                        <Typography className="text-yellow-400" variant="">
+                          Not Yet Uploaded.
+                        </Typography>
+                      </div>
                     )}
                   </div>
-                  <div>
+                  <div className="flex gap-5 items-center w-full mb-8">
                     <Typography className="font-semibold">
                       CAC Document:
                     </Typography>
-                    {user?.companyRegistrationPhotoUrl?.endsWith(".pdf") ? (
-                      <a
-                        href={user?.companyRegistrationPhotoUrl}
-                        target="_blank"
-                      >
-                        <img
-                          className="w-full h-32  border-blue-300"
-                          src={pdf}
-                        />
-                      </a>
+                    {user?.companyRegistrationPhotoUrl ? (
+                      <div>
+                        {/* {user?.companyRegistrationPhotoUrl?.endsWith(".pdf") ? (
+                          <a
+                            href={user?.companyRegistrationPhotoUrl}
+                            target="_blank"
+                          >
+                            <img
+                              className="w-full h-32  border-blue-300"
+                              src={pdf}
+                            />
+                          </a>
+                        ) : (
+                          <img
+                            className="w-[300px] h-32  border-blue-300"
+                            src={user?.companyRegistrationPhotoUrl}
+                          />
+                        )} */}
+                        <a
+                          href={user?.companyRegistrationPhotoUrl}
+                          target="_blank"
+                        >
+                          <Typography className="text-primary-main" variant="">
+                            Uploaded.
+                          </Typography>
+                        </a>
+                      </div>
                     ) : (
-                      <img
-                        className="w-[300px] h-32  border-blue-300"
-                        src={user?.companyRegistrationPhotoUrl}
-                      />
+                      <div className="w-full flex flex-col justify-start items-start gap-5">
+                        <Typography className="text-yellow-400" variant="">
+                          Not yet Uploaded.
+                        </Typography>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -409,7 +450,7 @@ function ManageRiders(props) {
             </div>
             <div className="flex justify-between my-10">
               <div className="w-full ">
-                <p className="font-bold">House/Office Address</p>
+                <p className="font-bold">Office Address</p>
                 <TextField
                   className="w-full bg-[#EBEBEB]"
                   multiline={true}
@@ -420,11 +461,21 @@ function ManageRiders(props) {
               </div>
             </div>
 
-            <div class="flex items-start   justify-between w-full px-8">
-              <div class="flex flex-col items-center gap-5 w-1/2 ">
-                <Typography className="font-bold">
-                  Upload Profile Picture
-                </Typography>
+            <div
+              class={
+                !authUser.verified
+                  ? "flex items-start  justify-between w-full px-8"
+                  : "flex items-start justify-start w-full"
+              }
+            >
+              <div
+                className={
+                  !authUser.verified
+                    ? "flex flex-col items-center gap-5 w-1/2 "
+                    : "flex flex-col items-start gap-5 w-1/2 "
+                }
+              >
+                <Typography className="font-bold">Upload Logo</Typography>
 
                 <div className="">
                   <input
@@ -439,11 +490,18 @@ function ManageRiders(props) {
                       color="primary"
                       component="span"
                     >
-                      Upload Profile Picture
+                      Upload Company Logo
                     </Button>
                   </label>
                 </div>
                 <div>
+                  {authUser.verified && authUser.profileUrl && !profilePic && (
+                    <Avatar
+                      className="w-32 h-32 border border-blue-300"
+                      src={authUser.profileUrl}
+                    />
+                  )}
+
                   {profilePic && (
                     <div className="relative w-20">
                       <Avatar
@@ -464,115 +522,149 @@ function ManageRiders(props) {
                   )}
                 </div>
               </div>
-              <div class=" flex flex-col items-center gap-5 justify-center w-full ">
-                <div class="flex flex-col w-2/3 items-center gap-5 justify-center ">
-                  <div class="flex items-center gap-5 justify-center w-full ">
-                    <Typography className="font-semibold">
-                      Upload Valid ID Card
-                    </Typography>
+              {!authUser.verified && (
+                <div class=" flex flex-col items-center gap-5 justify-center w-full ">
+                  <div class="flex flex-col w-2/3 items-center gap-5 justify-center ">
+                    <div class="flex items-center gap-5 justify-center w-full ">
+                      <Typography className="font-semibold">
+                        Upload Valid ID Card
+                      </Typography>
+                    </div>
+                    <div class="flex gap-3 w-full min-w-[360px]">
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          ID
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          className="w-full"
+                          // value={age}
+                          label="ID"
+                          onChange={(e) => {
+                            // console.log(e.target.value);
+                            setIdInfo(e.target.value);
+                          }}
+                        >
+                          <MenuItem value={"Int'l passport"}>
+                            Int'l passport
+                          </MenuItem>
+                          <MenuItem value={"Drivers license"}>
+                            Drivers license
+                          </MenuItem>
+                          <MenuItem value={"NIN"}>NIN</MenuItem>
+                          <MenuItem value={"Voters card"}>Voters card</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <div>
+                        <input
+                          onChange={(e) => onFileChange(e, "idPhoto", 2)}
+                          style={{ display: "none" }}
+                          id="contained-button-file3"
+                          type="file"
+                        />
+                        <label
+                          htmlFor="contained-button-file3"
+                          className="mb-8"
+                        >
+                          <Button
+                            className="min-w-[170px]"
+                            variant="contained"
+                            color="primary"
+                            component="span"
+                          >
+                            Upload {idInfo}
+                          </Button>
+                        </label>
+                      </div>
+                    </div>
+                    {/* <img className="w-full h-32  border-blue-300" src={pdf} /> */}
+
+                    {idPic && (
+                      <div>
+                        <div className="relative">
+                          {idPic?.file?.name?.endsWith(".pdf") ? (
+                            <a href={idPic?.readerURL} target="_blank">
+                              <img
+                                className="w-full h-32  border-blue-300"
+                                src={pdf}
+                              />
+                            </a>
+                          ) : (
+                            <img
+                              className="w-[300px] h-32  border-blue-300"
+                              src={idPic?.readerURL}
+                            />
+                          )}
+                          <Typography className="text-center">
+                            {idPic?.file?.name}
+                          </Typography>
+                          <div
+                            onClick={() => setidPic("")}
+                            className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 -right-5 text-white rounded-full"
+                          >
+                            x
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      // value={age}
-                      label="Age"
-                      onChange={(e) => {
-                        // console.log(e.target.value);
-                        setIdInfo(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={"Int'l passport"}>
-                        Int'l passport
-                      </MenuItem>
-                      <MenuItem value={"Drivers license"}>
-                        Drivers license
-                      </MenuItem>
-                      <MenuItem value={"NIN"}>NIN</MenuItem>
-                      <MenuItem value={"Voters card"}>Voters card</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <div>
+                </div>
+              )}
+              {!authUser.verified && (
+                <div class="flex flex-col items-center gap-5 w-1/2 ">
+                  <Typography className="font-bold">Upload CAC Doc</Typography>
+
+                  <div className="">
                     <input
-                      onChange={(e) => onFileChange(e, "idPhoto", 2)}
+                      onChange={(e) =>
+                        onFileChange(e, "companyRegistration", 3)
+                      }
                       style={{ display: "none" }}
-                      id="contained-button-file3"
+                      id="contained-button-filecac"
                       type="file"
                     />
-                    <label htmlFor="contained-button-file3" className="mb-8">
+                    <label htmlFor="contained-button-filecac" className="mb-8">
                       <Button
                         variant="contained"
                         color="primary"
                         component="span"
                       >
-                        Upload {idInfo}
+                        Upload CAC Document
                       </Button>
                     </label>
                   </div>
-                  {idPic && (
-                    <div>
+                  <div>
+                    {CACdoc && (
                       <div className="relative">
-                        <img
-                          className="w-[400px] h-32 border border-blue-300"
-                          src={idPic?.readerURL}
-                        />
+                        {CACdoc?.file?.name?.endsWith(".pdf") ? (
+                          <a href={CACdoc?.readerURL} target="_blank">
+                            <img
+                              className="w-full h-32  border-blue-300"
+                              src={pdf}
+                            />
+                          </a>
+                        ) : (
+                          <img
+                            className="w-[300px] h-32  border-blue-300"
+                            src={CACdoc?.readerURL}
+                          />
+                        )}
                         <Typography className="text-center">
-                          {idPic?.file?.name}
+                          {CACdoc?.file?.name}
                         </Typography>
+                        {/* <Typography>{ridersPictureName.name}</Typography> */}
                         <div
-                          onClick={() => setidPic("")}
+                          onClick={() => setCACdoc("")}
                           className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 -right-5 text-white rounded-full"
                         >
                           x
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div class="flex flex-col items-center gap-5 w-1/2 ">
-                <Typography className="font-bold">Upload CAC Doc</Typography>
-
-                <div className="">
-                  <input
-                    onChange={(e) => onFileChange(e, "companyRegistration", 3)}
-                    style={{ display: "none" }}
-                    id="contained-button-filecac"
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-filecac" className="mb-8">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component="span"
-                    >
-                      Upload CAC Document
-                    </Button>
-                  </label>
-                </div>
-                <div>
-                  {CACdoc && (
-                    <div className="relative">
-                      <img
-                        className="w-[400px] h-32 border border-blue-300"
-                        // className="w-32 h-32 border border-blue-300"
-                        src={CACdoc?.readerURL}
-                      />
-                      <Typography className="text-center">
-                        {CACdoc?.file?.name}
-                      </Typography>
-                      {/* <Typography>{ridersPictureName.name}</Typography> */}
-                      <div
-                        onClick={() => setCACdoc("")}
-                        className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 -right-5 text-white rounded-full"
-                      >
-                        x
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="w-full mb-8 flex justify-center mt-12">

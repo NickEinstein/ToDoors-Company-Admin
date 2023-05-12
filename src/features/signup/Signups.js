@@ -336,7 +336,7 @@ function Home(props) {
                 // rows={1.5}
                 placeholder="Enter your Password"
                 name="password"
-                type="password"
+                // type="password"
                 {...getTextFieldFormikProps(formik, "password")}
               />
 

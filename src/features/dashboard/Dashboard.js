@@ -10,6 +10,8 @@ import { getTextFieldFormikProps } from "utils/FormikUtils";
 import useAuthUser from "hooks/useAuthUser";
 import CompanyRiderCard from "common/CompanyRiderCard";
 
+import { AiFillWarning } from "react-icons/ai";
+
 import { Navigate } from "react-router-dom";
 import { RouteEnum } from "constants/RouteConstants";
 import DashboardChart from "./DashboardChart";
@@ -104,11 +106,9 @@ function Dashboard(props) {
   });
 
   function numberWithCommas(x) {
-   
     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  
   const getMonthlyEarningsResult = UserApi?.useGetEarningsByMonthQuery();
   const getMonthlyTripsResult = UserApi?.useGetTripsByMonthQuery();
 
@@ -142,7 +142,6 @@ function Dashboard(props) {
 
   const [visible, setVisible] = useState(true);
 
- 
   return (
     <div>
       {!show && (
@@ -150,7 +149,7 @@ function Dashboard(props) {
           <ToDoorSearch />
           <div className="mb-8">
             {!authUser?.verified && (
-              <div className="bg-yellow-400 mt-5 p-4 flex justify-between items-center">
+              <div className="bg-yellow-400 mt-5 p-4 my-4 rounded flex justify-between items-center">
                 <p className="text-sm md:text-base font-medium text-gray-800">
                   Please complete your profile and Verify Account to access Add
                   Bikes
@@ -163,7 +162,7 @@ function Dashboard(props) {
                 </button>
               </div>
             )}
-           
+
             {/* <ToDoorSearch /> */}
             <Typography variant="h5" className="font-bold">
               Welcome Back
@@ -347,14 +346,45 @@ function Dashboard(props) {
 
             {/* <Button className="p-3 w-1/3 ml-4">Search</Button> */}
           </div>
-          <div className=" flex mt-10 w-full justify-center">
-            <div className=" w-3/5 mb-10">
-              <DashboardChart
-                companyMonthly={companyMonthly}
-                companyMonthlyTrips={getMonthlyTripsResult?.data?.data}
-              />
+          {authUser?.verified ? (
+            <div className=" flex mt-10 w-full justify-center">
+              {(
+                earnings
+                  ? !companyMonthly?.length
+                  : !getMonthlyTripsResult?.data?.data?.length
+              ) ? (
+                <div className="w-full flex flex-col justify-center items-center gap-5 my-16">
+                  <AiFillWarning style={{ fontSize: "40px", color: "blue" }} />
+
+                  <Typography className="font-bold" variant="h5">
+                    {earnings ? "Earnings" : "Trips"}
+                  </Typography>
+                  <Typography variant="">
+                    No data available to display on the dashboard.
+                  </Typography>
+                </div>
+              ) : (
+                <div className=" w-3/5 mb-10">
+                  <DashboardChart
+                    companyMonthly={companyMonthly}
+                    companyMonthlyTrips={getMonthlyTripsResult?.data?.data}
+                  />
+                </div>
+              )}
             </div>
-          </div>
+          ) : (
+            <div className="w-full flex flex-col justify-center items-center gap-5 my-16">
+              <AiFillWarning style={{ fontSize: "40px", color: "#FDE047" }} />
+
+              <Typography className="font-bold" variant="h5">
+                {earnings ? "Earnings" : "Trips"}
+              </Typography>
+              <Typography variant="">
+                Your account is not yet verified. Upload required documents.
+              </Typography>
+              <Button onClick={() => history("/profile")}>Verify Now</Button>
+            </div>
+          )}
         </div>
       )}
       {show && (
