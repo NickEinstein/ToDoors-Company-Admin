@@ -1,6 +1,5 @@
 export const RouteEnum = {
   HOME: "/",
-  // DASHBOARD: "/",
   FORGOTPASSWORD: "/forgot-password",
   NEWPASSWORD: "/new-password",
   LOGIN: "/login",

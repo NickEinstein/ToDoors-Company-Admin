@@ -1,44 +1,13 @@
 import React, { useState } from "react";
 import UserApi from "apis/UserApi";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import { useSnackbar } from "notistack";
-// import { Button, TextField, Typography } from "@mui/material";
-import PasswordTextField from "common/PasswordTextField";
-import { getTextFieldFormikProps } from "utils/FormikUtils";
-import useAuthUser from "hooks/useAuthUser";
-import { Navigate } from "react-router-dom";
-import { RouteEnum } from "constants/RouteConstants";
-import LoginHeader from "common/LoginHeader";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import toDoorLogo from "images/Ellipse 30.png";
-// import ManageCompanyCard from 'common/ManageCompanyCard'
-
-// import { RouteEnum } from "constants/RouteConstants";
-// import ReactDOM from 'react-dom';
-// import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
-import trustedBy3 from "images/Rectangle 106.png";
-// import LoginHeader from './LoginHeader';
-// import trustedBy3 from './images/trustedBy-3.png'
-// import trustedBy4 from './images/trustedBy-4.png'
 import {
   Autocomplete,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Input,
-  MenuItem,
-  Rating,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import WallCards from "common/WallCards";
 import ManageCompanyCard from "./ManageCompanyCard";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import ManageCompaniesTable from "./ManageCompaniesTable";
@@ -79,37 +48,11 @@ function ManageCompanies(props) {
     },
   ];
 
-  const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      username: yup.string().trim().required(),
-      password: yup.string().trim().required(),
-    }),
-    onSubmit: async (values) => {
-      // localStorage.setItem('location', values.location)
-      redirect();
-
-      try {
-        const data = await loginMuation({ data: values }).unwrap();
-        // TODO extra login
-        // redirect()
-        enqueueSnackbar("Logged in successful", { variant: "success" });
-      } catch (error) {
-        enqueueSnackbar(error?.data?.message, "Failed to login", {
-          variant: "error",
-        });
-      }
-    },
-  });
-
+ 
  
 
   return (
@@ -173,9 +116,7 @@ function ManageCompanies(props) {
                 name="Riders"
                 count="20"
               />
-              {/* <WallCards name='Total Raiders' count='116,019'/> */}
-              {/* <WallCards name='Rides in progress' count='13'/>
-              <WallCards name='Active vehicles' count='8'/> */}
+            
               <NewWallCards
                 dashboard={true}
                 small={true}
@@ -189,24 +130,19 @@ function ManageCompanies(props) {
             <Typography
               variant="h5"
               className="font-bold mt-8 text-primary-main"
-              // text-blue-800
             >
               Riders
             </Typography>
 
             <div className="flex justify-between items-end">
               <Autocomplete
-                // clearIcon={<p></p>}
-                // variant=''
                 className="mr-3"
-                // disablePortal
                 id="combo-box-demo"
                 options={top100Films}
                 sx={{ width: 200 }}
                 renderInput={(params) => <TextField {...params} />}
               />
               <Autocomplete
-                // disablePortal
                 id="combo-box-demo"
                 options={top100Films}
                 sx={{ width: 200 }}

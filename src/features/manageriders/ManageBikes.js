@@ -6,7 +6,6 @@ import moment from "moment";
 import { useSnackbar } from "notistack";
 import gigLogo from "images/Ellipse 56.png";
 import { GiTrashCan } from "react-icons/gi";
-
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {
   Button,
@@ -28,23 +27,15 @@ import { AiFillWarning } from "react-icons/ai";
 function Trips(props) {
   const [userId, setUserId] = React.useState();
   const [editbikeObj, setEditbikeObj] = React.useState();
-  // const [PgeNo, setPageNo] = React.useState();
-
   const [allBikez, setAllBikez] = React.useState([]);
-
   const [opens, setOpens] = React.useState(false);
   const [show, setShow] = React.useState(false);
-  const [route, setRoute] = React.useState({});
   const [open, setOpen] = React.useState(false);
   const [pageNo, setPageNo] = useState(1);
-
   const getUserQueryResult = UserApi?.useGetUserQuery({ userId });
   const user = getUserQueryResult?.data;
-
   const getAllBikesQueryResult = UserApi?.useGetAllBikesQuery({ pageNo });
-  const totalPages=(getAllBikesQueryResult?.data?.meta?.totalNoOfPages);
-  // const bikers = getAllBikesQueryResult?.data?.data;
-
+  const totalPages = getAllBikesQueryResult?.data?.meta?.totalNoOfPages;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,12 +44,6 @@ function Trips(props) {
   const handleClose = () => {
     setOpen(false);
     getBikes();
-  };
-
-  const handleClick = (event, page) => {
-    event.preventDefault();
-    setPageNo(page);
-    onPageChange(page);
   };
 
   const onPageChange = (page) => {
@@ -167,74 +152,7 @@ function Trips(props) {
       )
     : [];
 
-  const rows = [
-    createData(
-      "Lagos",
-      "George Femi",
-      "435",
-      "NGN30,908",
-      "WXHDGDJKGG",
-      "Delivered",
-      "N200,000",
-      "11 Sept. 9:00am",
-      "15 Sept. 1:00am",
-      "-"
-    ),
-    createData(
-      "Lagos",
-      "George Femi",
-      "435",
-      "NGN30,908",
-      "WXHDGDJKGG",
-      "Delivered",
-      "N200,000",
-      "11 Sept. 9:00am",
-      "15 Sept. 1:00am",
-      "-"
-    ),
-    createData(
-      "Lagos",
-      "George Femi",
-      "435",
-      "NGN30,908",
-      "WXHDGDJKGG",
-      "Delivered",
-      "N200,000",
-      "11 Sept. 9:00am",
-      "15 Sept. 1:00am",
-      "-"
-    ),
-    createData(
-      "Lagos",
-      "George Femi",
-      "435",
-      "NGN30,908",
-      "WXHDGDJKGG",
-      "Delivered",
-      "N200,000",
-      "11 Sept. 9:00am",
-      "15 Sept. 1:00am",
-      "-"
-    ),
-  ];
-
-  const tableArray = [
-    {
-      image: gigLogo,
-      name: "Nickky Samuel jonas  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-
-    {
-      image: gigLogo,
-      name: "John jimmy Samuel  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-  ];
+  
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
@@ -272,7 +190,6 @@ function Trips(props) {
     minHeight: "520px",
     bgcolor: "background.paper",
     borderRadius: "3%",
-    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -336,7 +253,7 @@ function Trips(props) {
             No Riders have been registered by your company
           </Typography>
 
-          <Button onClick={()=>history('/add-riders')}>Add Riders</Button>
+          <Button onClick={() => history("/add-riders")}>Add Riders</Button>
         </div>
       )}
 
@@ -494,17 +411,11 @@ function Trips(props) {
                   <Typography className="font-semibold">
                     Email address:
                   </Typography>
-                  {/* <Typography className="font-semibold">ID Card:</Typography>
-                  <Typography className="font-semibold">
-                    Last Login Image
-                  </Typography> */}
                 </div>
                 <div className="flex flex-col gap-3">
                   <Typography>{user?.addres}</Typography>
                   <Typography>{user?.phoneNo}</Typography>
                   <Typography>{user?.email}</Typography>
-                  {/* <Typography>{"****"}</Typography>
-                  <Typography>{"***"}</Typography> */}
                 </div>
               </div>
             </div>

@@ -22,9 +22,8 @@ import rightInput from "images/Vector.png";
 // import ReactDOM from 'react-dom';
 // import trustedBy1 from './images/Vector.png'
 import gigLogo from "images/Ellipse 56.png";
-import trustedBy3 from "images/Rectangle 106.png";
 // import LoginHeader from './LoginHeader';
-// import trustedBy3 from './images/trustedBy-3.png'
+// import  from './images/trustedBy-3.png'
 // import trustedBy4 from './images/trustedBy-4.png'
 import {
   Autocomplete,

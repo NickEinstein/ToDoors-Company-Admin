@@ -2,14 +2,11 @@
 
 import axios from "axios";
 import paths from "./endpoints";
-import Cookies from "universal-cookie";
 
-// import { decodeToken, logout } from "../utility/auth";
 
 const getToken = () => {
   const token = localStorage.getItem("token");
 
-  // localStorage.getItem("token");
   return token;
 };
 
@@ -23,16 +20,12 @@ const fetchBackend = async (
   multipart
 ) => {
   const headers = {
-    // "X-API-KEY": "fq05322d-429b-4f77-8a4p-a97ry62eb37k",
-    // "X-API-KEY": process.env.REACT_APP_API_KEY,
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods": "POST",
     "Access-Control-Allow-Methods": "POST GET OPTIONS",
   };
   const path = paths[endpoint] || endpoint;
   let url = `${process.env.REACT_APP_TODOORS_API}/${path}`;
-  // let url = `${process.env.REACT_APP_BACKEND_URL}${path}`;
 
 console.log(process.env.REACT_APP_TODOORS_API);
 

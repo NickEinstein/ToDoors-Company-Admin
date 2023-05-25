@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import { useSnackbar } from "notistack";
 
 import PasswordTextField from "common/PasswordTextField";
@@ -11,7 +10,6 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import snake from "images/Mask group.png";
-import axios from "axios";
 
 import {
   Autocomplete,
@@ -45,7 +43,6 @@ function Home(props) {
   const formik = useFormik({
     initialValues: {
       email: "",
-      // phoneNo: "",
       password: "",
       userType: "company",
       fname: "",
@@ -56,10 +53,6 @@ function Home(props) {
       dob: "",
     },
 
-    // validationSchema: yup.object({
-    //   phoneNo: yup.string().trim().required(),
-    //   password: yup.string().trim().required(),
-    // }),
     onSubmit: async (values) => {
       localStorage.setItem("il", true);
       console.log(values);
@@ -79,10 +72,7 @@ function Home(props) {
         let kk = Object.keys(error?.data?.errors?.message.errors);
 
         for (let index = 0; index < kk.length; index++) {
-          console.log(
-            error?.data?.errors?.message.errors[kk[index]][0]
-            // Object.keys(error?.data?.errors?.message?.errors?.kk[index][0])
-          );
+          console.log(error?.data?.errors?.message.errors[kk[index]][0]);
 
           enqueueSnackbar(
             error?.data?.errors?.message.errors[kk[index]][0],
@@ -92,10 +82,6 @@ function Home(props) {
             }
           );
         }
-
-        // enqueueSnackbar(error?.data?.message, "Failed to login", {
-        //   variant: "error",
-        // });
       }
     },
   });
@@ -107,7 +93,6 @@ function Home(props) {
   const getStates = async () => {
     const res = await get({
       endpoint: `states`,
-      // body: { ...payload },
       auth: false,
     });
     setStates(res?.data?.data);
@@ -117,7 +102,6 @@ function Home(props) {
     const pp = states.find((e) => e.name == val);
     const res = await get({
       endpoint: `regions/${pp.alias}`,
-      // body: { ...payload },
       auth: false,
     });
     setCities(res?.data?.data);
@@ -183,7 +167,6 @@ function Home(props) {
                     className="w-full"
                     placeholder="Enter your Phone Number"
                     name="phoneNo"
-                    // onChange={(e) => setPhoneNo(e.target.value)}
                     onChange={(e) => {
                       const regex = /^[0-9\b]+$/;
                       if (e.target.value === "" || regex.test(e.target.value)) {
@@ -192,7 +175,6 @@ function Home(props) {
                       }
                     }}
                     value={phoneNo}
-                    // {...getTextFieldFormikProps(formik, "phoneNo")}
                   />
                 </div>
               </div>
@@ -225,8 +207,6 @@ function Home(props) {
                     className="w-full"
                     placeholder="Enter your Country"
                     name="country"
-                    // disabled
-                    // {...getTextFieldFormikProps(formik, "country")}
                   />
                 </div>
               </div>
@@ -250,8 +230,6 @@ function Home(props) {
                           rows={1.5}
                           className="w-full bg-[]"
                           {...params}
-                          // value={'ji'}
-                          // label="Search input"
                           InputProps={{
                             ...params.InputProps,
                             type: "search",
@@ -263,13 +241,7 @@ function Home(props) {
                 </div>
                 <div className="w-full ">
                   <p className="font-bold">City</p>
-                  {/* <TextField
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-[#EBEBEB]"
-              value={city}
-              multiline={true}
-              rows={1.5}
-            /> */}
+
                   <Stack spacing={2}>
                     <Autocomplete
                       multiline
@@ -315,12 +287,6 @@ function Home(props) {
                 />
               </div>
 
-              {/* <PasswordTextField
-                className="w-full "
-                placeholder="Enter your Password"
-                name="password"
-                {...getTextFieldFormikProps(formik, "password")}
-              /> */}
               <Typography
                 multiline
                 rows={1.5}
@@ -332,11 +298,8 @@ function Home(props) {
 
               <PasswordTextField
                 className="w-full"
-                // multiline
-                // rows={1.5}
                 placeholder="Enter your Password"
                 name="password"
-                // type="password"
                 {...getTextFieldFormikProps(formik, "password")}
               />
 
@@ -345,8 +308,6 @@ function Home(props) {
               </Typography>
 
               <PasswordTextField
-                // multiline
-                // rows={1.5}
                 className="w-full "
                 placeholder="Confirm your Password"
                 name="password"

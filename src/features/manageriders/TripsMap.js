@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserApi from "apis/UserApi";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useSnackbar } from "notistack";
-// import { Button, TextField, Typography } from "@mui/material";
-import PasswordTextField from "common/PasswordTextField";
-import { getTextFieldFormikProps } from "utils/FormikUtils";
-import useAuthUser from "hooks/useAuthUser";
 import { Navigate } from "react-router-dom";
-import { arr } from "react-icons/ai";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -35,10 +26,6 @@ function TripsMap({ route, width }) {
  
   const history = useNavigate();
 
-
-  const redirect = () => {
-    history("/complete-signUp");
-  };
 
   
 

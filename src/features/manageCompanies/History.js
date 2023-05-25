@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserApi from "apis/UserApi";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useSnackbar } from "notistack";
 import moment from "moment";
-import useAuthUser from "hooks/useAuthUser";
 import gigLogo from "images/Ellipse 56.png";
 
 import {
@@ -35,7 +31,6 @@ function Trips(props) {
   const [start_date, setStart_date] = React.useState();
   const [end_date, setEnd_date] = React.useState();
   const [riderId, setRiderId] = React.useState();
-  // const [allHistory, setAllHistory] = React.useState();
   const handleChange = (event) => {
     setRiderId(event.target.value);
   };
@@ -204,49 +199,6 @@ function Trips(props) {
     ),
   ];
 
-  //   useEffect(()=>{
-  // getHistory()
-  //   },[])
-
-  // const getHistory = async () => {
-  //   const res = await get({
-  //     endpoint: `api/company/history`,
-  //     auth: true,
-  //   });
-  //   setAllHistory(
-  //     res?.data?.data
-  //   );
-  // };
-
-  const tableArray = [
-    {
-      image: gigLogo,
-      name: "Nickky Samuel jonas  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-
-    {
-      image: gigLogo,
-      name: "John jimmy Samuel  ",
-      company: "GIG Logistics",
-      Id: "2234456",
-      ratings: "4",
-    },
-  ];
-
-  const formik = useFormik({
-    initialValues: {
-      //   username: "",
-      //   password: "",
-    },
-    validationSchema: yup.object({}),
-    onSubmit: async (values) => {
-      redirect();
-    },
-  });
-
   const style = {
     position: "absolute",
     top: "50%",
@@ -317,12 +269,12 @@ function Trips(props) {
             </div>
           </div>
 
-          {allBikes && allBikes.length > 0 ? (
+          {allBikes && allBikes?.length > 0 ? (
             <div
               sx={{ minWidth: 650, backgroundColor: "#EBEBEB" }}
               aria-label="simple table"
             >
-              {allHistory.length ? (
+              {allHistory?.length ? (
                 <div className="mt-3 ">
                   {allHistory?.map((row, idx) => (
                     <div
@@ -336,7 +288,7 @@ function Trips(props) {
                     >
                       <div
                         className={
-                          idx !== rows.length - 1
+                          idx !== rows?.length - 1
                             ? "w-[16%]  px-3 py-6  border4b text-left"
                             : "w-[16%]  px-3 py-6  border3b border4b text-left"
                         }
@@ -404,7 +356,7 @@ function Trips(props) {
 
                       <div
                         className={
-                          idx !== rows.length - 1
+                          idx !== rows?.length - 1
                             ? "w-[16%]  px-3 py-6  border4b text-left"
                             : "w-[16%]  px-3 py-6  border3b border4b text-left"
                         }
@@ -414,7 +366,7 @@ function Trips(props) {
                       </div>
                       <div
                         className={
-                          idx !== rows.length - 1
+                          idx !== rows?.length - 1
                             ? "w-[16%]  px-3 py-6  border4b text-left"
                             : "w-[16%]  px-3 py-6  border3b border4b text-left"
                         }
@@ -451,10 +403,6 @@ function Trips(props) {
                 There're currently No Rides History for this Company
               </Typography>
             </div>
-            // <Typography
-            //   variant="h4"
-            //   className="font-bold mt-16 text-center"
-            // >{`There're currently No Rides History for this Company`}</Typography>
           )}
         </div>
       )}
@@ -485,7 +433,6 @@ function Trips(props) {
       <div className="w-full flex items-center justify-center"></div>
 
       <Modal
-        // open={true}
         open={open}
         onClose={() => setOpen(!open)}
         aria-labelledby="modal-modal-title"
@@ -554,8 +501,6 @@ function Trips(props) {
               </Button>
               {showBikeDetails && (
                 <div>
-                  {/* <p>bikeDetails:{user?.bikeDetails} </p> */}
-
                   <p>accountNo: {user?.bankDetails?.accountNo},</p>
                   <p>holderName: {user?.bankDetails?.holderName},</p>
                   <p>bank: {user?.bankDetails?.bank}</p>

@@ -4,33 +4,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
 
-import { FcGoogle } from "react-icons/fc";
-// import { Button, TextField, Typography } from "@mui/material";
-import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
-import useAuthUser from "hooks/useAuthUser";
-import { Navigate } from "react-router-dom";
-import { RouteEnum } from "constants/RouteConstants";
 import LoginHeader from "common/LoginHeader";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import toDoorLogo from "images/Ellipse 30.png";
-import background from "images/background.png";
 import snake from "images/Mask group.png";
 
-// import ReactDOM from 'react-dom';
-// import trustedBy1 from './images/Vector.png'
-import trustedBy2 from "images/Rectangle 7.png";
-import trustedBy3 from "images/Rectangle 106.png";
-// import LoginHeader from './LoginHeader';
-// import trustedBy3 from './images/trustedBy-3.png'
-// import trustedBy4 from './images/trustedBy-4.png'
 import {
   Button,
-  Input,
-  MenuItem,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -49,7 +28,6 @@ function ForgotPassword(props) {
   };
 
 
-  // const authUser = useAuthUser();
 
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
@@ -81,25 +59,10 @@ function ForgotPassword(props) {
     },
   });
 
-  // if (authUser.accessToken) {
-  //   return <Navigate to={RouteEnum.HOME} />;
-  // }
+  
 
   return (
-    // <div>
-    //  {/* <Typography variant="h6">Hi</Typography> */}
-    //   <form onSubmit={formik.handleSubmit}>
-    //     <TextField
-    //       label="Username"
-    //       {...getTextFieldFormikProps(formik, "username")}
-    //     />
-    //     <PasswordTextField
-    //       label="Password"
-    //       {...getTextFieldFormikProps(formik, "password")}
-    //     />
-    //     <Button type="submit">Submit</Button>
-    //   </form>
-    // </div>
+   
     <div className="  pl-24 h-screen">
       <div className="flex justify-between">
         <div
@@ -132,11 +95,7 @@ function ForgotPassword(props) {
                   size="medium"
                   className="w-full"
                   placeholder="Enter your username"
-                  // onChange={handleChange}
-                  //     onChange={(e)=>{
-                  //   alert('k')
-                  //   // localStorage.setItem ('location', e.target.value)
-                  // }}
+                 
                   name="username"
                   {...getTextFieldFormikProps(formik, "username")}
                 />
@@ -204,12 +163,7 @@ function ForgotPassword(props) {
               Manage.
             </Typography>
           </div>
-          {/* <Typography variant='h1' className='mt-10 font-bold'>Manage.</Typography> */}
-
-          {/* background:`url(${background})` */}
-          {/* <div className='two-circles relative' style={{ position: 'relative' }}></div> */}
-          {/* <img src={trustedBy3} className='' style={{ position: 'absolute', top: '50%', height: '49%', width: '98.8%' }} /> */}
-          {/* <div className='' style={{width:'100px', height:'50px', ottomLeftRadius:'100%',ottomRightRadius:'100%', position:'absolute', bottom:'0px', opColor:'blue'}}></div> */}
+         
         </div>
       </div>
     </div>

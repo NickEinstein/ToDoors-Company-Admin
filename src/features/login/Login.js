@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import UserApi from "apis/UserApi";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useSnackbar } from "notistack";
 
-import { FcGoogle } from "react-icons/fc";
-// import { Button, TextField, Typography } from "@mui/material";
 import PasswordTextField from "common/PasswordTextField";
 import { getTextFieldFormikProps } from "utils/FormikUtils";
 
@@ -118,14 +114,7 @@ function Home(props) {
                 >
                   Sign In
                 </Button>
-                {/* <Button
-                  variant="outlined"
-                  startIcon={<FcGoogle />}
-                  className="p-3 bg-white text-base text-black mt-4 w-full"
-                  type="submit"
-                >
-                  Sign In With Google
-                </Button> */}
+               
               </div>
             </form>
 

@@ -23,7 +23,6 @@ export const UserApi = todoorsApi.injectEndpoints({
         return {
           url: `${BASE_URL}/company/companyStatistics`,
           method: "GET",
-          // params: { userType },
         };
       },
     }),
@@ -48,13 +47,7 @@ export const UserApi = todoorsApi.injectEndpoints({
       },
     }),
 
-    // updateBike: builder.mutation({
-    //   query: (config) => ({
-    //     url: `${BASE_URL}/company/updateBike`,
-    //     method: "PUT",
-    //     ...config,
-    //   }),
-    // }),
+   
 
     deleteBike: builder.mutation({
       query: (config) => ({
@@ -64,57 +57,41 @@ export const UserApi = todoorsApi.injectEndpoints({
       }),
     }),
 
-    // getAllBikes: builder.mutation({
-    //   query: (config) => ({
-    //     url: `${BASE_URL}/company/bikes`,
-    //     method: "GET",
-    //     ...config,
-    //   }),
-    // }),
-    
+ 
 
     getAllBikes: builder.query({
       query: (config) => {
-        // const { pageNo } = arg;
-        // console.log(pageNo)
         return {
           url: `${BASE_URL}/company/bikes`,
           method: "GET",
-          ...config
-          // params: { pageNo },
+          ...config,
         };
       },
     }),
 
     getRiderTripStatistics: builder.query({
       query: (arg) => {
-        // const { userType } = arg;
         return {
           url: `${BASE_URL}/company/companyTripStatics`,
           method: "GET",
-          // params: { userType },
         };
       },
     }),
 
     getEarningsByMonth: builder.query({
       query: (arg) => {
-        // const { userType } = arg;
         return {
           url: `${BASE_URL}/company/getTotalEarningsByMonth`,
           method: "GET",
-          // params: { userType },
         };
       },
     }),
 
     getTripsByMonth: builder.query({
       query: (arg) => {
-        // const { userType } = arg;
         return {
           url: `${BASE_URL}/company/getTotalTripsByMonth`,
           method: "GET",
-          // params: { userType },
         };
       },
     }),
@@ -132,33 +109,27 @@ export const UserApi = todoorsApi.injectEndpoints({
 
     getBanks: builder.query({
       query: (arg) => {
-        // const { to, from, riderId } = arg;
         return {
           url: `${BASE_URL}/payment/getAllBanks`,
           method: "GET",
-          // params: { to, from, riderId },
         };
       },
     }),
     updateUser: builder.mutation({
       query: (arg) => {
-        // const { userId } = arg;
         return {
           url: `${BASE_URL}/users`,
           method: "PUT",
           ...arg,
-          // params: { userId },
         };
       },
     }),
     updateUserUpload: builder.mutation({
       query: (arg) => {
-        // const { userId } = arg;
         return {
           url: `${BASE_URL}/users/upload`,
           method: "PUT",
           ...arg,
-          // params: { userId },
         };
       },
     }),

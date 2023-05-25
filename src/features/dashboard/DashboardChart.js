@@ -1,86 +1,8 @@
-// import React, { useState, useEffect } from "react";
-// import ReactDOM from "react-dom";
-// import { Column } from "@ant-design/plots";
-
-// const DemoColumn = () => {
-//   const data = [
-//     {
-//       type: "家具家电",
-//       sales: 38,
-//     },
-//     {
-//       type: "粮油副食",
-//       sales: 52,
-//     },
-//     {
-//       type: "生鲜水果",
-//       sales: 61,
-//     },
-//     {
-//       type: "美容洗护",
-//       sales: 145,
-//     },
-//     {
-//       type: "母婴用品",
-//       sales: 48,
-//     },
-//     {
-//       type: "进口食品",
-//       sales: 38,
-//     },
-//     {
-//       type: "食品饮料",
-//       sales: 38,
-//     },
-//     {
-//       type: "家庭清洁",
-//       sales: 38,
-//     },
-//   ];
-//   const config = {
-//     data,
-//     xField: "type",
-//     yField: "sales",
-//     label: {
-//       // 可手动配置 label 数据标签位置
-//       position: "middle",
-//       // 'top', 'bottom', 'middle',
-//       // 配置样式
-//       style: {
-//         fill: "#FFFFFF",
-//         opacity: 0.6,
-//       },
-//     },
-//     xAxis: {
-//       label: {
-//         autoHide: true,
-//         autoRotate: false,
-//       },
-//     },
-//     meta: {
-//       type: {
-//         alias: "类别",
-//       },
-//       sales: {
-//         alias: "销售额",
-//       },
-//     },
-//   };
-//   return <Column {...config} />;
-// };
-
-// ReactDOM.render(<DemoColumn />, document.getElementById("container"));
-
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { Column } from "@ant-design/plots";
-// import { Dashboard } from "@mui/icons-material";
 
 const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
-  const [dataz, setDataz] = useState([]);
-
   const brandColor = "#0C3BAA";
-  const paletteSemanticRed = "#F4664A";
 
   const getMonth = (val) => {
     if (val == 1) return "Jan";
@@ -160,7 +82,7 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
     },
   ];
 
-   data = data.map((obj) => {
+  data = data.map((obj) => {
     const newDataObj = data2.find((newObj) => newObj.year === obj.year);
     console.log(newDataObj);
     if (newDataObj) {
@@ -170,61 +92,12 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
     }
   });
 
-  
-
-  // console.log(updatedArray);
-
-  // const config = {
-  //   data,
-  //   xField: "year",
-  //   yField: "value",
-  //   // seriesField: "year",
-  //   legend: false,
-
-  //   // {
-  //   //   position: "top-left",
-  //   // },
-  //   yAxis: {
-  //     grid: {
-  //       line: false,
-  //       // line: {
-  //       //   style: {
-  //       //     stroke: "black",
-  //       //     lineWidth: 2,
-  //       //     lineDash: [4, 5],
-  //       //     strokeOpacity: 0.7,
-  //       //     shadowColor: "black",
-  //       //     shadowBlur: 10,
-  //       //     shadowOffsetX: 5,
-  //       //     shadowOffsetY: 5,
-  //       //     cursor: "pointer",
-  //       //   },
-  //       // },
-  //     },
-  //   },
-  //   // color: ({ type }) => {
-  //   //   if (type === "10-30分" || type === "30+分") {
-  //   //     return paletteSemanticRed;
-  //   //   }
-
-  //   //   return brandColor;
-  //   // },
-
-  //   //   };
-  //   //   return <Bar {...config} />;
-  // };
-  // const paletteSemanticRed = "#F4664A";
-  // const brandColor = "#5B8FF9";
   const config = {
     data,
     xField: "year",
     yField: "value",
     seriesField: "",
     color: ({ type }) => {
-      // if (type) {
-      //   return paletteSemanticRed;
-      // }
-
       return brandColor;
     },
     label: {
@@ -240,7 +113,6 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
     legend: true,
     xAxis: {
       label: {
-
         autoHide: true,
         autoRotate: false,
       },
@@ -249,23 +121,6 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
       label: {
         autoHide: true,
         autoRotate: false,
-      },
-      // label: false,
-      grid: {
-        // line: false,
-        // line: {
-        //   style: {
-        //     // stroke: "black",
-        //     lineWidth: 1,
-        //     // lineDash: [4, 5],
-        //     // strokeOpacity: 0.7,
-        //     // shadowColor: "black",
-        //     // shadowBlur: 10,
-        //     // shadowOffsetX: 5,
-        //     // shadowOffsetY: 5,
-        //     cursor: "pointer",
-        //   },
-        // },
       },
     },
   };
@@ -284,5 +139,3 @@ const DashboardChart = ({ companyMonthly, companyMonthlyTrips }) => {
   );
 };
 export default DashboardChart;
-
-// ReactDOM.render(<DemoColumn />, document.getElementById("container"));

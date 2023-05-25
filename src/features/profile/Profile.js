@@ -207,21 +207,7 @@ function ManageRiders(props) {
     } else enqueueSnackbar(res?.data?.message, { variant: "error" });
   };
 
-  const toFilter = (array) => {
-    // alert();
-    console.log(array);
-    setUploadArray(uploadArray?.filter((e) => e?.id !== array?.id));
-    // console.log(k);
-  };
-  function ImageFrame(link) {
-    return (
-      <iframe
-        title="image-frame"
-        src={link}
-        style={{ width: "100%", height: "500px" }}
-      />
-    );
-  }
+ 
 
   return (
     <div className="add-bike">
@@ -264,15 +250,7 @@ function ManageRiders(props) {
               </div>
               <div className="self-center flex flex-col gap-2">
                 <Typography variant="h6">{authUser?.fname}</Typography>
-                {/* <Button
-                  className={
-                    user?.verified
-                      ? "h-6 bg-green-400"
-                      : "h-6 bg-yellow-300 text-black font-bold"
-                  }
-                >
-                  {user?.verified ? "Verified" : "Unverified"}
-                </Button> */}
+              
                 {!user?.verified && (
                   <Button onClick={() => setShowProfile(false)}>
                     Proceed to Verification
@@ -310,20 +288,6 @@ function ManageRiders(props) {
                             Uploaded.
                           </Typography>
                         </a>
-
-                        {/* {user?.idPhotoUrl?.endsWith(".pdf") ? (
-                          <a href={user?.idPhotoUrl} target="_blank">
-                            <img
-                              className="w-full h-32  border-blue-300"
-                              src={pdf}
-                            />
-                          </a>
-                        ) : (
-                          <img
-                            className="w-[300px] h-32  border-blue-300"
-                            src={user?.idPhotoUrl}
-                          />
-                        )} */}
                       </div>
                     ) : (
                       <div className="w-full flex flex-col justify-start items-start gap-5">
@@ -339,22 +303,6 @@ function ManageRiders(props) {
                     </Typography>
                     {user?.companyRegistrationPhotoUrl ? (
                       <div>
-                        {/* {user?.companyRegistrationPhotoUrl?.endsWith(".pdf") ? (
-                          <a
-                            href={user?.companyRegistrationPhotoUrl}
-                            target="_blank"
-                          >
-                            <img
-                              className="w-full h-32  border-blue-300"
-                              src={pdf}
-                            />
-                          </a>
-                        ) : (
-                          <img
-                            className="w-[300px] h-32  border-blue-300"
-                            src={user?.companyRegistrationPhotoUrl}
-                          />
-                        )} */}
                         <a
                           href={user?.companyRegistrationPhotoUrl}
                           target="_blank"
@@ -511,7 +459,6 @@ function ManageRiders(props) {
                       <Typography className="text-center">
                         {profilePic?.file?.name}
                       </Typography>
-                      {/* <Typography>{ridersPictureName.name}</Typography> */}
                       <div
                         onClick={() => setProfilePic("")}
                         className="p-1 bg-red-500 absolute w-4 h-4 flex justify-center hover:cursor-pointer items-center top-0 left-32 text-white rounded-full"
@@ -690,7 +637,6 @@ function ManageRiders(props) {
           </div>
         )}
       </div>
-      {/* {ImageFrame(user.profileUrl)} */}
     </div>
   );
 }
