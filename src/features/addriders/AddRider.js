@@ -663,13 +663,13 @@ function ManageRiders(props) {
             Save
           </Button>
 
-          <Button
+          {/* <Button
             disabled={!authUser.verified}
             onClick={() => onSave()}
             className="h-12 w-2/6 bg-primary-main"
           >
             Save & Continue
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

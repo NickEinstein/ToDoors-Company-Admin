@@ -71,7 +71,7 @@ function ToDoorSearch({ hide, pad }) {
                   src={user?.profileUrl}
                 />
                 <div className="cursor-pointer" onClick={redirect}>
-                  <p className="text-[#1E1E1E] text-sm text-center mb-1">
+                  <p className="text-[#1E1E1E] text-base font-bold text-center mb-1">
                     {user?.fname?.toUpperCase()}, {user?.city}
                   </p>
                   <Button
