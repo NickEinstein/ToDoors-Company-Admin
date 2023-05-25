@@ -133,7 +133,7 @@ function Home(props) {
           </div>
         </div>
         <div
-          className="relative flex-vertical bg-primary-main text-white pl-10 justify-center w-2/5"
+          className="relative hidden md:flex flex-vertical bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
             minWidth: "40%",
             minHeight: "100%",

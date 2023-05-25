@@ -301,7 +301,7 @@ function Trips(props) {
                     <p className="text-[#959595] text-[11px] h-6">
                       Phone Number
                     </p>
-                    <p className="font-semibold my-2">{`+234${row.rider}`}</p>
+                    <p className="font-semibold my-2">{`${row.rider}`}</p>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">Reg Date</p>

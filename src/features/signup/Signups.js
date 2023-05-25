@@ -119,26 +119,25 @@ function Home(props) {
   }));
 
   return (
-    <div className="z  pl-24">
-      <div className="flex justify-between ">
+    <div className="z  md:pl-24">
+      <div className="flex md:justify-between justify-center w-full">
         <div
-          className="pt-4"
+          className="pt-4 w-full md:w-2/5 px-4"
           style={{
             paddingLeft: "",
             paddingRight: "",
-            minWidth: "40%",
+            // minWidth: "40%",
           }}
         >
           <LoginHeader />
-          <div className="flex-vertical">
-            <div className="my-8">
-              <Typography variant="h3" className="mb-2 mt-3 font-bold">
-                Sign Up
-              </Typography>
-            </div>
-
-            <form onSubmit={formik.handleSubmit}>
-              <div class="flex gap-5 w-full">
+          <div className="my-8">
+            <Typography variant="h3" className="mb-2 mt-3 font-bold">
+              Sign Up
+            </Typography>
+          </div>
+          <div className="flex-vertical w-full">
+            <form className="w-full bo" onSubmit={formik.handleSubmit}>
+              <div class="flex gap-5 w-full  flex-col md:flex-row">
                 <div className="w-full">
                   <Typography variant="h6" className="mb-2">
                     Email Address
@@ -178,7 +177,7 @@ function Home(props) {
                   />
                 </div>
               </div>
-              <div class="flex gap-5">
+              <div class="flex gap-5  flex-col md:flex-row w-full">
                 <div className="w-full">
                   <Typography variant="h6" className="mb-2 mt-4">
                     Company Name
@@ -210,7 +209,7 @@ function Home(props) {
                   />
                 </div>
               </div>
-              <div className="flex justify-between my-4">
+              <div className="flex  flex-col md:flex-row justify-between my-4">
                 <div className="w-full mr-[5%]">
                   <p className="font-bold">State</p>
 
@@ -340,7 +339,7 @@ function Home(props) {
           </div>
         </div>
         <div
-          className="relative flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
+          className="relative hidden md:flex flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
             minWidth: "40%",
             position: "relative",

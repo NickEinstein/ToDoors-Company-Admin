@@ -60,10 +60,10 @@ function Home(props) {
   
   return (
    
-    <div className="pl-24 min-h-screen">
+    <div className="md:pl-24 min-h-screen">
       <div className="flex justify-between">
         <div
-          className="pt-4 min-h-screen"
+          className="pt-4 min-h-screen md:w-2/5 w-full px-4"
           style={{
             paddingLeft: "",
             paddingRight: "",
@@ -135,7 +135,7 @@ function Home(props) {
           </div>
         </div>
         <div
-          className="relative flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
+          className="relative md:flex hidden flex-vertical min-h-screen bg-primary-main text-white pl-10 justify-center w-2/5"
           style={{
            
             position: "relative",
