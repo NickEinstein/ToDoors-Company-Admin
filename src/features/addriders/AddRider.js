@@ -142,6 +142,7 @@ function ManageRiders(props) {
         }).unwrap();
         onUpload(data?.data?.user?._id);
 
+
         enqueueSnackbar(data.message, { variant: "success" });
       } catch (error) {
         enqueueSnackbar(error?.data?.message, "Failed to login", {
@@ -338,6 +339,8 @@ function ManageRiders(props) {
       if (res?.data?.success) {
         enqueueSnackbar(res?.data?.message, { variant: "success" });
         setRidersPicture("");
+        redirect();
+        
       } else {
         console.log(res);
 
