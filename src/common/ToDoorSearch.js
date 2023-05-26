@@ -71,18 +71,18 @@ function ToDoorSearch({ hide, pad }) {
                   src={user?.profileUrl}
                 />
                 <div className="cursor-pointer" onClick={redirect}>
-                  <p className="text-[#1E1E1E] text-base font-bold text-center mb-1">
+                  <Button className="text-white text-base font-bold text-center mb-1">
                     {user?.fname?.toUpperCase()}, {user?.city}
-                  </p>
-                  <Button
+                  </Button>
+                  <p
                     className={
                       user?.verified
-                        ? "h-6 bg-green-400"
-                        : "h-6 bg-yellow-300 text-black font-bold"
+                        ? "h-6 text-green-400 text-center font-bold"
+                        : "h-6 text-red-500 font-bold text-center"
                     }
                   >
                     {user?.verified ? "Verified" : "Unverified"}
-                  </Button>
+                  </p>
                 </div>
               </div>
             </div>
