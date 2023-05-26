@@ -621,7 +621,7 @@ function ManageRiders(props) {
             />
             <label htmlFor="contained-button-file3" className="mb-8">
               <Button variant="contained" color="primary" component="span">
-                Upload liscence Picture
+                Upload licence Picture
               </Button>
             </label>
           </div>

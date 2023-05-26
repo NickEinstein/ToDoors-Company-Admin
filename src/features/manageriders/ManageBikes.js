@@ -152,8 +152,6 @@ function Trips(props) {
       )
     : [];
 
-  
-
   const { enqueueSnackbar } = useSnackbar();
   const [loginMuation, loginMutationResult] = UserApi.useLoginMutation();
 
@@ -286,9 +284,9 @@ function Trips(props) {
 
                     <div>
                       <Button className="h-7 bg-primary-main">
-                        {row.origin}
+                        {row.place}
                       </Button>
-                      <p className="font-semibold my-2">{row.place}</p>
+                      <p className="font-semibold my-2">{row.origin}</p>
                     </div>
                   </div>
                   <div className="w-1/5  px-3 py-3  border3b text-center">
@@ -297,7 +295,7 @@ function Trips(props) {
                     </p>
                     <p className="font-semibold my-2">{row.destination}</p>
                   </div>
-                  <div className="w-1/5  px-3 py-3  border3b text-center">
+                  <div className="w-1/5  px-3 py-3   border3b text-center">
                     <p className="text-[#959595] text-[11px] h-6">
                       Phone Number
                     </p>
@@ -372,7 +370,7 @@ function Trips(props) {
                 <div className="flex">
                   <Avatar
                     sx={{ width: 100, height: 100 }}
-                    src="/broken-image.jpg"
+                    src={user?.profileUrl||"/broken-image.jpg"}
                   />
                 </div>
                 <div className="mt-4">
@@ -404,18 +402,22 @@ function Trips(props) {
               <Divider className="my-8" />
               <div class="flex gap-16 ">
                 <div className="flex flex-col gap-3 font-semibold">
-                  <Typography className="font-semibold">Address:</Typography>
-                  <Typography className="font-semibold">
-                    Phone Number:
-                  </Typography>
-                  <Typography className="font-semibold">
-                    Email address:
-                  </Typography>
-                </div>
-                <div className="flex flex-col gap-3">
-                  <Typography>{user?.addres}</Typography>
-                  <Typography>{user?.phoneNo}</Typography>
-                  <Typography>{user?.email}</Typography>
+                  <div class="flex gap-5 align-center">
+                    <Typography className="font-semibold">Address:</Typography>
+                    <Typography>{user?.address}</Typography>
+                  </div>
+                  <div class="flex gap-5 align-center">
+                    <Typography className="font-semibold">
+                      Phone Number:
+                    </Typography>
+                    <Typography>{user?.phoneNo}</Typography>
+                  </div>
+                  <div class="flex gap-5 align-center">
+                    <Typography className="font-semibold">
+                      Email address:
+                    </Typography>
+                    <Typography>{user?.email}</Typography>
+                  </div>
                 </div>
               </div>
             </div>
